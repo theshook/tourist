@@ -1,4 +1,4 @@
-<nav class="navbar fixed-top navbar-expand-lg navbar-light " style="background-color: #e3f2fd;">
+<nav class="navbar navbar-expand-lg navbar-light " style="background-color: #e3f2fd;">
   <a class="navbar-brand" href="/">
     <img src="logo.png" width="70" height="70" alt="">
   </a>
@@ -14,7 +14,11 @@
       <% } else { %>
         <li class="nav-item">
       <% } %>
-          <a class="nav-link lead" href="/places-to-go">Places to Go</a>
+          <a class="nav-link lead" href="/places-to-go"> Places to Go </a>
+        </li>
+
+        <li class="nav-item">
+          <p class="nav-link lead"> | </p>
         </li>
 
       <% if (pageTitle === 'things-to-do') { %>
@@ -22,7 +26,11 @@
       <% } else { %>
         <li class="nav-item">
       <% } %>
-        <a class="nav-link lead" href="/things-to-do">Things to Do</a>
+        <a class="nav-link lead" href="/things-to-do"> Things to Do </a>
+      </li>
+
+      <li class="nav-item">
+        <p class="nav-link lead"> | </p>
       </li>
 
       <% if (pageTitle === 'plan-your-trip') { %>
@@ -30,12 +38,17 @@
       <% } else { %>
         <li class="nav-item">
       <% } %>
-        <a class="nav-link lead" href="/plan-your-trip">Plan Your Trip</a>
+        <a class="nav-link lead" href="/plan-your-trip"> Plan Your Trip </a>
       </li>
     </ul>
-    <form class="form-inline my-2 my-lg-0">
-      <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-    </form>
+    <ul class="navbar-nav float-right">
+      <% if (pageTitle === 'Login') { %>
+        <li class="nav-item active">
+      <% } else { %>
+        <li class="nav-item">
+      <% } %>
+        <a class="nav-link lead" href="/login">Login/Register</a>
+      </li>
+    </ul>
   </div>
 </nav>

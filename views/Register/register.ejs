@@ -1,0 +1,51 @@
+<%- include('../partials/index') %>
+<%- include('../partials/navbar') %>
+
+<div class="container mt-5">
+  <div class="row">
+    <div class="col-md-8 mx-auto">
+      <div class="card shadow p-3 mb-5 bg-white rounded ">
+        <div class="card-body">
+          <form>
+            <div class="form-group row">
+              <label for="fname" class="col-sm-4 col-form-label">First Name</label>
+              <div class="col-sm-8">
+                <input type="text" class="form-control" id="fname" placeholder="First Name">
+              </div>
+            </div>
+            <div class="form-group row">
+              <label for="lname" class="col-sm-4 col-form-label">Last Name</label>
+              <div class="col-sm-8">
+                <input type="text" class="form-control" id="lname" placeholder="Last Name">
+              </div>
+            </div>
+            <div class="form-group row">
+              <label for="staticEmail" class="col-sm-4 col-form-label">Email</label>
+              <div class="col-sm-8">
+                <input type="email" class="form-control" id="email" placeholder="Email Address">
+              </div>
+            </div>
+            <div class="form-group row">
+              <label for="inputPassword" class="col-sm-4 col-form-label">Password</label>
+              <div class="col-sm-8">
+                <input type="password" class="form-control" id="inputPassword" placeholder="Password">
+              </div>
+            </div>
+            <div class="form-group row">
+              <label for="confirmPassword" class="col-sm-4 col-form-label">Confirm Password</label>
+              <div class="col-sm-8">
+                <input type="password" class="form-control" id="confirmPassword" placeholder="confirmPassword">
+              </div>
+            </div>
+            <div class="text-center">
+              <button type="submit" class="btn btn-primary w-75 p-2">Create Account</button>
+              <p>Already have an account? Login <a href="/login">here!</a></p>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<%- include('../partials/footer') %>

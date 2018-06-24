@@ -23,6 +23,14 @@ app.get('/plan-your-trip', (req, res) => {
   res.render('plan-your-trip', {pageTitle: 'plan-your-trip'});
 });
 
+app.get('/login', (req,res) => {
+  res.render('Login/login', {pageTitle: 'Login'});
+});
+
+app.get('/register', (req,res) => {
+  res.render('Register/register', {pageTitle: 'Login'});
+});
+
 const port = process.env.PORT || 8000;
 
 app.listen(port, function(){
