@@ -1,0 +1,40 @@
+<div class="col-md-12">
+  <div class="card">
+    <div class="card-header card-header-primary">
+      <h3 class="card-title">Town Table</h3>
+      <p class="card-category"> Here is a subtitle for this table</p>
+      <a href="/admin/town/new" class="btn btn-default float-right"> Add New Record</a>
+    </div>
+    <div class="card-body">
+      <div class="table-responsive">
+        <table class="table">
+          <thead class=" text-primary">
+            <tr>
+              <th>Name</th>
+              <th>Zip Code</th>
+              <th>Type</th>
+              <th class="text-right">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% rows.forEach(function(row){ %>
+              <tr>
+                <td><%= row.town_name %></td>
+                <td><%= row.town_zipcode %></td>
+                <td><%= row.town_iscity === 0 ? 'Town' : 'City' %></td>
+                <td class="td-actions text-right">
+                  <a href="/admin/town/<%= row.town_no %>" rel="tooltip" class="btn btn-success">
+                      <i class="material-icons">edit</i>
+                  </a>
+                  <form class="d-inline" action="/admin/town/delete/<%= row.town_no %>" method="POST">
+                    <button class="btn btn-danger"><i class="material-icons">close</i></button>
+                  </form>
+                </td>
+              </tr>
+            <%	}); %>     
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

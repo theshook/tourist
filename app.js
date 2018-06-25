@@ -2,13 +2,15 @@ const express         = require('express');
 const app             = express();
 const bodyParser 	    = require("body-parser");
 
+const townRoutes     = require('./routes/Town');
+
 app.use(bodyParser.urlencoded({extended: true}));
 app.set('view engine', 'ejs');
 app.use(express.static(__dirname + "/public"));
 
 
 app.get('/', (req, res) => {
-  res.render('home', {pageTitle: 'Abra Travel Guide'});
+  res.render('Client/home', {pageTitle: 'Abra Travel Guide'});
 });
 
 app.get('/places-to-go', (req, res) => {
@@ -24,14 +26,20 @@ app.get('/plan-your-trip', (req, res) => {
 });
 
 app.get('/login', (req,res) => {
-  res.render('Login/login', {pageTitle: 'Login'});
+  res.render('Client/Login/login', {pageTitle: 'Login'});
 });
 
 app.get('/register', (req,res) => {
-  res.render('Register/register', {pageTitle: 'Login'});
+  res.render('Client/Register/register', {pageTitle: 'Login'});
 });
 
-const port = process.env.PORT || 8000;
+app.get('/admin', (req,res) => {
+  res.render('Admin/template', {pageTitle: 'Admin Panel', page: 'Dashboard'});
+});
+
+app.use('/admin/town', townRoutes);
+
+const port = process.env.PORT || 8001;
 
 app.listen(port, function(){
   console.log(`Server is running on ${port}`)

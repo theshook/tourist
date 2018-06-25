@@ -1,0 +1,51 @@
+<div class="col-md-6 mx-auto">
+    <div class="card">
+      <div class="card-header card-header-primary">
+        <h4 class="card-title">New Town</h4>
+      </div>
+      <div class="card-body">
+        <form action="/admin/town" method="POST">
+          <div class="row">
+            <div class="col-md-12">
+              <div class="form-group bmd-form-group">
+                <label class="bmd-label-floating">Town Name</label>
+                <input type="text" class="form-control" name="town_name">
+              </div>
+            </div>
+            <div class="col-md-12">
+              <div class="form-group bmd-form-group">
+                <label class="bmd-label-floating">Zip Code</label>
+                <input type="number" class="form-control" name="zipcode">
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-4">
+              <div class="form-check form-check-radio">
+                <label class="form-check-label">
+                  <input class="form-check-input" type="radio" name="city" id="city" value="1" checked>
+                  City
+                  <span class="circle">
+                      <span class="check"></span>
+                  </span>
+                </label>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="form-check form-check-radio">
+                <label class="form-check-label">
+                  <input class="form-check-input" type="radio" name="city" id="city1" value="0">
+                  Town
+                  <span class="circle">
+                      <span class="check"></span>
+                  </span>
+                </label>
+              </div>
+            </div>
+          </div>
+          <button type="submit" class="btn btn-primary pull-right">Save Record</button>
+          <div class="clearfix"></div>
+        </form>
+      </div>
+    </div>
+  </div>
