@@ -2,7 +2,9 @@ const express         = require('express');
 const app             = express();
 const bodyParser 	    = require("body-parser");
 
+
 const townRoutes     = require('./routes/Town');
+const barangayRoutes     = require('./routes/Barangay');
 
 app.use(bodyParser.urlencoded({extended: true}));
 app.set('view engine', 'ejs');
@@ -38,6 +40,7 @@ app.get('/admin', (req,res) => {
 });
 
 app.use('/admin/town', townRoutes);
+app.use('/admin/barangay', barangayRoutes);
 
 const port = process.env.PORT || 8001;
 
