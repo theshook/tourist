@@ -1,13 +1,14 @@
-const express           = require('express');
-const router            = express.Router();
-const barangayController   = require('../controllers/Barangays');
+const express               = require('express');
+const router                = express.Router();
+const barangayController    = require('../controllers/Barangays');
+const isLoggedIn            = require('../isLoggedIn');
 
 // Handle incoming GET requests to /barangay
-router.get('/', barangayController.barangays_get_all);
-router.get('/new', barangayController.barangays_new);
-router.post('/', barangayController.barangays_create);
-router.get('/:barId', barangayController.barangays_edit);
-router.post('/:barId', barangayController.barangays_update)
-router.post('/delete/:barId', barangayController.barangays_delete);
+router.get('/', isLoggedIn, barangayController.barangays_get_all);
+router.get('/new', isLoggedIn, barangayController.barangays_new);
+router.post('/', isLoggedIn, barangayController.barangays_create);
+router.get('/:barId', isLoggedIn, barangayController.barangays_edit);
+router.post('/:barId', isLoggedIn, barangayController.barangays_update)
+router.post('/delete/:barId', isLoggedIn, barangayController.barangays_delete);
 
 module.exports = router;

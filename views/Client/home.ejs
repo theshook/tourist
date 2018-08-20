@@ -1,107 +1,107 @@
 <%- include('partials/index') %>
-<%- include('partials/navbar') %>
-<div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
-  <div class="carousel-inner">
-    <div class="carousel-item active">
-      <img class="d-block w-100" src="Apao_Rolling_Hills.jpg" alt="First slide" height='450px'>
+
+  <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
+    <div class="carousel-inner">
+      <div class="carousel-item active">
+        <img class="d-block w-100" src="Apao_Rolling_Hills.jpg" alt="First slide" height='450px'>
         <div class="carousel-caption d-none d-md-block ">
           <h1 class="display-4">Apao Rolling Hills</h1>
           <p class="lead">This is a modified jumbotron that occupies the entire horizontal space of its parent.</p>
         </div>
-    </div>
-    <div class="carousel-item">
-      <img class="d-block w-100" src="Kili_Falls.jpg" alt="Second slide" height='450px'>
-      <div class="carousel-caption d-none d-md-block">
-        <h1 class="display-4">Kili Falls</h1>
-        <p class="lead">This is a modified jumbotron that occupies the entire horizontal space of its parent.</p>
       </div>
-    </div>
-    <div class="carousel-item">
-      <img class="d-block w-100" src="Piwek_Rock_Formations.jpg" alt="Third slide" height='450px'>
-      <div class="carousel-caption d-none d-md-block">
-        <h1 class="display-4">Piwek Rock Formations</h1>
-        <p class="lead">This is a modified jumbotron that occupies the entire horizontal space of its parent.</p>
+      <div class="carousel-item">
+        <img class="d-block w-100" src="Kili_Falls.jpg" alt="Second slide" height='450px'>
+        <div class="carousel-caption d-none d-md-block">
+          <h1 class="display-4">Kili Falls</h1>
+          <p class="lead">This is a modified jumbotron that occupies the entire horizontal space of its parent.</p>
+        </div>
       </div>
-    </div>
-  </div>
-  <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
-    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-    <span class="sr-only">Previous</span>
-  </a>
-  <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
-    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-    <span class="sr-only">Next</span>
-  </a>
-</div>
-
-<div class="container-fluid mt-5 mb-5">
-  <div class="row">
-    <div class="col-md-4 mb-3">
-      <div class="card bg-dark text-white">
-        <img class="card-img" src="Apao_Rolling_Hills.jpg" alt="Card image" height="219" width="50%">
-        <div class="card-img-overlay">
-          <h5 class="card-title">Card title</h5>
+      <div class="carousel-item">
+        <img class="d-block w-100" src="Piwek_Rock_Formations.jpg" alt="Third slide" height='450px'>
+        <div class="carousel-caption d-none d-md-block">
+          <h1 class="display-4">Piwek Rock Formations</h1>
+          <p class="lead">This is a modified jumbotron that occupies the entire horizontal space of its parent.</p>
         </div>
       </div>
     </div>
-    <div class="col-md-4 mb-3">
-      <div class="card bg-dark text-white">
-        <img class="card-img" src="Kili_Falls.jpg" alt="Card image" height="219" width="50%">
-        <div class="card-img-overlay">
-          <h5 class="card-title">Card title</h5>
-        </div>
-      </div>
-    </div>
-    <div class="col-md-4 mb-3">
-      <div class="card bg-dark text-white">
-        <img class="card-img" src="Piwek_Rock_Formations.jpg" alt="Card image" height="219" width="50%">
-        <div class="card-img-overlay">
-          <h5 class="card-title">Card title</h5>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-md-4 mb-2">
-      <div class="card bg-dark text-white">
-        <img class="card-img" src="Apao_Rolling_Hills.jpg" alt="Card image" height="219" width="50%">
-        <div class="card-img-overlay">
-          <h5 class="card-title">Card title</h5>
-        </div>
-      </div>
-    </div>
-    <div class="col-md-4 mb-2">
-      <div class="card bg-dark text-white">
-        <img class="card-img" src="Kili_Falls.jpg" alt="Card image" height="219" width="50%">
-        <div class="card-img-overlay">
-          <h5 class="card-title">Card title</h5>
-        </div>
-      </div>
-    </div>
-    <div class="col-md-4 mb-2">
-      <div class="card bg-dark text-white">
-        <img class="card-img" src="Piwek_Rock_Formations.jpg" alt="Card image" height="219" width="50%">
-        <div class="card-img-overlay">
-          <h5 class="card-title">Card title</h5>
-        </div>
-      </div>
-    </div>
+    <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="sr-only">Previous</span>
+    </a>
+    <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="sr-only">Next</span>
+    </a>
   </div>
 
-  <div class="row mt-5">
-    <div class="col-md-6">
+  <div class="container mt-5 mb-5">
+    <h1 class="text-center">Explore the Province</h1>
+    <div class="row">
+      <% rows.forEach(function(row){ %>
+        <div class="col-md-4 mb-3">
+          <div class="card bg-dark text-white d-flex justify-content-center">
+            <% if(row.ec_name == 'Restaurant') { %>
+              <img class="card-img" src="restaurant.jpg" alt="Card image" height="219" width="50%">
+              <% } else if(row.ec_name == 'Island') { %>
+                <img class="card-img" src="island.jpeg" alt="Card image" height="219" width="50%">
+                <% } else if(row.ec_name == 'Beach') { %>
+                  <img class="card-img" src="beach.jpg" alt="Card image" height="219" width="50%">
+                  <% } else if(row.ec_name == 'Waterfalls') { %>
+                    <img class="card-img" src="waterfalls.jpg" alt="Card image" height="219" width="50%">
+                    <% } else if(row.ec_name == 'Church') { %>
+                      <img class="card-img" src="chruch.jpg" alt="Card image" height="219" width="50%">
+                      <% } else if(row.ec_name == 'Hotels') { %>
+                        <img class="card-img" src="hotels.jpg" alt="Card image" height="219" width="50%">
+                        <% } %>
+                          <div class="card-img-overlay">
+                            <h3 class="card-title font-weight-bold">
+                              <% if(row.ec_name == 'Restaurant') { %>
+                                <a href="/restaurant" class="btn btn-outline-light btn-lg">
+                                  <i class="material-icons">restaurant</i>
+                                  <% } else if(row.ec_name == 'Island') { %>
+                                    <a href="/island" class="btn btn-outline-light btn-lg">
+                                      <i class="material-icons">landscape</i>
+                                      <% } else if(row.ec_name == 'Beach') { %>
+                                        <a href="/Beach" class="btn btn-outline-light btn-lg">
+                                          <i class="material-icons">beach_access</i>
+                                          <% } else if(row.ec_name == 'Waterfalls') { %>
+                                            <a href="/waterfall" class="btn btn-outline-light btn-lg">
+                                              <i class="material-icons">pool</i>
+                                              <% } else if(row.ec_name == 'Church') { %>
+                                                <a href="/church" class="btn btn-outline-light btn-lg">
+                                                  <i class="material-icons">location_city</i>
+                                                  <% } else if(row.ec_name == 'Hotels') { %>
+                                                    <a href="/hotel" class="btn btn-outline-light btn-lg">
+                                                      <i class="material-icons">account_balance</i>
+                                                      <% } %>
+                                                        <%= row.ec_name %>
+                                                    </a>
+                            </h3>
+                          </div>
+          </div>
+        </div>
+        <%	}); %>
+    </div>
+
+    <div class="row mt-5">
+      <div class="col-md-6">
         <h1 class="display-4">Where is Abra?</h1>
-        <p class="lead">Abra (Ilokano: Probinsia ti Abra; Filipino: Lalawigan ng Abra) is a landlocked province of the Philippines in the Cordillera Administrative Region in Luzon. Its capital is Bangued, and is bordered by Ilocos Norte on the northwest, Apayao on the northeast, Kalinga on the mid-east, Mountain Province on the southeast, and Ilocos Sur on the southwest.</p>
+        <p class="lead">Abra (Ilokano: Probinsia ti Abra; Filipino: Lalawigan ng Abra) is a landlocked province of the Philippines in the
+          Cordillera Administrative Region in Luzon. Its capital is Bangued, and is bordered by Ilocos Norte on the northwest,
+          Apayao on the northeast, Kalinga on the mid-east, Mountain Province on the southeast, and Ilocos Sur on the southwest.</p>
         <hr>
-        <p>The first inhabitants of Abra were the ancestors of the Bontocs and the Ifugaos. These inhabitants eventually left to settle in the old Mountain Province. Other early inhabitants were the Tingguians, or Itnegs, as they are also known.</p>
+        <p>The first inhabitants of Abra were the ancestors of the Bontocs and the Ifugaos. These inhabitants eventually left
+          to settle in the old Mountain Province. Other early inhabitants were the Tingguians, or Itnegs, as they are also
+          known.
+        </p>
         <p class="lead">
           <a class="btn btn-primary btn-lg" href="#" role="button">Learn more</a>
         </p>
-    </div>
-    <div class="col-md-6">
-      <img class="card-img" src="abra-map.png" alt="Map Image" height="500" width="50%">
+      </div>
+      <div class="col-md-6">
+        <img class="card-img" src="abra-map.png" alt="Map Image" height="500" width="50%">
+      </div>
     </div>
   </div>
-</div>
 
-<%- include('partials/footer') %>
+  <%- include('partials/footer') %>

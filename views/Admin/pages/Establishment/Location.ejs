@@ -1,0 +1,71 @@
+<div class="row">
+  <div class="col-md-10 mx-auto">
+    <div class="card">
+      <div class="card-header card-header-warning">
+        <h4 class="card-title">Location for <%= row[0].estab_name %></h4>
+      </div>
+      <div class="card-body">
+        <form action="/admin/establishment/location/<%= row[0].estab_no %>" method="POST"> 
+          <div class="row">
+            <div class="col-md-12" id="map" style="height:350px;width:100%;"></div>
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group bmd-form-group">
+                <label for="barangay_name">Latitude</label>
+                <input type="text" class="form-control" name="el_latitude" id="el_latitude" readonly>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group bmd-form-group">
+                <label for="barangay_name">Longitude</label>
+                <input type="text" class="form-control" name="el_longitude" id="el_longitude" readonly>
+              </div>
+            </div>
+            <div class="col-md-12">
+              <div class="form-group">
+                <label for="exampleFormControlTextarea1">Route</label>
+                <textarea class="form-control" id="route" rows="4" name="route"></textarea>
+              </div>
+            </div>
+          </div>
+          <button>Submit</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<script async defer
+src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBc7MrXyAOjZ9VAmPCniGxbH5MEn0jpP7Q&callback=initMap">
+</script>
+<script>
+let map;
+let marker;
+  function initMap() {
+    let dagupan = { lat: 16.0433, lng: 120.3333 };
+    map = new google.maps.Map(document.getElementById('map'), {
+      zoom: 12,
+      center: dagupan
+    });
+
+    // This event listener calls addMarker() when the map is clicked.
+    map.addListener('click', function(event) {
+      marker.setMap(null);
+      addMarker(event.latLng, map);
+      document.getElementById('el_latitude').value = event.latLng.lat();
+      document.getElementById('el_longitude').value =  event.latLng.lng();
+    });
+
+    addMarker(dagupan, map);
+  }
+
+  // Adds a marker to the map.
+  function addMarker(location, map) {
+    // Add the marker at the clicked location.
+    marker = new google.maps.Marker({
+      position: location,
+      map: map
+    });
+  }
+
+</script>

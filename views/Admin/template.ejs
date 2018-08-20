@@ -3,15 +3,20 @@
 <%- include('partials/head') %>
 <body class="">
   <div class="wrapper ">
-    <%- include('partials/sidebar') %>
-    <div class="main-panel">
-      <div class="content p-0">
-        <div class="container-fluid">
-          <%- include('pages/' + page) %>
+    <% if (page == 'Login')  { %>
+      <%- include('pages/Authenticate/Login') %>
+    <% } else { %>
+      <%- include('partials/sidebar') %>
+      <div class="main-panel">
+        <%- include('partials/navbar') %>
+        <div class="content p-0">
+          <div class="container-fluid">
+            <%- include('pages/' + page) %>
+          </div>
         </div>
+        <%- include('partials/footer') %>
       </div>
-      <%- include('partials/footer') %>
-    </div>
+    <% } %>
   </div>
 <%- include('partials/corejs') %>
 </body>
