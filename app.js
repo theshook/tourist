@@ -3,9 +3,14 @@ const session = require("express-session");
 const app = express();
 const bodyParser = require("body-parser");
 const passport = require("passport");
+let favicon = require("serve-favicon");
+let path = require("path");
 
-// configuration ==============================================
-// connect to our database
+// configuration ============================================================
+
+// Favicon ==================================================================
+app.use(favicon(path.join(__dirname, "public", "favicon.ico")));
+// ==========================================================================
 
 require("./passport")(passport); // pass passport for configuration
 // required for passport
