@@ -14,7 +14,7 @@
             <a class="nav-link js-scroll-trigger" href="#services">Services</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link js-scroll-trigger" href="#portfolio">Places to Go</a>
+            <a class="nav-link js-scroll-trigger" href="#portfolio">Explore</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="/login">Sign in</a>
@@ -88,7 +88,19 @@
       <div class="row">
         <% rows.forEach(function(row){ %>
           <div class="col-md-4 col-sm-6 portfolio-item">
-            <a class="portfolio-link" data-toggle="modal" href="#portfolioModal1">
+            <% if(row.ec_name == 'Restaurant') { %>
+              <a class="portfolio-link" href="/restaurant">
+            <% } else if(row.ec_name == 'Island') { %>
+              <a class="portfolio-link" href="/island">
+            <% } else if(row.ec_name == 'Beach') { %>
+              <a class="portfolio-link" href="/beach">
+            <% } else if(row.ec_name == 'Waterfalls') { %>
+              <a class="portfolio-link" href="/waterfall">
+            <% } else if(row.ec_name == 'Church') { %>
+              <a class="portfolio-link" href="/church">
+            <% } else if(row.ec_name == 'Hotels') { %>
+              <a class="portfolio-link" href="/hotel">
+            <% } %>
               <div class="portfolio-hover">
                 <div class="portfolio-hover-content">
                   <% if(row.ec_name == 'Restaurant') { %>
