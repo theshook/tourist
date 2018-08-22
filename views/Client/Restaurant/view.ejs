@@ -73,9 +73,7 @@
 
   <input type="text" class="form-control" name="el_longitude" id="el_longitude" value="<%= rows[0].el_lontitude %>" hidden>
         
-<script async defer
-src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBc7MrXyAOjZ9VAmPCniGxbH5MEn0jpP7Q&callback=initMap">
-</script>
+
 <script type="text/javascript">
   function initMap() {
     let dagupan = { 
@@ -92,6 +90,9 @@ src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBc7MrXyAOjZ9VAmPCniGxbH5M
       map: map
     });
   }   
+</script>
+<script async defer
+src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBc7MrXyAOjZ9VAmPCniGxbH5MEn0jpP7Q&callback=initMap">
 </script>
 
 
