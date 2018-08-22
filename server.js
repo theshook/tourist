@@ -1,8 +1,7 @@
 const http = require('http');
 const app = require('./app');
 
-let port = process.env.OPENSHIFT_NODEJS_PORT || 8080;
-var ipaddress = process.env.OPENSHIFT_NODEJS_IP || "127.0.0.1";
+let port = process.env.PORT || 8080;
 
 app.set('port', port);
 const server = http.createServer(app);
@@ -17,6 +16,6 @@ module.exports.io = io;
 // });
 
 
-server.listen(port, ipaddress, (err, res) => {
-  console.log(`Listening on ${ipaddress}, port ${port}`)
+server.listen(port, (err, res) => {
+  console.log(`Listening on port ${port}`)
 });
