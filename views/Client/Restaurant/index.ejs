@@ -1,26 +1,64 @@
 <%- include('../partials/index') %>
-  <div>
-    <h1 class="display-1">Restaurant Routes</h1>
-  </div>
-  <div class="container mt-5 mb-5">
-    <div class="row mt-5">
-      <div class="col-md-6">
-        <h1 class="display-4">Where is Abra?</h1>
-        <p class="lead">Abra (Ilokano: Probinsia ti Abra; Filipino: Lalawigan ng Abra) is a landlocked province of the Philippines in the
-          Cordillera Administrative Region in Luzon. Its capital is Bangued, and is bordered by Ilocos Norte on the northwest,
-          Apayao on the northeast, Kalinga on the mid-east, Mountain Province on the southeast, and Ilocos Sur on the southwest.</p>
-        <hr>
-        <p>The first inhabitants of Abra were the ancestors of the Bontocs and the Ifugaos. These inhabitants eventually left
-          to settle in the old Mountain Province. Other early inhabitants were the Tingguians, or Itnegs, as they are also
-          known.
-        </p>
-        <p class="lead">
-          <a class="btn btn-primary btn-lg" href="#" role="button">Learn more</a>
-        </p>
-      </div>
-      <div class="col-md-6">
-        <img class="card-img" src="../abra-map.png" alt="Map Image" height="500" width="50%">
+
+<!-- Navigation -->
+  <nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="mainNav">
+    <div class="container">
+      <a class="navbar-brand js-scroll-trigger" href="/">Abra Guide</a>
+      <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive"
+        aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+        Menu
+        <i class="fa fa-bars"></i>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav text-uppercase ml-auto">
+          <li class="nav-item">
+            <a class="nav-link js-scroll-trigger" href="#restaurant">Restaurant</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/login">Sign in</a>
+          </li>
+        </ul>
       </div>
     </div>
-  </div>
+  </nav>
+
+  <header class="masthead" style="background-image: url(../img/hotel-header2.jpg);">
+    <div class="container">
+      <div class="intro-text">
+        <div class="intro-heading text-uppercase text-body">Looking for a food in the area?</div>
+      </div>
+    </div>
+  </header>
+
+  <section id="restaurant">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-12 text-center">
+          <h2 class="section-heading text-uppercase">Restaurants</h2>
+          <h3 class="section-subheading text-muted">Lorem ipsum dolor sit amet consectetur.</h3>
+        </div>
+      </div>
+      <div class="row text-center">
+        <% rows.forEach(function(row){ %>
+          <div class="container py-3">
+            <div class="card">
+              <div class="row ">
+                <div class="col-md-4">
+                  <img src="uploads/<%= row.image_filename %>" class="w-100">
+                </div>
+                <div class="col-md-8 px-3">
+                  <div class="card-body">
+                    <h3 class="text-left"><%= row.estab_name %></h3>
+                    <p class="card-text text-left text-truncate"><%= row.estab_description %></p>
+                    <a href="/restaurant/<%= row.estab_no %>" class="btn btn-primary float-left my-3">View more</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        <% }); %>
+      </div>
+    </div>
+  </section>
+  
   <%- include('../partials/footer') %>

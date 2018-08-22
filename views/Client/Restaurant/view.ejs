@@ -1,0 +1,98 @@
+<%- include('../partials/index') %>
+
+<!-- Navigation -->
+  <nav class="navbar navbar-expand-lg navbar-dark fixed-top pt-0 pb-0" id="mainNav" style="background-color: #212529;">
+    <div class="container">
+      <a class="navbar-brand" href="/">Abra Guide</a>
+      <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive"
+        aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+        Menu
+        <i class="fa fa-bars"></i>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav text-uppercase ml-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="/restaurant">Restaurant</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/login">Sign in</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <section>
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="card">
+            <div class="card-header card-header-warning">
+              <h4 class="card-title"><%= rows[0].estab_name %></h4>
+            </div>
+            <img src="/uploads/<%= rows[0].image_filename %>" class="card-img-top" alt="Responsive image">
+            <div class="card-body">
+              <dl class="row">
+                <dt class="col-sm-3">Description</dt>
+                <dd class="col-sm-9 lead"><%= rows[0].estab_description %></dd>
+
+                <dt class="col-sm-3">Address</dt>
+                <dd class="col-sm-9 lead"><%= rows[0].estab_address %></dd>
+
+                <dt class="col-sm-3">Town</dt>
+                <dd class="col-sm-9 lead"><%= rows[0].town_name %></dd>
+
+                <dt class="col-sm-3">Barangay</dt>
+                <dd class="col-sm-9 lead"><%= rows[0].bar_name %></dd>
+
+                <dt class="col-sm-3">Contact Number</dt>
+                <dd class="col-sm-9 lead"><%= rows[0].estab_contact %></dd>
+
+                <dt class="col-sm-3">Email Address</dt>
+                <dd class="col-sm-9 lead"><%= rows[0].estab_email %></dd>
+                
+                <dt class="col-sm-3">Routes</dt>
+                <dd class="col-sm-9 lead"><%= rows[0].el_route %></dd>
+
+                <dt class="col-sm-3">Location</dt>
+                <dd class="col-sm-9"><div class="col-md-12" id="map" style="height:350px;width:100%;"></div></dd>
+              </dl>
+            </div>
+            <div class="card-footer text-muted">
+              <% rows.forEach(function(row){ %>
+                <img src="/uploads/<%= row.image_filename %>" alt="/uploads/<%= row.image_filename %>" height="200" width="200" class="img-thumbnail" >
+              <%	}); %>  
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <input type="text" class="form-control" name="el_latitude" id="el_latitude" value="<%= rows[0].el_latitude %>" hidden>
+
+  <input type="text" class="form-control" name="el_longitude" id="el_longitude" value="<%= rows[0].el_lontitude %>" hidden>
+        
+<script async defer
+src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBc7MrXyAOjZ9VAmPCniGxbH5MEn0jpP7Q&callback=initMap">
+</script>
+<script type="text/javascript">
+  function initMap() {
+    let dagupan = { 
+      lat: parseFloat(document.getElementById('el_latitude').value), 
+      lng: parseFloat(document.getElementById('el_longitude').value)
+    };
+    map = new google.maps.Map(document.getElementById('map'), {
+      zoom: 18,
+      center: dagupan
+    });
+
+    var marker = new google.maps.Marker({
+      position: dagupan,
+      map: map
+    });
+  }   
+</script>
+
+
+  <%- include('../partials/footer') %>
