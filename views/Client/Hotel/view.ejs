@@ -1,4 +1,24 @@
 <%- include('../partials/index') %>
+<script async defer
+src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBc7MrXyAOjZ9VAmPCniGxbH5MEn0jpP7Q&callback=initMap">
+</script>
+<script>
+  function initMap() {
+    let dagupan = { 
+      lat: <%= rows[0].el_latitude %>, 
+      lng: <%= rows[0].el_lontitude %> 
+    };
+    map = new google.maps.Map(document.getElementById('map'), {
+      zoom: 18,
+      center: dagupan
+    });
+
+    var marker = new google.maps.Marker({
+      position: dagupan,
+      map: map
+    });
+  }   
+</script>
 
 <!-- Navigation -->
   <nav class="navbar navbar-expand-lg navbar-dark fixed-top pt-0 pb-0" id="mainNav" style="background-color: #212529;">
@@ -69,25 +89,6 @@
     </div>
   </section>
   
-<script async defer
-src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBc7MrXyAOjZ9VAmPCniGxbH5MEn0jpP7Q&callback=initMap">
-</script>
-<script>
-  function initMap() {
-    let dagupan = { 
-      lat: <%= rows[0].el_latitude %>, 
-      lng: <%= rows[0].el_lontitude %> 
-    };
-    map = new google.maps.Map(document.getElementById('map'), {
-      zoom: 18,
-      center: dagupan
-    });
 
-    var marker = new google.maps.Marker({
-      position: dagupan,
-      map: map
-    });
-  }   
-</script>
 
   <%- include('../partials/footer') %>
