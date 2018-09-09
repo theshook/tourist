@@ -1,6 +1,7 @@
 const db = require("../../db.js");
 
 exports.get_all_Category = (req, res) => {
+  console.log(req.connection.remoteAddress);
   db.query(
     `SELECT ec_name FROM establistments_category
     UNION
