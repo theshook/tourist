@@ -1,6 +1,6 @@
 <%- include('../partials/index') %>
 
-<!-- Navigation -->
+  <!-- Navigation -->
   <nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="mainNav">
     <div class="container">
       <a class="navbar-brand js-scroll-trigger" href="/">Abra Guide</a>
@@ -38,27 +38,8 @@
           <h3 class="section-subheading text-muted">Lorem ipsum dolor sit amet consectetur.</h3>
         </div>
       </div>
-      <div class="row text-center">
-        <% rows.forEach(function(row){ %>
-          <div class="container py-3">
-            <div class="card">
-              <div class="row ">
-                <div class="col-md-4">
-                  <img src="uploads/<%= row.image_filename %>" class="w-100">
-                </div>
-                <div class="col-md-8 px-3">
-                  <div class="card-body">
-                    <h3 class="text-left"><%= row.estab_name %></h3>
-                    <p class="card-text text-left text-truncate"><%= row.estab_description %></p>
-                    <a href="/restaurant/<%= row.estab_no %>" class="btn btn-primary float-left my-3">View more</a>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        <% }); %>
-      </div>
+      <%- include('../Layout/estabGetAll') %>
     </div>
   </section>
-  
+
   <%- include('../partials/footer') %>

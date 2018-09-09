@@ -1,20 +1,9 @@
 const db = require("../../db.js");
+const { spot_get_all_query, spot_get_single_query } = require('./Helpers/QueryHelpers');
 
 exports.get_all_Beach = (req, res) => {
   db.query(
-    `SELECT spots_category.sc_name, 
-    spot_no,
-    spot_name,
-    spot_subname,
-    spot_description, 
-    towns.town_name,
-    barangays.bar_name
-    FROM spots 
-    INNER JOIN towns ON spots.town_no = towns.town_no 
-    INNER JOIN barangays ON spots.bar_no = barangays.bar_no 
-    INNER JOIN spots_category ON spots.sc_no = spots_category.sc_no 
-    WHERE spots.sc_no=1 AND (spot_delete=0 AND spot_inactive=0)
-    order by spot_no ASC`,
+    spot_get_all_query(1),
     (err, rows) => {
       if (err) {
         throw err;
@@ -26,3 +15,19 @@ exports.get_all_Beach = (req, res) => {
     }
   );
 };
+
+exports.Beach_View = (req, res) => {
+  let id = req.params.beach_id;
+  db.query(
+    spot_get_single_query(id),
+    (err, rows) => {
+      if (err) {
+        throw err;
+      }
+      res.render("Client/Beach/view", {
+        rows: rows,
+        pageTitle: "Beach Information"
+      });
+    }
+  );
+}

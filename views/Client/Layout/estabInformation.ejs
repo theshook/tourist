@@ -1,0 +1,99 @@
+<section>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12 mx-auto">
+        <div class="card">
+          <div class="card-header">
+            <h4 class="card-title d-flex justify-content-center">
+              <%= rows[0].estab_name.toUpperCase() %>
+            </h4>
+          </div>
+          <img src="/uploads/<%= rows[0].image_filename %>" class="card-img-top" alt="Responsive image">
+          <div class="card-footer">
+            <h3>Rating: 4.7</h3>
+          </div>
+          <div class="card-body">
+            <dl class="row">
+              <dd class="col-sm-12 lead">
+                <%= rows[0].estab_description %>
+              </dd>
+
+              <dd class="col-sm-12 lead">
+                <%= rows[0].estab_address %>
+              </dd>
+
+              <dd class="col-sm-12 lead">
+                <%= rows[0].town_name %>
+              </dd>
+
+              <dd class="col-sm-12 lead">
+                <%= rows[0].bar_name %>
+              </dd>
+
+              <dd class="col-sm-12 lead">
+                <%= rows[0].estab_contact %>
+              </dd>
+
+              <dd class="col-sm-12 lead">
+                <%= rows[0].estab_email %>
+              </dd>
+
+              <dd class="col-sm-12 lead">
+                <%= rows[0].el_route %>
+              </dd>
+
+              <dd class="col-sm-12">
+                <div class="col-md-12" id="map" style="height:350px;width:100%;"></div>
+              </dd>
+            </dl>
+          </div>
+          <div class="card-footer text-muted">
+            <% rows.forEach(function(row){ %>
+              <img src="/uploads/<%= row.image_filename %>" alt="/uploads/<%= row.image_filename %>" height="200" width="200" class="img-thumbnail align-baseline">
+              <%	}); %>
+          </div>
+          <div class="card-body">
+
+            <dl class="row">
+              <dd class="col-sm-12">
+                <form action="/<%= route %>/<%= rows[0].estab_no %>" method="post">
+                  <img src="/Kili_Falls.jpg" alt="..." class="rounded-circle" height="32" width="32">
+                  <input class="rounded w-75 form-control d-inline" type="text" placeholder="Write Comment ..." />
+
+                  <Button class="btn btn-primary">Comment</Button>
+                </form>
+              </dd>
+            </dl>
+            <hr />
+            <%- include('./comment/comment.ejs') %>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<input type="text" class="form-control" name="el_latitude" id="el_latitude" value="<%= rows[0].el_latitude %>" hidden>
+
+<input type="text" class="form-control" name="el_longitude" id="el_longitude" value="<%= rows[0].el_lontitude %>" hidden>
+
+<script type="text/javascript">
+  window.initMap = function () {
+    let dagupan = {
+      lat: parseFloat(document.getElementById('el_latitude').value),
+      lng: parseFloat(document.getElementById('el_longitude').value)
+    };
+    map = new google.maps.Map(document.getElementById('map'), {
+      zoom: 18,
+      center: dagupan
+    });
+
+    var marker = new google.maps.Marker({
+      position: dagupan,
+      map: map
+    });
+  }   
+</script>
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBc7MrXyAOjZ9VAmPCniGxbH5MEn0jpP7Q&callback=initMap">
+</script>
