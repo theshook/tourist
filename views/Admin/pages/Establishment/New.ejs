@@ -84,7 +84,7 @@
           url: 'https://abra-tourist.herokuapp.com/admin/spot/new/barangays/' + $(this).val(),
           success: function (data) {
             console.log(data);
-            $("#town_no").empty();
+            $("#bar_no").empty();
             $.each(JSON.parse(data), function (i, value) {
               $('#bar_no').append($('<option>').text(value.bar_name).attr('value', value.bar_no));
             });
