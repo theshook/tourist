@@ -3,8 +3,8 @@
     <div class="card-header card-header-warning">
       <div class="form-group bmd-form-group float-right w-50">
         <form action="/admin/spot/" method="get" onsubmit="myFunction()">
-        <label class="bmd-label-floating text-primary">Search here...</label>
-        <input type="text" class="form-control text-white " name="town_q">
+          <label class="bmd-label-floating text-primary">Search here...</label>
+          <input type="text" class="form-control text-white " name="town_q">
         </form>
       </div>
       <h3 class="card-title">Spot Table</h3>
@@ -25,32 +25,48 @@
               <th class="text-right">Actions</th>
             </tr>
           </thead>
-            <% rows.forEach(function(row){ %>
-              <tr>
-                <td><a href="/admin/spot/view/<%= row.spot_no %>"><%= row.spot_name %></a></td>
-                <td><%= row.spot_subname %></td>
-                <td><%= row.spot_description %></td>
-                <td><%= row.town_name %></td>
-                <td><%= row.bar_name %></td>
-                <td><%= row.sc_name %></td>
-                <td class="td-actions text-right">
-                  <a href="/admin/spot/image/<%= row.spot_no %>" title="Set Image!" class="btn btn-success">
-                    <i class="material-icons">image</i>
-                  </a>
-                  <a href="/admin/spot/location/<%= row.spot_no %>" class="btn btn-success" title="Set Location">
-                    <i class="material-icons">my_location</i>
-                  </a>
-                  <a href="/admin/spot/<%= row.spot_no %>" class="btn btn-success" title="Edit Record">
-                    <i class="material-icons">edit</i>
-                  </a>
-                  <form class="d-inline" action="/admin/spot/delete/<%= row.spot_no %>" method="POST">
-                    <button class="btn btn-danger" title="Hooray!"><i class="material-icons">close</i></button>
-                  </form>
-                </td>
-              </tr>
-            <%	}); %> 
-          <tbody>
-          </tbody>
+          <% rows.forEach(function(row){ %>
+            <tr>
+              <td>
+                <a href="/admin/spot/view/<%= row.spot_no %>">
+                  <%= row.spot_name %>
+                </a>
+              </td>
+              <td>
+                <%= row.spot_subname %>
+              </td>
+              <td>
+                <%= row.spot_description %>
+              </td>
+              <td>
+                <%= row.town_name %>
+              </td>
+              <td>
+                <%= row.bar_name %>
+              </td>
+              <td>
+                <%= row.sc_name %>
+              </td>
+              <td class="td-actions text-right">
+                <a href="/admin/spot/image/<%= row.spot_no %>" title="Set Image!" class="btn btn-success">
+                  <i class="material-icons">image</i>
+                </a>
+                <a href="/admin/spot/location/<%= row.spot_no %>" class="btn btn-success" title="Set Location">
+                  <i class="material-icons">my_location</i>
+                </a>
+                <a href="/admin/spot/<%= row.spot_no %>" class="btn btn-success" title="Edit Record">
+                  <i class="material-icons">edit</i>
+                </a>
+                <form class="d-inline" action="/admin/spot/delete/<%= row.spot_no %>" method="POST">
+                  <button class="btn btn-danger" title="Hooray!">
+                    <i class="material-icons">close</i>
+                  </button>
+                </form>
+              </td>
+            </tr>
+            <%	}); %>
+              <tbody>
+              </tbody>
         </table>
       </div>
       <nav aria-label="Page navigation example">
@@ -62,14 +78,18 @@
             </a>
           </li>
           <% for(var i=1; i <= total_pages; i++){ %>
-            <li class="page-item"><a class="page-link" href="/admin/spot/?page=<%= i %>"><%= i %></a></li>
-          <% } %>
-          <li class="page-item">
-            <a class="page-link" href="/admin/spot/?page=<%= total_pages %>" aria-label="Next">
-              <span aria-hidden="true">&raquo;</span>
-              <span class="sr-only">Next</span>
-            </a>
-          </li>
+            <li class="page-item">
+              <a class="page-link" href="/admin/spot/?page=<%= i %>">
+                <%= i %>
+              </a>
+            </li>
+            <% } %>
+              <li class="page-item">
+                <a class="page-link" href="/admin/spot/?page=<%= total_pages %>" aria-label="Next">
+                  <span aria-hidden="true">&raquo;</span>
+                  <span class="sr-only">Next</span>
+                </a>
+              </li>
         </ul>
       </nav>
     </div>

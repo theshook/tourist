@@ -19,32 +19,66 @@
               <label for="inputState">Category</label>
               <select id="inputState" class="form-control" name="sc_no">
                 <% data.forEach(function(row){ %>
-                <option value="<%= row.sc_no %>"><%= row.sc_name %></option>
-                <%	}); %>  
+                  <option value="<%= row.sc_no %>">
+                    <%= row.sc_name %>
+                  </option>
+                  <%	}); %>
               </select>
             </div>
             <div class="form-group bmd-form-group">
-              <label for="inputState">Town</label>
-              <select id="inputState" class="form-control" name="town_no">
+              <label for="town_no">Town</label>
+              <select class="form-control" name="town_no" id="town_no">
                 <% towns.forEach(function(town){ %>
-                <option value="<%= town.town_no %>"><%= town.town_name %></option>
-                <%	}); %>  
+                  <option value="<%= town.town_no %>">
+                    <%= town.town_name %>
+                  </option>
+                  <%	}); %>
               </select>
             </div>
             <div class="form-group bmd-form-group">
-              <label for="inputState">Barangay</label>
-              <select id="inputState" class="form-control" name="bar_no">
-                <% towns.forEach(function(town){ %>
-                <option value="<%= town.bar_no %>"><%= town.bar_name %></option>
-                <%	}); %>  
+              <label for="bar_no">Barangay</label>
+              <select id="bar_no" class="form-control" name="bar_no">
+                <option value="">
+                  Select Barangay...
+                </option>
               </select>
             </div>
             <label for="exampleFormControlTextarea1">Description</label>
             <textarea class="form-control" name="desc" rows="3"></textarea>
           </div>
-        <button type="submit" class="btn btn-info pull-right">Save Record</button>
-        <div class="clearfix"></div>
+          <button type="submit" class="btn btn-info pull-right">Save Record</button>
+          <div class="clearfix"></div>
       </form>
+      </div>
     </div>
   </div>
-</div>
+
+  <script>
+    $(document).ready(function () {
+      $.ajax({
+        type: 'POST',
+        data: 3,
+        contentType: 'application/json',
+        url: 'http://localhost:8080/admin/spot/new/barangays/3',
+        success: function (data) {
+          $.each(JSON.parse(data), function (i, value) {
+            $('#bar_no').append($('<option>').text(value.bar_name).attr('value', value.bar_no));
+          });
+        }
+      });
+
+      $("#town_no").change(function () {
+        $.ajax({
+          type: 'POST',
+          data: $(this).val(),
+          contentType: 'application/json',
+          url: 'http://localhost:8080/admin/spot/new/barangays/' + $(this).val(),
+          success: function (data) {
+            $.each(JSON.parse(data), function (i, value) {
+              $('#bar_no').append($('<option>').text(value.bar_name).attr('value', value.bar_no));
+            });
+          }
+        });
+      });
+    });
+  </script>

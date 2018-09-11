@@ -6,6 +6,13 @@ const passport = require("passport");
 let favicon = require("serve-favicon");
 let path = require("path");
 
+const publicIp = require("public-ip");
+
+publicIp.v4().then(ip => {
+  console.log(ip);
+  //=> '46.5.21.123'
+});
+
 // configuration ============================================================
 
 // Favicon ==================================================================
