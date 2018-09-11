@@ -61,6 +61,7 @@
         contentType: 'application/json',
         url: 'https://abra-tourist.herokuapp.com/admin/spot/new/barangays/3',
         success: function (data) {
+          console.log(data);
           $.each(JSON.parse(data), function (i, value) {
             $('#bar_no').append($('<option>').text(value.bar_name).attr('value', value.bar_no));
           });
@@ -74,6 +75,7 @@
           contentType: 'application/json',
           url: 'https://abra-tourist.herokuapp.com/admin/spot/new/barangays/' + $(this).val(),
           success: function (data) {
+            console.log(data);
             $.each(JSON.parse(data), function (i, value) {
               $('#bar_no').append($('<option>').text(value.bar_name).attr('value', value.bar_no));
             });

@@ -115,7 +115,7 @@ exports.esatablishment_new = (req, res) => {
     "SELECT ec_no, ec_name FROM establistments_category WHERE ec_delete=0 AND ec_inactive=0 order by ec_no",
     (err, rows) => {
       db.query(
-        "SELECT towns.town_no, towns.town_name, barangays.bar_name, barangays.bar_no FROM towns INNER JOIN barangays ON towns.town_no = barangays.town_no WHERE bar_inactive=0 AND bar_delete=0 AND town_inactive=0 AND town_delete=0 order by town_no",
+        "SELECT town_name, town_no FROM towns WHERE town_inactive=0 AND town_delete=0 ORDER BY town_name ",
         (error, result) => {
           if (error) {
             throw err;
