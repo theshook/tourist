@@ -1,5 +1,5 @@
 const moment = require("moment");
-const db = require("../db.js");
+var db = require("../db.js");
 let date;
 
 exports.towns_get_all = (req, res) => {

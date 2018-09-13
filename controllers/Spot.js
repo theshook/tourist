@@ -1,5 +1,5 @@
 const db = require("../db.js");
-const moment = require("moment");
+var moment = require("moment");
 
 exports.spots_gets_all = (req, res) => {
   let search_towns = req.query.town_q || null;

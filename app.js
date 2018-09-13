@@ -6,12 +6,12 @@ const passport = require("passport");
 let favicon = require("serve-favicon");
 let path = require("path");
 
-const publicIp = require("public-ip");
+// const publicIp = require("public-ip");
 
-publicIp.v4().then(ip => {
-  console.log(ip);
-  //=> '46.5.21.123'
-});
+// publicIp.v4().then(ip => {
+//   console.log(ip);
+//   //=> '46.5.21.123'
+// });
 
 // configuration ============================================================
 
@@ -43,6 +43,11 @@ app.use(passport.session()); // persistent login sessions
 //   }
 // });
 
+app.use(bodyParser.urlencoded({ extended: true }));
+app.set("view engine", "ejs");
+app.use(express.static(__dirname + "/public"));
+
+
 const townRoutes = require("./routes/Town");
 const barangayRoutes = require("./routes/Barangay");
 const authenticateRoutes = require("./routes/Authenticate");
@@ -60,9 +65,6 @@ const churchRoutes = require("./routes/Client/Church");
 const beachRoutes = require("./routes/Client/Beach");
 const waterfallRoutes = require("./routes/Client/Waterfall");
 
-app.use(bodyParser.urlencoded({ extended: true }));
-app.set("view engine", "ejs");
-app.use(express.static(__dirname + "/public"));
 
 app.get("/places-to-go", (req, res) => {
   res.render("places-to-go", { pageTitle: "places-to-go" });

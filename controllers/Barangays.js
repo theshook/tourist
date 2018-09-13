@@ -1,4 +1,4 @@
-const moment = require("moment");
+var moment = require("moment");
 const db = require("../db.js");
 
 exports.barangays_get_all = (req, res) => {

@@ -1,5 +1,5 @@
 const db = require("../db.js");
-const moment = require("moment");
+var moment = require("moment");
 
 exports.esatablishment_view = (req, res) => {
   let id = req.params.estab_no;

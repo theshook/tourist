@@ -1,11 +1,22 @@
-<dl class="row">
-  <dd class="col-sm-12">
-    <img src="/Kili_Falls.jpg" alt="..." class="rounded-circle" height="32" width="32">
-    <span class="p-1 mb-2 bg-light text-dark rounded">
-      <%= rows[0].estab_address %>
-    </span>
-    <span class="p-2 mb-3">
-      34mins Ago
-    </span>
-  </dd>
-</dl>
+<% if (comments.length > 0) { %>
+  <dl class="row">
+    <div class="card w-100">
+      <ul class="list-group list-group-flush">
+        <% comments.forEach(function(comment){ %>
+          <li class="list-group-item bg-light">
+            <img src="/guest.ico" alt="..." class="rounded-circle" height="32" width="32">
+            <span>
+              Guest -
+            </span>
+            <span>
+              <%= comment.comm_content %>
+            </span>
+            <p class="float-right" id="comm_date">
+              <%= moment(comment.comm_date).format('MMMM Do YYYY, h:mm:ss a') %>
+            </p>
+          </li>
+          <%	}); %>
+      </ul>
+    </div>
+  </dl>
+  <% } %>

@@ -38,6 +38,10 @@ exports.estab_get_single = id => {
   WHERE establistments.estab_no = ${id}`;
 };
 
+exports.estab_comments = id => {
+  return `SELECT user_no, estab_no, comm_guest, comm_content, comm_date FROM comments WHERE estab_no = ${id} ORDER BY comm_date DESC`;
+}
+
 exports.spot_get_all_query = sc_no => {
   return `SELECT 
   spots.spot_no,
@@ -74,9 +78,6 @@ exports.spot_get_single_query = sc_no => {
   WHERE spots.spot_no=${sc_no}`;
 };
 
-exports.comment_query = (estab_id, spot_id, user_id, guest, content, email) => {
-  return `
-    INSERT INTO comments (user_no, estab_no, spot_no, comm_guest, comm_content, comm_email, comm_ip, comm_date) VALUES 
-    (${estab_id}, ${spot_id}, ${user_id}, ${guest}, ${content}, ${email})
-  `;
+exports.comment_query = (user_no, estab_no, spot_no, comm_guest, comm_content, comm_email, comm_ip, comm_date) => {
+  return `INSERT INTO comments (user_no, estab_no, spot_no, comm_guest, comm_content, comm_email, comm_ip, comm_date) VALUES ('${user_no}', '${estab_no}', '${spot_no}', '${comm_guest}', '${comm_content}', '${comm_email}', '${comm_ip}', '${comm_date}')`;
 };
