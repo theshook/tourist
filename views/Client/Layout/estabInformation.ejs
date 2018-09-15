@@ -10,7 +10,10 @@
           </div>
           <img src="/uploads/<%= rows[0].image_filename %>" class="card-img-top" alt="Responsive image">
           <div class="card-footer">
-            <h3>Rating:
+            <h3>Rating: 
+              <% if (rating.length > 0) { %>
+                <%= rating[0].RATES %>
+              <% } %>
               <span class="float-right">
                 <%- include('./rating/rating.ejs') %>
               </span>
@@ -52,7 +55,7 @@
           </div>
           <div class="card-body" id="comments">
             <dl class="row">
-              <form class="form-inline" action="/<%= route %>/<%= rows[0].estab_no %>" method="post">
+              <form id="form-comments" class="form-inline" action="/<%= route %>/<%= rows[0].estab_no %>" method="post">
                 <dd class="col-sm-12">
                   <% if (user=="null") { %>
                   <img src="/guest.ico" alt="..." class="rounded-circle" height="32" width="32">
@@ -102,7 +105,7 @@
 
 <script>
   $(document).ready(function () {
-    $("form").submit(function (e) {
+    $("#form-comments").submit(function (e) {
       var name = $('#name').val();
       var email = $('#email').val();
       var content = $('#content').val();

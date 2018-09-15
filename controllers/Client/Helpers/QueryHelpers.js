@@ -85,3 +85,15 @@ exports.spot_get_single_query = sc_no => {
 exports.comment_query = (user_no, estab_no, spot_no, comm_guest, comm_content, comm_email, comm_ip, comm_date) => {
   return `INSERT INTO comments (user_no, estab_no, spot_no, comm_guest, comm_content, comm_email, comm_ip, comm_date) VALUES ('${user_no}', '${estab_no}', '${spot_no}', '${comm_guest}', '${comm_content}', '${comm_email}', '${comm_ip}', '${comm_date}')`;
 };
+
+exports.ratings_query = (user_no, estab_no, spot_no, rating_value, rating_ip, rating_date) => {
+  return `INSERT INTO ratings (user_no, estab_no, spot_no, rating_value, rating_ip, rating_date) VALUES ('${user_no}', '${estab_no}', '${spot_no}', '${rating_value}', '${rating_ip}', '${rating_date}')`;
+};
+
+exports.ratings_check_ip = (id, ip) => {
+  return `SELECT * FROM ratings WHERE (rating_ip = '${ip}' AND estab_no = '${id}') AND (rating_inactive=0 AND rating_delete=0)`;
+};
+
+exports.ratings_rate = (id) => {
+  return `SELECT round(SUM(rating_value)/COUNT(*), 2) as RATES FROM ratings WHERE estab_no='${id}' AND (rating_inactive=0 AND rating_delete=0) GROUP BY estab_no`;
+};

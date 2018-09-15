@@ -2,12 +2,16 @@ const db = require("../../db.js");
 var moment = require("moment");
 const publicIp = require("public-ip");
 let {
-  estab_get_all_query,
-  estab_get_single,
+  estab_get_all_query, estab_get_single,
   comment_query,
-  estab_comments,
-  estab_count_comments
+  estab_comments, estab_count_comments,
+  ratings_check_ip, ratings_query, ratings_rate
 } = require("./Helpers/QueryHelpers");
+
+var ipAddress;
+publicIp.v4().then(ip => {
+  ipAddress = ip;  
+});
 
 exports.get_all_Restaurant = (req, res) => {
   db.query(estab_get_all_query(1), (err, rows) => {
@@ -39,17 +43,28 @@ exports.restaurant_View = (req, res) => {
 
       db.query(estab_comments(id, start_index, items_per_page), (error, comments) => {
         if (error) { throw error; }
+        
+        db.query(ratings_check_ip(id, ipAddress), (log_err, isRated) => {
+          if (log_err) { throw log_err; }
+          
+          var rated = (isRated.length >= 1) ? true : false;
 
-
-        res.render("Client/Restaurant/view", {
-          rows: rows,
-          id: id,
-          total_pages: total_pages,
-          user: req.user == undefined ? "null" : req.user.user_no,
-          moment: moment,
-          comments: comments,
-          pageTitle: "Restaurant Information",
-          route: "restaurant"
+          db.query(ratings_rate(id), (log_errs, rating) => {
+            if (log_errs) { throw log_errs; }
+            res.render("Client/Restaurant/view", {
+              rows: rows,
+              id: id,
+              rating: rating,
+              isRated: isRated,
+              rated: rated,
+              total_pages: total_pages,
+              user: req.user == undefined ? "null" : req.user.user_no,
+              moment: moment,
+              comments: comments,
+              pageTitle: "Restaurant Information",
+              route: "restaurant"
+            });
+          });
         });
       })
     });
@@ -77,5 +92,19 @@ exports.restaurant_comments = (req, res) => {
 };
 
 exports.restaurant_ratings = (req, res) => {
+  let id = (req.user == undefined) ? "null" : req.user.user_no;
+  let data = {
+    estab_no: req.params.restaurant_id,
+    spot_no: null,
+    rating_value: req.body.ratings,
+    rating_ip: null,
+    rating_date: moment().format()
+  };
 
+  publicIp.v4().then(ip => {
+    db.query(ratings_query(id, data.estab_no, data.spot_no, data.rating_value, ip, data.rating_date), (err,result) => {
+      if (err) throw err;
+      res.redirect(`/restaurant/${data.estab_no}`);
+    });
+  });
 };
