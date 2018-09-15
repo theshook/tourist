@@ -5,7 +5,8 @@ let {
   estab_get_all_query,
   estab_get_single,
   comment_query,
-  estab_comments
+  estab_comments,
+  estab_count_comments
 } = require("./Helpers/QueryHelpers");
 
 exports.get_all_Restaurant = (req, res) => {
@@ -22,21 +23,36 @@ exports.get_all_Restaurant = (req, res) => {
 };
 
 exports.restaurant_View = (req, res) => {
+  let current_page = req.query.page || 1;
+  let items_per_page = 4;
+  let start_index = (current_page - 1) * items_per_page;
   let id = req.params.restaurant_id;
   db.query(estab_get_single(id), (err, rows) => {
     if (err) {
       throw err;
     }
-    db.query(estab_comments(id), (error, comments) => {
-      if (error) throw error;
-      res.render("Client/Restaurant/view", {
-        rows: rows,
-        moment: moment,
-        comments: comments,
-        pageTitle: "Restaurant Information",
-        route: "restaurant"
-      });
-    })
+
+    db.query(estab_count_comments(id), (errs, total_items) => {
+      if (errs) { throw errs; }
+
+      let total_pages = Math.ceil(total_items[0].total / items_per_page);
+
+      db.query(estab_comments(id, start_index, items_per_page), (error, comments) => {
+        if (error) { throw error; }
+
+
+        res.render("Client/Restaurant/view", {
+          rows: rows,
+          id: id,
+          total_pages: total_pages,
+          user: req.user == undefined ? "null" : req.user.user_no,
+          moment: moment,
+          comments: comments,
+          pageTitle: "Restaurant Information",
+          route: "restaurant"
+        });
+      })
+    });
   });
 };
 
@@ -45,11 +61,11 @@ exports.restaurant_comments = (req, res) => {
   let data = {
     estab_no: req.params.restaurant_id,
     spot_no: null,
-    comm_guest: "yes",
+    comm_guest: req.body.name || "yes",
     comm_content: req.body.comment_content,
-    comm_email: null,
+    comm_email: req.body.email || null,
     comm_ip: null,
-    comm_date: moment().format("YYYY-MM-DD HH:MM:SS")
+    comm_date: moment().format()
   };
 
   publicIp.v4().then(ip => {

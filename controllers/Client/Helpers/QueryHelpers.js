@@ -38,8 +38,12 @@ exports.estab_get_single = id => {
   WHERE establistments.estab_no = ${id}`;
 };
 
-exports.estab_comments = id => {
-  return `SELECT user_no, estab_no, comm_guest, comm_content, comm_date FROM comments WHERE estab_no = ${id} ORDER BY comm_date DESC`;
+exports.estab_count_comments = (id) => {
+  return `SELECT COUNT(*) as total FROM comments WHERE estab_no = ${id} AND (comm_inactive=0 AND comm_delete=0)`;
+}
+
+exports.estab_comments = (id, start, end) => {
+  return `SELECT user_no, estab_no, comm_guest, comm_content, comm_date FROM comments WHERE estab_no = ${id} AND (comm_inactive=0 AND comm_delete=0) ORDER BY comm_date DESC LIMIT ${start}, ${end}`;
 }
 
 exports.spot_get_all_query = sc_no => {
