@@ -75,3 +75,7 @@ exports.restaurant_comments = (req, res) => {
     });
   });
 };
+
+exports.restaurant_ratings = (req, res) => {
+
+};
