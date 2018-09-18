@@ -14,6 +14,7 @@ publicIp.v4().then(ip => {
 });
 
 exports.get_all_Restaurant = (req, res) => {
+  let userDetail = req.user || '';
   db.query(estab_get_all_query(1), (err, rows) => {
     if (err) {
       throw err;
@@ -21,12 +22,14 @@ exports.get_all_Restaurant = (req, res) => {
     res.render("Client/Restaurant", {
       rows: rows,
       pageTitle: "Restaurants in Abra",
-      route: "restaurant"
+      route: "restaurant",
+      userDetail: userDetail 
     });
   });
 };
 
 exports.restaurant_View = (req, res) => {
+  let userDetail = req.user || '';
   let current_page = req.query.page || 1;
   let items_per_page = 4;
   let start_index = (current_page - 1) * items_per_page;
@@ -35,7 +38,6 @@ exports.restaurant_View = (req, res) => {
     if (err) {
       throw err;
     }
-
     db.query(estab_count_comments(id), (errs, total_items) => {
       if (errs) { throw errs; }
 
@@ -62,7 +64,8 @@ exports.restaurant_View = (req, res) => {
               moment: moment,
               comments: comments,
               pageTitle: "Restaurant Information",
-              route: "restaurant"
+              route: "restaurant",
+              userDetail: userDetail 
             });
           });
         });
@@ -76,9 +79,9 @@ exports.restaurant_comments = (req, res) => {
   let data = {
     estab_no: req.params.restaurant_id,
     spot_no: null,
-    comm_guest: req.body.name || "yes",
+    comm_guest: req.body.name || req.user.user_lname + ', ' + req.user.user_fname || "yes",
     comm_content: req.body.comment_content,
-    comm_email: req.body.email || null,
+    comm_email: req.body.email || req.user.user_email || null,
     comm_ip: null,
     comm_date: moment().format()
   };

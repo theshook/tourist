@@ -5,15 +5,7 @@ const bodyParser = require("body-parser");
 const passport = require("passport");
 let favicon = require("serve-favicon");
 let path = require("path");
-
-// const publicIp = require("public-ip");
-
-// publicIp.v4().then(ip => {
-//   console.log(ip);
-//   //=> '46.5.21.123'
-// });
-
-// configuration ============================================================
+let flash=require("connect-flash");
 
 // Favicon ==================================================================
 app.use(favicon(path.join(__dirname, "public", "favicon.ico")));
@@ -31,17 +23,7 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session()); // persistent login sessions
 
-// const googleMapsClient = require('@google/maps').createClient({
-//   key: 'AIzaSyC9v26KPdWkUp9antAALdJ_5cSUjqzUSO0'
-// });
-
-// googleMapsClient.geocode({
-//   address: '1600 Amphitheatre Parkway, Mountain View, CA'
-// }, function(err, response) {
-//   if (!err) {
-//     console.log(response.json.results);
-//   }
-// });
+app.use(flash());
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.set("view engine", "ejs");
@@ -65,26 +47,8 @@ const churchRoutes = require("./routes/Client/Church");
 const beachRoutes = require("./routes/Client/Beach");
 const waterfallRoutes = require("./routes/Client/Waterfall");
 
-
-app.get("/places-to-go", (req, res) => {
-  res.render("places-to-go", { pageTitle: "places-to-go" });
-});
-
-app.get("/things-to-do", (req, res) => {
-  res.render("things-to-do", { pageTitle: "things-to-do" });
-});
-
-app.get("/plan-your-trip", (req, res) => {
-  res.render("plan-your-trip", { pageTitle: "plan-your-trip" });
-});
-
-app.get("/login", (req, res) => {
-  res.render("Client/Login/login", { pageTitle: "Login" });
-});
-
-app.get("/register", (req, res) => {
-  res.render("Client/Register/register", { pageTitle: "Login" });
-});
+const clientRegisterRoutes = require("./routes/Client/RegisterClient");
+const clientLoginRoutes = require("./routes/Client/LoginClient");
 
 app.use("/admin/login", authenticateRoutes);
 app.use("/admin/", dashboardRouters);
@@ -102,6 +66,9 @@ app.use("/hotel", hotelRoutes);
 app.use("/church", churchRoutes);
 app.use("/beach", beachRoutes);
 app.use("/waterfall", waterfallRoutes);
+
+app.use("/register", clientRegisterRoutes);
+app.use("/login", clientLoginRoutes);
 
 // const port = process.env.PORT || 8001;
 
