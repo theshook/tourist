@@ -14,7 +14,7 @@ exports.estab_get_all_query = ec_no => {
   order by estab_no ASC`;
 };
 
-exports.estab_get_single = id => {
+exports.estab_get_single = (id) => {
   return `SELECT 
   establistments.estab_no,
   estab_name,
@@ -35,7 +35,7 @@ exports.estab_get_single = id => {
   INNER JOIN establistments_category ON establistments_category.ec_no = establistments.ec_no
   INNER JOIN barangays ON barangays.bar_no = establistments.bar_no
   INNER JOIN towns ON towns.town_no = establistments.town_no
-  WHERE establistments.estab_no = ${id}`;
+  WHERE establistments.estab_no = '${id}'`;
 };
 
 exports.estab_count_comments = (id) => {
@@ -82,8 +82,8 @@ exports.spot_get_single_query = sc_no => {
   WHERE spots.spot_no=${sc_no}`;
 };
 
-exports.comment_query = (user_no, estab_no, spot_no, comm_guest, comm_content, comm_email, comm_ip, comm_date) => {
-  return `INSERT INTO comments (user_no, estab_no, spot_no, comm_guest, comm_content, comm_email, comm_ip, comm_date) VALUES ('${user_no}', '${estab_no}', '${spot_no}', '${comm_guest}', '${comm_content}', '${comm_email}', '${comm_ip}', '${comm_date}')`;
+exports.comment_query = () => {
+  return `INSERT INTO comments (user_no, estab_no, spot_no, comm_guest, comm_content, comm_email, comm_ip, comm_date) VALUES (?, ?, ?, ?, ?, ?, ?, ?)`;
 };
 
 exports.ratings_query = (user_no, estab_no, spot_no, rating_value, rating_ip, rating_date) => {

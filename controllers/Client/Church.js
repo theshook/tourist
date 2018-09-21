@@ -10,7 +10,7 @@ let {
 
 var ipAddress;
 publicIp.v4().then(ip => {
-  ipAddress = ip;  
+  ipAddress = ip;
 });
 
 exports.get_all_Church = (req, res) => {
@@ -23,7 +23,7 @@ exports.get_all_Church = (req, res) => {
       rows: rows,
       pageTitle: "Churches in Abra",
       route: "church",
-      userDetail: userDetail 
+      userDetail: userDetail
     });
   });
 };
@@ -66,7 +66,7 @@ exports.church_View = (req, res) => {
               comments: comments,
               pageTitle: "Church Information",
               route: "church",
-              userDetail: userDetail 
+              userDetail: userDetail
             });
           });
         });
@@ -80,15 +80,15 @@ exports.church_comments = (req, res) => {
   let data = {
     estab_no: req.params.church_id,
     spot_no: null,
-    comm_guest: req.body.name || "yes",
+    comm_guest: req.body.name || req.user.user_lname + ', ' + req.user.user_fname || "yes",
     comm_content: req.body.comment_content,
-    comm_email: req.body.email || null,
+    comm_email: req.body.email || req.user.user_email || null,
     comm_ip: null,
     comm_date: moment().format()
   };
 
   publicIp.v4().then(ip => {
-    db.query(comment_query(id, data.estab_no, data.spot_no, data.comm_guest, data.comm_content, data.comm_email, ip, data.comm_date), (err, rows) => {
+    db.query(comment_query(), [id, data.estab_no, data.spot_no, data.comm_guest, data.comm_content, data.comm_email, ip, data.comm_date], (err, rows) => {
       if (err) throw err;
       res.redirect(`/church/${data.estab_no}`);
     });
@@ -106,7 +106,7 @@ exports.church_ratings = (req, res) => {
   };
 
   publicIp.v4().then(ip => {
-    db.query(ratings_query(id, data.estab_no, data.spot_no, data.rating_value, ip, data.rating_date), (err,result) => {
+    db.query(ratings_query(id, data.estab_no, data.spot_no, data.rating_value, ip, data.rating_date), (err, result) => {
       if (err) throw err;
       res.redirect(`/church/${data.estab_no}`);
     });
