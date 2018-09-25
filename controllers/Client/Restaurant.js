@@ -10,7 +10,7 @@ let {
 
 var ipAddress;
 publicIp.v4().then(ip => {
-  ipAddress = ip;  
+  ipAddress = ip;
 });
 
 exports.get_all_Restaurant = (req, res) => {
@@ -23,7 +23,7 @@ exports.get_all_Restaurant = (req, res) => {
       rows: rows,
       pageTitle: "Restaurants in Abra",
       route: "restaurant",
-      userDetail: userDetail 
+      userDetail: userDetail
     });
   });
 };
@@ -38,6 +38,7 @@ exports.restaurant_View = (req, res) => {
     if (err) {
       throw err;
     }
+
     db.query(estab_count_comments(id), (errs, total_items) => {
       if (errs) { throw errs; }
 
@@ -45,10 +46,10 @@ exports.restaurant_View = (req, res) => {
 
       db.query(estab_comments(id, start_index, items_per_page), (error, comments) => {
         if (error) { throw error; }
-        
+
         db.query(ratings_check_ip(id, ipAddress), (log_err, isRated) => {
           if (log_err) { throw log_err; }
-          
+
           var rated = (isRated.length >= 1) ? true : false;
 
           db.query(ratings_rate(id), (log_errs, rating) => {
@@ -65,7 +66,7 @@ exports.restaurant_View = (req, res) => {
               comments: comments,
               pageTitle: "Restaurant Information",
               route: "restaurant",
-              userDetail: userDetail 
+              userDetail: userDetail
             });
           });
         });
@@ -87,7 +88,7 @@ exports.restaurant_comments = (req, res) => {
   };
 
   publicIp.v4().then(ip => {
-    db.query(comment_query(id, data.estab_no, data.spot_no, data.comm_guest, data.comm_content, data.comm_email, ip, data.comm_date), (err, rows) => {
+    db.query(comment_query(), [id, data.estab_no, data.spot_no, data.comm_guest, data.comm_content, data.comm_email, ip, data.comm_date], (err, rows) => {
       if (err) throw err;
       res.redirect(`/restaurant/${data.estab_no}`);
     });
@@ -105,7 +106,7 @@ exports.restaurant_ratings = (req, res) => {
   };
 
   publicIp.v4().then(ip => {
-    db.query(ratings_query(id, data.estab_no, data.spot_no, data.rating_value, ip, data.rating_date), (err,result) => {
+    db.query(ratings_query(id, data.estab_no, data.spot_no, data.rating_value, ip, data.rating_date), (err, result) => {
       if (err) throw err;
       res.redirect(`/restaurant/${data.estab_no}`);
     });

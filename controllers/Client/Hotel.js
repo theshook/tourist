@@ -10,7 +10,7 @@ let {
 
 var ipAddress;
 publicIp.v4().then(ip => {
-  ipAddress = ip;  
+  ipAddress = ip;
 });
 
 exports.get_all_Hotel = (req, res) => {
@@ -23,7 +23,7 @@ exports.get_all_Hotel = (req, res) => {
       rows: rows,
       pageTitle: `Hotel in Abra`,
       route: "hotel",
-      userDetail: userDetail 
+      userDetail: userDetail
     });
   });
 };
@@ -38,6 +38,7 @@ exports.hotel_View = (req, res) => {
     if (err) {
       throw err;
     }
+
     db.query(estab_count_comments(id), (errs, total_items) => {
       if (errs) { throw errs; }
 
@@ -65,7 +66,7 @@ exports.hotel_View = (req, res) => {
               comments: comments,
               pageTitle: "Hotel Information",
               route: "hotel",
-              userDetail: userDetail 
+              userDetail: userDetail
             });
           });
         });
@@ -79,15 +80,15 @@ exports.hotel_comments = (req, res) => {
   let data = {
     estab_no: req.params.hotel_id,
     spot_no: null,
-    comm_guest: req.body.name || "yes",
+    comm_guest: req.body.name || req.user.user_lname + ', ' + req.user.user_fname || "yes",
     comm_content: req.body.comment_content,
-    comm_email: req.body.email || null,
+    comm_email: req.body.email || req.user.user_email || null,
     comm_ip: null,
     comm_date: moment().format()
   };
 
   publicIp.v4().then(ip => {
-    db.query(comment_query(id, data.estab_no, data.spot_no, data.comm_guest, data.comm_content, data.comm_email, ip, data.comm_date), (err, rows) => {
+    db.query(comment_query(), [id, data.estab_no, data.spot_no, data.comm_guest, data.comm_content, data.comm_email, ip, data.comm_date], (err, rows) => {
       if (err) throw err;
       res.redirect(`/hotel/${data.estab_no}`);
     });
@@ -105,7 +106,7 @@ exports.hotel_ratings = (req, res) => {
   };
 
   publicIp.v4().then(ip => {
-    db.query(ratings_query(id, data.estab_no, data.spot_no, data.rating_value, ip, data.rating_date), (err,result) => {
+    db.query(ratings_query(id, data.estab_no, data.spot_no, data.rating_value, ip, data.rating_date), (err, result) => {
       if (err) throw err;
       res.redirect(`/hotel/${data.estab_no}`);
     });
