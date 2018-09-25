@@ -79,7 +79,7 @@ exports.church_comments = (req, res) => {
   let id = (req.user == undefined) ? "null" : req.user.user_no;
   let data = {
     estab_no: req.params.church_id,
-    spot_no: null,
+    spot_no: 0,
     comm_guest: req.body.name || req.user.user_lname + ', ' + req.user.user_fname || "yes",
     comm_content: req.body.comment_content,
     comm_email: req.body.email || req.user.user_email || null,
