@@ -7,7 +7,7 @@ router.get('/', (req, res) => {
   if(req.user) {
     res.redirect('/');
   } else {
-     res.render('Client/Login/Login', {pageTitle: 'Login Panel', page: 'Login', message: req.flash('loginMessage')});
+     res.render('Client/Login/login', {pageTitle: 'Login Panel', page: 'Login', message: req.flash('loginMessage')});
   }
 });
 
