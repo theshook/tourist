@@ -11,31 +11,39 @@ exports.esatablishment_view = (req, res) => {
   towns.town_name,
   barangays.bar_name,
   estab_contact,
-  estab_email,
-  establistments_location.el_latitude,
-  establistments_location.el_lontitude,
-  establistments_location.el_route,
-  establistments_photo.image_filename
+  estab_email
   FROM establistments
-  INNER JOIN establistments_photo ON establistments_photo.estab_no = establistments.estab_no
-  INNER JOIN establistments_location ON establistments_location.estab_no = establistments.estab_no
-  INNER JOIN establistments_category ON establistments_category.ec_no = establistments.ec_no
   INNER JOIN barangays ON barangays.bar_no = establistments.bar_no
   INNER JOIN towns ON towns.town_no = establistments.town_no
-  WHERE establistments.estab_no = ?`,
-    [id],
-    (err, rows) => {
-      if (err) {
-        throw err;
-      }
-      res.render("Admin/template", {
-        user: req.user,
-        rows: rows,
-        pageTitle: "Establishment Panel",
-        page: "Establishment/View"
-      });
-    }
-  );
+  WHERE establistments.estab_no = ?`, [id], (info_err, estab_info) => {
+      if (info_err) { throw info_err; }
+
+      db.query(`SELECT 
+        el_latitude, 
+        el_lontitude, 
+        el_route 
+        FROM establistments_location 
+        WHERE establistments_location.estab_no = ?`, [id], (maps_err, estab_maps) => {
+          if (maps_err) { throw maps_err; }
+          db.query(`SELECT 
+          image_filename 
+          FROM establistments_photo 
+          WHERE establistments_photo.estab_no =?`, [id], (images_err, estab_images) => {
+              if (images_err) { throw images_err; }
+              console.log()
+              res.render("Admin/template", {
+                user: req.user,
+                estab_info,
+                el_latitude: estab_maps.length ? estab_maps[0].el_latitude : "N/A",
+                el_lontitude: estab_maps.length ? estab_maps[0].el_lontitude : "N/A",
+                el_route: estab_maps.length ? estab_maps[0].el_route : "N/A",
+                estab_images,
+                pageTitle: "Establishment Panel",
+                page: "Establishment/View"
+              });
+            });
+        });
+    });
 };
 
 exports.establishments_gets_all = (req, res) => {

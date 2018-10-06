@@ -5,14 +5,14 @@
         <div class="card">
           <div class="card-header">
             <h4 class="card-title d-flex justify-content-center">
-              <%= rows[0].estab_name.toUpperCase() %>
+              <%= info_rows[0].estab_name.toUpperCase() %>
             </h4>
           </div>
-          <img src="/uploads/<%= rows[0].image_filename %>" class="card-img-top" alt="Responsive image">
+          <img src="/uploads/<%= images_rows[0].image_filename %>" class="card-img-top" alt="Responsive image">
           <div class="card-footer">
-            <h3>Rating: 
+            <h3>Rating:
               <% if (rating.length > 0) { %>
-                <%= rating[0].RATES %>
+              <%= rating[0].RATES %>
               <% } %>
               <span class="float-right">
                 <%- include('./rating/rating.ejs') %>
@@ -22,25 +22,25 @@
           <div class="card-body">
             <dl class="row">
               <dd class="col-sm-12 lead">
-                <%= rows[0].estab_description %>
+                <%= info_rows[0].estab_description %>
               </dd>
               <dd class="col-sm-12 lead">
-                <%= rows[0].estab_address %>
+                <%= info_rows[0].estab_address %>
               </dd>
               <dd class="col-sm-12 lead">
-                <%= rows[0].town_name %>
+                <%= info_rows[0].town_name %>
               </dd>
               <dd class="col-sm-12 lead">
-                <%= rows[0].bar_name %>
+                <%= info_rows[0].bar_name %>
               </dd>
               <dd class="col-sm-12 lead">
-                <%= rows[0].estab_contact %>
+                <%= info_rows[0].estab_contact %>
               </dd>
               <dd class="col-sm-12 lead">
-                <%= rows[0].estab_email %>
+                <%= info_rows[0].estab_email %>
               </dd>
               <dd class="col-sm-12 lead">
-                <%= rows[0].el_route %>
+                <%= el_route %>
               </dd>
               <dd class="col-sm-12">
                 <div class="col-md-12" id="map" style="height:350px;width:100%;"></div>
@@ -48,14 +48,14 @@
             </dl>
           </div>
           <div class="card-footer text-muted">
-            <% rows.forEach(function(row){ %>
+            <% images_rows.forEach(function(row){ %>
             <img src="/uploads/<%= row.image_filename %>" alt="/uploads/<%= row.image_filename %>" height="200" width="200"
               class="img-thumbnail align-baseline">
             <%	}); %>
           </div>
           <div class="card-body" id="comments">
             <dl class="row">
-              <form id="form-comments" class="form-inline" action="/<%= route %>/<%= rows[0].estab_no %>" method="post">
+              <form id="form-comments" class="form-inline" action="/<%= route %>/<%= info_rows[0].estab_no %>" method="post">
                 <dd class="col-sm-12">
                   <% if (user=="null") { %>
                   <img src="/guest.ico" alt="..." class="rounded-circle" height="32" width="32">
@@ -78,10 +78,9 @@
   </div>
 </section>
 
-<input type="text" class="form-control" name="el_latitude" id="el_latitude" value="<%= rows[0].el_latitude %>" hidden>
+<input type="text" class="form-control" name="el_latitude" id="el_latitude" value="<%= el_latitude %>" hidden>
 
-<input type="text" class="form-control" name="el_longitude" id="el_longitude" value="<%= rows[0].el_lontitude %>"
-  hidden>
+<input type="text" class="form-control" name="el_longitude" id="el_longitude" value="<%= el_lontitude %>" hidden>
 
 
 <script type="text/javascript">

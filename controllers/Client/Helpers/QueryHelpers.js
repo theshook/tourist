@@ -14,7 +14,7 @@ exports.estab_get_all_query = ec_no => {
   order by estab_no ASC`;
 };
 
-exports.estab_get_single = (id) => {
+exports.estab_single_info = (id) => {
   return `SELECT 
   establistments.estab_no,
   estab_name,
@@ -23,19 +23,27 @@ exports.estab_get_single = (id) => {
   towns.town_name,
   barangays.bar_name,
   estab_contact,
-  estab_email,
-  establistments_location.el_latitude,
-  establistments_location.el_lontitude,
-  establistments_location.el_route,
-  establistments_photo.image_filename,
-  establistments_photo.image_isprimary
+  estab_email
   FROM establistments
-  INNER JOIN establistments_photo ON establistments_photo.estab_no = establistments.estab_no
-  INNER JOIN establistments_location ON establistments_location.estab_no = establistments.estab_no
-  INNER JOIN establistments_category ON establistments_category.ec_no = establistments.ec_no
   INNER JOIN barangays ON barangays.bar_no = establistments.bar_no
   INNER JOIN towns ON towns.town_no = establistments.town_no
-  WHERE establistments.estab_no = '${id}'`;
+  WHERE establistments.estab_no = ${id}`;
+};
+
+exports.estab_single_maps = (id) => {
+  return `SELECT 
+  el_latitude, 
+  el_lontitude, 
+  el_route 
+  FROM establistments_location 
+  WHERE establistments_location.estab_no = ${id}`
+};
+
+exports.estab_single_images = (id) => {
+  return `SELECT 
+  image_filename 
+  FROM establistments_photo 
+  WHERE establistments_photo.estab_no = ${id}`
 };
 
 exports.estab_count_comments = (id) => {

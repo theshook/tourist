@@ -2,7 +2,10 @@ const db = require("../../db.js");
 var moment = require("moment");
 const publicIp = require("public-ip");
 let {
-  estab_get_all_query, estab_get_single,
+  estab_get_all_query,
+  estab_single_info,
+  estab_single_maps,
+  estab_single_images,
   comment_query,
   estab_comments, estab_count_comments,
   ratings_check_ip, ratings_query, ratings_rate
@@ -34,44 +37,56 @@ exports.church_View = (req, res) => {
   let items_per_page = 4;
   let start_index = (current_page - 1) * items_per_page;
   let id = req.params.church_id;
-  db.query(estab_get_single(id), (err, rows) => {
+  db.query(estab_single_info(id), (err, info_rows) => {
     if (err) {
       throw err;
     }
 
-    db.query(estab_count_comments(id), (errs, total_items) => {
-      if (errs) { throw errs; }
+    db.query(estab_single_maps(id), (maps_err, maps_rows) => {
+      if (maps_err) { throw maps_err; }
 
-      let total_pages = Math.ceil(total_items[0].total / items_per_page);
+      db.query(estab_single_images(id), (images_err, images_rows) => {
+        if (images_err) { throw images_err; }
 
-      db.query(estab_comments(id, start_index, items_per_page), (error, comments) => {
-        if (error) { throw error; }
+        db.query(estab_count_comments(id), (errs, total_items) => {
+          if (errs) { throw errs; }
 
-        db.query(ratings_check_ip(id, ipAddress), (log_err, isRated) => {
-          if (log_err) { throw log_err; }
+          let total_pages = Math.ceil(total_items[0].total / items_per_page);
 
-          var rated = (isRated.length >= 1) ? true : false;
+          db.query(estab_comments(id, start_index, items_per_page), (error, comments) => {
+            if (error) { throw error; }
 
-          db.query(ratings_rate(id), (log_errs, rating) => {
-            if (log_errs) { throw log_errs; }
-            res.render("Client/Church/view", {
-              rows: rows,
-              id: id,
-              rating: rating,
-              isRated: isRated,
-              rated: rated,
-              total_pages: total_pages,
-              user: req.user == undefined ? "null" : req.user.user_no,
-              moment: moment,
-              comments: comments,
-              pageTitle: "Church Information",
-              route: "church",
-              userDetail: userDetail
+            db.query(ratings_check_ip(id, ipAddress), (log_err, isRated) => {
+              if (log_err) { throw log_err; }
+
+              var rated = (isRated.length >= 1) ? true : false;
+
+              db.query(ratings_rate(id), (log_errs, rating) => {
+                if (log_errs) { throw log_errs; }
+                res.render("Client/Church/view", {
+                  info_rows,
+                  el_latitude: maps_rows.length ? maps_rows[0].el_latitude : "N/A",
+                  el_lontitude: maps_rows.length ? maps_rows[0].el_lontitude : "N/A",
+                  el_route: maps_rows.length ? maps_rows[0].el_route : "N/A",
+                  images_rows,
+                  id: id,
+                  rating: rating,
+                  isRated: isRated,
+                  rated: rated,
+                  total_pages: total_pages,
+                  user: req.user == undefined ? "null" : req.user.user_no,
+                  moment: moment,
+                  comments: comments,
+                  pageTitle: "Church Information",
+                  route: "church",
+                  userDetail: userDetail
+                });
+              });
             });
-          });
+          })
         });
-      });
-    });
+      })
+    })
   });
 };
 
@@ -79,7 +94,7 @@ exports.church_comments = (req, res) => {
   let id = (req.user == undefined) ? "null" : req.user.user_no;
   let data = {
     estab_no: req.params.church_id,
-    spot_no: null,
+    spot_no: 0,
     comm_guest: req.body.name || req.user.user_lname + ', ' + req.user.user_fname || "yes",
     comm_content: req.body.comment_content,
     comm_email: req.body.email || req.user.user_email || null,
@@ -99,7 +114,7 @@ exports.church_ratings = (req, res) => {
   let id = (req.user == undefined) ? "null" : req.user.user_no;
   let data = {
     estab_no: req.params.church_id,
-    spot_no: null,
+    spot_no: 0,
     rating_value: req.body.ratings,
     rating_ip: null,
     rating_date: moment().format()
