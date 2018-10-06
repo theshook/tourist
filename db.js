@@ -6,7 +6,6 @@ let connection = mysql.createConnection({
   password: "tourist",
   database: "bdvelasc_tourist"
 });
-<<<<<<< HEAD
 
 // let connection = mysql.createConnection({
 //   host: "localhost",
@@ -16,15 +15,3 @@ let connection = mysql.createConnection({
 // });
 
 module.exports = connection;
-=======
-
-// let connection = mysql.createConnection({
-//   host: "localhost",
-//   user: "root",
-//   password: "",
-//   database: "tourist"
-// });
-
-
-module.exports = connection;
->>>>>>> f9ae3982749c03350b01644665face9fa0cafe2e
