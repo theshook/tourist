@@ -64,11 +64,10 @@ exports.spot_get_all_query = sc_no => {
   spot_description, 
   spots_photo.img_filename
   FROM spots
-  INNER JOIN spots_photo ON spots_photo.spot_no = spots.spot_no
-  INNER JOIN spots_location ON spots_location.spot_no = spots.spot_no
   INNER JOIN spots_category ON spots_category.sc_no = spots.sc_no
   INNER JOIN barangays ON barangays.bar_no = spots.bar_no
   INNER JOIN towns ON towns.town_no = spots.town_no
+  INNER JOIN spots_photo ON spots_photo.spot_no = spots.spot_no
   WHERE spots_photo.img_isprimary=1 AND
 	spots.sc_no=${sc_no}`;
 };
