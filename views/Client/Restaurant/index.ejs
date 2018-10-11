@@ -3,24 +3,24 @@
 <%- include('../Layout/estabGetAllNavBar') %>
 
 
-  <header class="masthead" style="background-image: url(../img/hotel-header2.jpg);">
-    <div class="container">
-      <div class="intro-text">
-        <div class="intro-heading text-uppercase text-body">Looking for a food in the area?</div>
+<header class="masthead" style="background-image: url(../img/restaurant-header.jpg);">
+  <div class="container">
+    <div class="intro-text">
+      <div class="intro-heading text-uppercase text-white">Looking for a food in the area?</div>
+    </div>
+  </div>
+</header>
+
+<section id="restaurant">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-12 text-center">
+        <h2 class="section-heading text-uppercase">Restaurants</h2>
+        <h3 class="section-subheading text-muted">Lorem ipsum dolor sit amet consectetur.</h3>
       </div>
     </div>
-  </header>
+    <%- include('../Layout/estabGetAll') %>
+  </div>
+</section>
 
-  <section id="restaurant">
-    <div class="container">
-      <div class="row">
-        <div class="col-lg-12 text-center">
-          <h2 class="section-heading text-uppercase">Restaurants</h2>
-          <h3 class="section-subheading text-muted">Lorem ipsum dolor sit amet consectetur.</h3>
-        </div>
-      </div>
-      <%- include('../Layout/estabGetAll') %>
-    </div>
-  </section>
-
-  <%- include('../partials/footer') %>
+<%- include('../partials/footer') %>

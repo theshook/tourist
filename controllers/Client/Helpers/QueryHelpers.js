@@ -1,3 +1,4 @@
+// ESTABLISHMENTS QUERY
 exports.estab_get_all_query = ec_no => {
   return `SELECT 
   establistments.estab_no,
@@ -54,6 +55,7 @@ exports.estab_comments = (id, start, end) => {
   return `SELECT user_no, estab_no, comm_guest, comm_content, comm_date FROM comments WHERE estab_no = ${id} AND (comm_inactive=0 AND comm_delete=0) ORDER BY comm_date DESC LIMIT ${start}, ${end}`;
 }
 
+// *********************************** SPOTS QUERY ************************************ \\
 exports.spot_get_all_query = sc_no => {
   return `SELECT 
   spots.spot_no,
@@ -78,18 +80,46 @@ exports.spot_get_single_query = sc_no => {
   spot_subname,
   spot_description, 
   towns.town_name,
-  barangays.bar_name,
-  spots_photo.img_filename,
-  spots_photo.img_isprimary
+  barangays.bar_name
   FROM spots
-  INNER JOIN spots_photo ON spots_photo.spot_no = spots.spot_no
-  INNER JOIN spots_location ON spots_location.spot_no = spots.spot_no
-  INNER JOIN spots_category ON spots_category.sc_no = spots.sc_no
   INNER JOIN barangays ON barangays.bar_no = spots.bar_no
   INNER JOIN towns ON towns.town_no = spots.town_no
   WHERE spots.spot_no=${sc_no}`;
 };
 
+exports.spot_single_maps = (id) => {
+  return `SELECT 
+  sl_latitude, 
+  sl_lontitude, 
+  sl_route 
+  FROM spots_location 
+  WHERE spots_location.spot_no = ${id}`
+};
+
+exports.spot_single_images = (id) => {
+  return `SELECT 
+  img_filename 
+  FROM spots_photo 
+  WHERE spots_photo.spot_no = ${id}`
+};
+
+exports.spot_count_comments = (id) => {
+  return `SELECT COUNT(*) as total FROM comments WHERE spot_no = ${id} AND (comm_inactive=0 AND comm_delete=0)`;
+}
+
+exports.spot_comments = (id, start, end) => {
+  return `SELECT user_no, estab_no, comm_guest, comm_content, comm_date FROM comments WHERE spot_no = ${id} AND (comm_inactive=0 AND comm_delete=0) ORDER BY comm_date DESC LIMIT ${start}, ${end}`;
+}
+
+exports.spot_ratings_check_ip = (id, ip) => {
+  return `SELECT * FROM ratings WHERE (rating_ip = '${ip}' AND spot_no = '${id}') AND (rating_inactive=0 AND rating_delete=0)`;
+};
+
+exports.spot_ratings_rate = (id) => {
+  return `SELECT round(SUM(rating_value)/COUNT(*), 2) as RATES FROM ratings WHERE spot_no='${id}' AND (rating_inactive=0 AND rating_delete=0) GROUP BY spot_no`;
+};
+
+// Comments, Ratings, And Ip Sections
 exports.comment_query = () => {
   return `INSERT INTO comments (user_no, estab_no, spot_no, comm_guest, comm_content, comm_email, comm_ip, comm_date) VALUES (?, ?, ?, ?, ?, ?, ?, ?)`;
 };

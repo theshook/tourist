@@ -1,0 +1,110 @@
+<section>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12 mx-auto">
+        <div class="card">
+          <div class="card-header">
+            <h4 class="card-title d-flex justify-content-center">
+              <%= info_rows[0].spot_name.toUpperCase() %>
+            </h4>
+          </div>
+          <img src="/uploads/<%= images_rows[0].img_filename %>" class="card-img-top" alt="Responsive image">
+          <div class="card-footer">
+            <h3>Rating:
+              <% if (rating.length > 0) { %>
+              <%= rating[0].RATES %>
+              <% } %>
+              <span class="float-right">
+                <%- include('../rating/rating.ejs') %>
+              </span>
+            </h3>
+          </div>
+          <div class="card-body">
+            <dl class="row">
+              <dd class="col-sm-12 lead">
+                <%= info_rows[0].spot_description %>
+              </dd>
+              <dd class="col-sm-12 lead">
+                <%= info_rows[0].town_name %>
+              </dd>
+              <dd class="col-sm-12 lead">
+                <%= info_rows[0].bar_name %>
+              </dd>
+              <dd class="col-sm-12 lead">
+                <%= sl_route %>
+              </dd>
+              <dd class="col-sm-12">
+                <div class="col-md-12" id="map" style="height:350px;width:100%;"></div>
+              </dd>
+            </dl>
+          </div>
+          <div class="card-footer text-muted">
+            <% images_rows.forEach(function(row){ %>
+            <img src="/uploads/<%= row.img_filename %>" alt="/uploads/<%= row.img_filename %>" height="200" width="200"
+              class="img-thumbnail align-baseline">
+            <%	}); %>
+          </div>
+          <div class="card-body" id="comments">
+            <dl class="row">
+              <form id="form-comments" class="form-inline" action="/<%= route %>/<%= info_rows[0].spot_no %>" method="post">
+                <dd class="col-sm-12">
+                  <% if (user=="null") { %>
+                  <img src="/guest.ico" alt="..." class="rounded-circle" height="32" width="32">
+                  <input type="email" class="form-control" placeholder="Email (Required)" name="email" id="email">
+                  <input type="text" class="form-control" placeholder="Name (Required)" name="name" id="name">
+                  <% } else { %>
+
+                  <% } %>
+                  <textarea class="form-control" id="content" rows="3" cols="90%" name="comment_content"></textarea>
+                  <button class="btn btn-primary float-right" id="comment">Comment</button>
+                </dd>
+              </form>
+            </dl>
+            <hr />
+            <%- include('../comment/comment.ejs') %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<input type="text" class="form-control" name="el_latitude" id="el_latitude" value="<%= sl_latitude %>" hidden>
+
+<input type="text" class="form-control" name="el_longitude" id="el_longitude" value="<%= sl_lontitude %>" hidden>
+
+
+<script type="text/javascript">
+  window.initMap = function () {
+    let dagupan = {
+      lat: parseFloat(document.getElementById('el_latitude').value),
+      lng: parseFloat(document.getElementById('el_longitude').value)
+    };
+    map = new google.maps.Map(document.getElementById('map'), {
+      zoom: 18,
+      center: dagupan
+    });
+
+    var marker = new google.maps.Marker({
+      position: dagupan,
+      map: map
+    });
+  }   
+</script>
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBc7MrXyAOjZ9VAmPCniGxbH5MEn0jpP7Q&callback=initMap"></script>
+
+<script>
+  $(document).ready(function () {
+    $("#form-comments").submit(function (e) {
+      var name = $('#name').val();
+      var email = $('#email').val();
+      var content = $('#content').val();
+
+      // Check if empty of not
+      if (name === '' || email === '' || content === '') {
+        alert('Name, Email and Comment must be filled.');
+        return false;
+      }
+    });
+  });
+</script>

@@ -1,154 +1,161 @@
 <%- include('partials/index') %>
-  <!-- Navigation -->
-  <nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="mainNav">
-    <div class="container">
-      <a class="navbar-brand js-scroll-trigger" href="#page-top">Abra Guide</a>
-      <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive"
-        aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-        Menu
-        <i class="fa fa-bars"></i>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarResponsive">
-        <ul class="navbar-nav text-uppercase ml-auto">
-          <li class="nav-item">
-            <a class="nav-link js-scroll-trigger" href="#services">Services</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link js-scroll-trigger" href="#portfolio">Explore</a>
-          </li>
-          <li class="nav-item">
-            <% if (user == '') {%>
-              <a class="nav-link" href="/login">Sign In</a>
-            <% } else { %>
-              <a class="nav-link" href="/logout">Welcome back <%= user.user_lname %>, <%= user.user_fname %>!</a>
-            <% } %>
-          </li>
-        </ul>
+<!-- Navigation -->
+<nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="mainNav">
+  <div class="container">
+    <a class="navbar-brand js-scroll-trigger" href="#page-top">Abra Guide</a>
+    <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive"
+      aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+      Menu
+      <i class="fa fa-bars"></i>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarResponsive">
+      <ul class="navbar-nav text-uppercase ml-auto">
+        <li class="nav-item">
+          <a class="nav-link js-scroll-trigger" href="#services">Services</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link js-scroll-trigger" href="#portfolio">Explore</a>
+        </li>
+        <li class="nav-item">
+          <% if (user == '') {%>
+          <a class="nav-link" href="/login">Sign In</a>
+          <% } else { %>
+          <a class="nav-link" href="/logout">Welcome back
+            <%= user.user_lname %>,
+            <%= user.user_fname %>!</a>
+          <% } %>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<!-- Header -->
+<header class="masthead">
+  <div class="container">
+    <div class="intro-text">
+      <div class="intro-lead-in">Welcome To Our Website!</div>
+      <div class="intro-heading text-uppercase">Abra Tourist Assistant</div>
+      <!-- <a class="btn btn-primary btn-xl text-uppercase js-scroll-trigger" href="#services">Tell Me More</a> -->
+    </div>
+  </div>
+</header>
+
+<!-- Services -->
+<section id="services">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-12 text-center">
+        <h2 class="section-heading text-uppercase">Services</h2>
+        <h3 class="section-subheading text-muted">Lorem ipsum dolor sit amet consectetur.</h3>
       </div>
     </div>
-  </nav>
-
-  <!-- Header -->
-  <header class="masthead">
-    <div class="container">
-      <div class="intro-text">
-        <div class="intro-lead-in">Welcome To Our Website!</div>
-        <div class="intro-heading text-uppercase">It's Nice To Meet You</div>
-        <!-- <a class="btn btn-primary btn-xl text-uppercase js-scroll-trigger" href="#services">Tell Me More</a> -->
+    <div class="row text-center">
+      <div class="col-md-4">
+        <span class="fa-stack fa-4x">
+          <i class="fa fa-circle fa-stack-2x text-primary"></i>
+          <i class="fa fa-shopping-cart fa-stack-1x fa-inverse"></i>
+        </span>
+        <h4 class="service-heading">E-Commerce</h4>
+        <p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minima maxime quam architecto
+          quo inventore harum ex
+          magni, dicta impedit.</p>
+      </div>
+      <div class="col-md-4">
+        <span class="fa-stack fa-4x">
+          <i class="fa fa-circle fa-stack-2x text-primary"></i>
+          <i class="fa fa-laptop fa-stack-1x fa-inverse"></i>
+        </span>
+        <h4 class="service-heading">Responsive Design</h4>
+        <p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minima maxime quam architecto
+          quo inventore harum ex
+          magni, dicta impedit.</p>
+      </div>
+      <div class="col-md-4">
+        <span class="fa-stack fa-4x">
+          <i class="fa fa-circle fa-stack-2x text-primary"></i>
+          <i class="fa fa-lock fa-stack-1x fa-inverse"></i>
+        </span>
+        <h4 class="service-heading">Web Security</h4>
+        <p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minima maxime quam architecto
+          quo inventore harum ex
+          magni, dicta impedit.</p>
       </div>
     </div>
-  </header>
+  </div>
+</section>
 
-  <!-- Services -->
-  <section id="services">
-    <div class="container">
-      <div class="row">
-        <div class="col-lg-12 text-center">
-          <h2 class="section-heading text-uppercase">Services</h2>
-          <h3 class="section-subheading text-muted">Lorem ipsum dolor sit amet consectetur.</h3>
-        </div>
-      </div>
-      <div class="row text-center">
-        <div class="col-md-4">
-          <span class="fa-stack fa-4x">
-            <i class="fa fa-circle fa-stack-2x text-primary"></i>
-            <i class="fa fa-shopping-cart fa-stack-1x fa-inverse"></i>
-          </span>
-          <h4 class="service-heading">E-Commerce</h4>
-          <p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minima maxime quam architecto quo inventore harum ex
-            magni, dicta impedit.</p>
-        </div>
-        <div class="col-md-4">
-          <span class="fa-stack fa-4x">
-            <i class="fa fa-circle fa-stack-2x text-primary"></i>
-            <i class="fa fa-laptop fa-stack-1x fa-inverse"></i>
-          </span>
-          <h4 class="service-heading">Responsive Design</h4>
-          <p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minima maxime quam architecto quo inventore harum ex
-            magni, dicta impedit.</p>
-        </div>
-        <div class="col-md-4">
-          <span class="fa-stack fa-4x">
-            <i class="fa fa-circle fa-stack-2x text-primary"></i>
-            <i class="fa fa-lock fa-stack-1x fa-inverse"></i>
-          </span>
-          <h4 class="service-heading">Web Security</h4>
-          <p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minima maxime quam architecto quo inventore harum ex
-            magni, dicta impedit.</p>
-        </div>
+<!-- Portfolio Grid -->
+<section class="bg-light" id="portfolio">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-12 text-center">
+        <h2 class="section-heading text-uppercase">Explore the Province</h2>
+        <h3 class="section-subheading text-muted">Lorem ipsum dolor sit amet consectetur.</h3>
       </div>
     </div>
-  </section>
-
-  <!-- Portfolio Grid -->
-  <section class="bg-light" id="portfolio">
-    <div class="container">
-      <div class="row">
-        <div class="col-lg-12 text-center">
-          <h2 class="section-heading text-uppercase">Explore the Province</h2>
-          <h3 class="section-subheading text-muted">Lorem ipsum dolor sit amet consectetur.</h3>
-        </div>
-      </div>
-      <div class="row">
-        <% rows.forEach(function(row){ %>
-          <div class="col-md-4 col-sm-6 portfolio-item">
-            <% if(row.ec_name == 'Restaurant') { %>
-              <a class="portfolio-link" href="/restaurant">
-            <% } else if(row.ec_name == 'Island') { %>
-              <a class="portfolio-link" href="/island">
+    <div class="row">
+      <% rows.forEach(function(row){ %>
+      <div class="col-md-4 col-sm-6 portfolio-item">
+        <% if(row.ec_name == 'Restaurant') { %>
+        <a class="portfolio-link" href="/restaurant">
+          <% } else if(row.ec_name == 'Island') { %>
+          <a class="portfolio-link" href="/island">
             <% } else if(row.ec_name == 'Beach') { %>
-              <a class="portfolio-link" href="/beach">
-            <% } else if(row.ec_name == 'Waterfalls') { %>
-              <a class="portfolio-link" href="/waterfall">
-            <% } else if(row.ec_name == 'Church') { %>
-              <a class="portfolio-link" href="/church">
-            <% } else if(row.ec_name == 'Hotels') { %>
-              <a class="portfolio-link" href="/hotel">
-            <% } %>
-              <div class="portfolio-hover">
-                <div class="portfolio-hover-content">
-                  <% if(row.ec_name == 'Restaurant') { %>
-                    <i class="fa fa-cutlery fa-3x"></i>
-                    <p class="text-muted">Restaurant</p>
-                  <% } else if(row.ec_name == 'Island') { %>
-                    <i class="fa fa-area-chart fa-3x"></i>
-                    <p class="text-muted">Island</p>
-                  <% } else if(row.ec_name == 'Beach') { %>
-                    <i class="fa fa-life-ring fa-3x"></i>
-                    <p class="text-muted">Beach</p>
-                  <% } else if(row.ec_name == 'Waterfalls') { %>
-                    <i class="fa fa-tint fa-3x"></i>
-                    <p class="text-muted">Waterfalls</p>
-                  <% } else if(row.ec_name == 'Church') { %>
-                    <i class="fa fa-bank fa-3x"></i>
-                    <p class="text-muted">Church</p>
-                  <% } else if(row.ec_name == 'Hotels') { %>
-                    <i class="fa fa-hotel fa-3x"></i>
-                    <p class="text-muted">Hotels</p>
-                  <% } %>
-                </div>
-              </div>
-              <% if(row.ec_name == 'Restaurant') { %>
-                <img class="img-fluid" src="restaurant.jpg" alt="" height="300" width="400">
-              <% } else if(row.ec_name == 'Island') { %>
-                <img class="img-fluid" src="island.jpeg" alt="" height="300" width="400">
-              <% } else if(row.ec_name == 'Beach') { %>
-                <img class="img-fluid" src="beach.jpg" alt="" height="300" width="400">
+            <a class="portfolio-link" href="/beach">
               <% } else if(row.ec_name == 'Waterfalls') { %>
-                <img class="img-fluid" src="waterfalls.jpg" alt="" height="300" width="400">
-              <% } else if(row.ec_name == 'Church') { %>
-                <img class="img-fluid" src="church.jpg" alt="" height="300" width="400">
-              <% } else if(row.ec_name == 'Hotels') { %>
-                <img class="img-fluid" src="hotels.jpg" alt="" height="300" width="400">
-              <% } %>
-            </a>
-            <div class="portfolio-caption">
-              <h4><%= row.ec_name %></h4>
-            </div>
-          </div>
-        <%	}); %>
+              <a class="portfolio-link" href="/waterfall">
+                <% } else if(row.ec_name == 'Church') { %>
+                <a class="portfolio-link" href="/church">
+                  <% } else if(row.ec_name == 'Hotels') { %>
+                  <a class="portfolio-link" href="/hotel">
+                    <% } %>
+                    <div class="portfolio-hover">
+                      <div class="portfolio-hover-content">
+                        <% if(row.ec_name == 'Restaurant') { %>
+                        <i class="fa fa-cutlery fa-3x"></i>
+                        <p class="text-muted">Restaurant</p>
+                        <% } else if(row.ec_name == 'Island') { %>
+                        <i class="fa fa-area-chart fa-3x"></i>
+                        <p class="text-muted">Island</p>
+                        <% } else if(row.ec_name == 'Beach') { %>
+                        <i class="fa fa-life-ring fa-3x"></i>
+                        <p class="text-muted">Beach</p>
+                        <% } else if(row.ec_name == 'Waterfalls') { %>
+                        <i class="fa fa-tint fa-3x"></i>
+                        <p class="text-muted">Waterfalls</p>
+                        <% } else if(row.ec_name == 'Church') { %>
+                        <i class="fa fa-bank fa-3x"></i>
+                        <p class="text-muted">Church</p>
+                        <% } else if(row.ec_name == 'Hotels') { %>
+                        <i class="fa fa-hotel fa-3x"></i>
+                        <p class="text-muted">Hotels</p>
+                        <% } %>
+                      </div>
+                    </div>
+                    <% if(row.ec_name == 'Restaurant') { %>
+                    <img class="img-fluid" src="restaurant.jpg" alt="" height="300" width="400">
+                    <% } else if(row.ec_name == 'Island') { %>
+                    <img class="img-fluid" src="island.jpeg" alt="" height="300" width="400">
+                    <% } else if(row.ec_name == 'Beach') { %>
+                    <img class="img-fluid" src="beach.jpg" alt="" height="300" width="400">
+                    <% } else if(row.ec_name == 'Waterfalls') { %>
+                    <img class="img-fluid" src="waterfalls.jpg" alt="" height="300" width="400">
+                    <% } else if(row.ec_name == 'Church') { %>
+                    <img class="img-fluid" src="church.jpg" alt="" height="300" width="400">
+                    <% } else if(row.ec_name == 'Hotels') { %>
+                    <img class="img-fluid" src="hotels.jpg" alt="" height="300" width="400">
+                    <% } %>
+                  </a>
+                  <div class="portfolio-caption">
+                    <h4>
+                      <%= row.ec_name %>
+                    </h4>
+                  </div>
       </div>
+      <%	}); %>
     </div>
-  </section>
+  </div>
+</section>
 
-  <%- include('partials/footer') %>
+<%- include('partials/footer') %>
