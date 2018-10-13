@@ -28,7 +28,6 @@ exports.get_all_Waterfall = (req, res) => {
       if (err) {
         throw err;
       }
-      console.log(rows)
       res.render("Client/Spot/Waterfall", {
         rows: rows,
         pageTitle: "Waterfalls in Abra",

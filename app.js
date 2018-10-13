@@ -50,6 +50,8 @@ const waterfallRoutes = require("./routes/Client/Waterfall");
 const clientRegisterRoutes = require("./routes/Client/RegisterClient");
 const clientLoginRoutes = require("./routes/Client/LoginClient");
 
+const logOut = require("./routes/Logout");
+
 app.use("/admin/login", authenticateRoutes);
 app.use("/admin/", dashboardRouters);
 app.use("/admin/user", userRoutes);
@@ -69,6 +71,7 @@ app.use("/waterfall", waterfallRoutes);
 
 app.use("/register", clientRegisterRoutes);
 app.use("/login", clientLoginRoutes);
+app.use("/logout", logOut);
 
 // const port = process.env.PORT || 8001;
 
