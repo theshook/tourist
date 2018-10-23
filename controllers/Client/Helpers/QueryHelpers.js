@@ -134,3 +134,7 @@ exports.ratings_check_ip = (id, ip) => {
 exports.ratings_rate = (id) => {
   return `SELECT round(SUM(rating_value)/COUNT(*), 2) as RATES FROM ratings WHERE estab_no='${id}' AND (rating_inactive=0 AND rating_delete=0) GROUP BY estab_no`;
 };
+
+// **************************************************************************************************
+// Visited Query
+// **************************************************************************************************
