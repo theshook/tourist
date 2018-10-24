@@ -68,7 +68,7 @@ exports.restaurant_View = (req, res) => {
                   el_latitude: maps_rows.length ? maps_rows[0].el_latitude : "N/A",
                   el_lontitude: maps_rows.length ? maps_rows[0].el_lontitude : "N/A",
                   el_route: maps_rows.length ? maps_rows[0].el_route : "N/A",
-                  images_rows,
+                  images_rows: images_rows.length ? images_rows : "N/A",
                   id: id,
                   rating: rating,
                   isRated: isRated,

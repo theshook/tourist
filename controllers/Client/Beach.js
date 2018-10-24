@@ -67,7 +67,7 @@ exports.beach_View = (req, res) => {
               if (log_err) { throw log_err; }
 
               var rated = (isRated.length >= 1) ? true : false;
-
+              
               db.query(spot_ratings_rate(id), (log_errs, rating) => {
                 if (log_errs) { throw log_errs; }
                 res.render("Client/Spot/Beach/view", {
@@ -75,7 +75,7 @@ exports.beach_View = (req, res) => {
                   sl_latitude: maps_rows.length ? maps_rows[0].sl_latitude : "N/A",
                   sl_lontitude: maps_rows.length ? maps_rows[0].sl_lontitude : "N/A",
                   sl_route: maps_rows.length ? maps_rows[0].sl_route : "N/A",
-                  images_rows,
+                  images_rows: images_rows.length ? images_rows : "N/A",
                   id: id,
                   rating: rating,
                   isRated: isRated,

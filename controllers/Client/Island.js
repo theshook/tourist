@@ -75,7 +75,7 @@ exports.island_View = (req, res) => {
                   sl_latitude: maps_rows.length ? maps_rows[0].sl_latitude : "N/A",
                   sl_lontitude: maps_rows.length ? maps_rows[0].sl_lontitude : "N/A",
                   sl_route: maps_rows.length ? maps_rows[0].sl_route : "N/A",
-                  images_rows,
+                  images_rows: images_rows.length ? images_rows : "N/A",
                   id: id,
                   rating: rating,
                   isRated: isRated,

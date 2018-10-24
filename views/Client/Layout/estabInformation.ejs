@@ -48,10 +48,12 @@
             </dl>
           </div>
           <div class="card-footer text-muted">
-            <% images_rows.forEach(function(row){ %>
-            <img src="/uploads/<%= row.image_filename %>" alt="/uploads/<%= row.image_filename %>" height="200" width="200"
-              class="img-thumbnail align-baseline">
-            <%	}); %>
+            <% if (images_rows !== "N/A") { %> 
+              <% images_rows.forEach(function(row){ %>
+              <img src="/uploads/<%= row.image_filename %>" alt="/uploads/<%= row.image_filename %>" height="200" width="200"
+                class="img-thumbnail align-baseline">
+              <%	}); %>
+            <% } %>
           </div>
           <div class="card-body" id="comments">
             <dl class="row">
