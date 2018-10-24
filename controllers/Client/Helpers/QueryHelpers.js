@@ -1,4 +1,30 @@
 // ESTABLISHMENTS QUERY
+exports.estab_maps = () => {
+  return `SELECT
+  establistments.estab_no as "estab_no",
+  estab_name,
+  estab_description,
+  el_latitude,
+  el_lontitude,
+  el_route,
+  ec_name
+  FROM establistments
+  INNER JOIN establistments_location ON establistments_location.estab_no = establistments.estab_no
+  INNER JOIN establistments_category ON establistments.ec_no = establistments_category.ec_no
+union
+SELECT
+  spots.spot_no as "estab_no",
+  spot_name,
+  spot_description,
+  sl_latitude,
+  sl_lontitude,
+  sl_route,
+  sc_name
+  FROM spots
+  INNER JOIN spots_location ON spots_location.spot_no = spots.spot_no
+  INNER JOIN spots_category ON spots.sc_no = spots_category.sc_no`
+}
+
 exports.estab_get_all_query = ec_no => {
   return `SELECT 
   establistments.estab_no,

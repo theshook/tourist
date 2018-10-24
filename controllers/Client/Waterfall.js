@@ -31,7 +31,7 @@ exports.get_all_Waterfall = (req, res) => {
       res.render("Client/Spot/Waterfall", {
         rows: rows,
         pageTitle: "Waterfalls in Abra",
-        route: "waterfall",
+        route: "Waterfalls",
         userDetail: userDetail
       });
     }
@@ -85,7 +85,7 @@ exports.Waterfall_View = (req, res) => {
                   moment: moment,
                   comments: comments,
                   pageTitle: "Waterfall Information",
-                  route: "waterfall",
+                  route: "Waterfalls",
                   userDetail: userDetail
                 });
               });
@@ -112,7 +112,7 @@ exports.spot_comments = (req, res) => {
   publicIp.v4().then(ip => {
     db.query(comment_query(), [id, data.estab_no, data.spot_no, data.comm_guest, data.comm_content, data.comm_email, ip, data.comm_date], (err, rows) => {
       if (err) throw err;
-      res.redirect(`/waterfall/${data.spot_no}`);
+      res.redirect(`/Waterfalls/${data.spot_no}`);
     });
   });
 };
@@ -130,7 +130,7 @@ exports.spot_ratings = (req, res) => {
   publicIp.v4().then(ip => {
     db.query(ratings_query(id, data.estab_no, data.spot_no, data.rating_value, ip, data.rating_date), (err, result) => {
       if (err) throw err;
-      res.redirect(`/waterfall/${data.spot_no}`);
+      res.redirect(`/Waterfalls/${data.spot_no}`);
     });
   });
 };

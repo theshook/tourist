@@ -25,7 +25,7 @@ exports.get_all_Restaurant = (req, res) => {
     res.render("Client/Restaurant", {
       rows: rows,
       pageTitle: "Restaurants in Abra",
-      route: "restaurant",
+      route: "Restaurants",
       userDetail: userDetail
     });
   });
@@ -78,7 +78,7 @@ exports.restaurant_View = (req, res) => {
                   moment: moment,
                   comments: comments,
                   pageTitle: "Restaurant Information",
-                  route: "restaurant",
+                  route: "Restaurants",
                   userDetail: userDetail
                 });
               });
@@ -105,7 +105,7 @@ exports.restaurant_comments = (req, res) => {
   publicIp.v4().then(ip => {
     db.query(comment_query(), [id, data.estab_no, data.spot_no, data.comm_guest, data.comm_content, data.comm_email, ip, data.comm_date], (err, rows) => {
       if (err) throw err;
-      res.redirect(`/restaurant/${data.estab_no}`);
+      res.redirect(`/Restaurants/${data.estab_no}`);
     });
   });
 };
@@ -123,7 +123,7 @@ exports.restaurant_ratings = (req, res) => {
   publicIp.v4().then(ip => {
     db.query(ratings_query(id, data.estab_no, data.spot_no, data.rating_value, ip, data.rating_date), (err, result) => {
       if (err) throw err;
-      res.redirect(`/restaurant/${data.estab_no}`);
+      res.redirect(`/Restaurants/${data.estab_no}`);
     });
   });
 };

@@ -25,7 +25,7 @@ exports.get_all_Church = (req, res) => {
     res.render("Client/Church", {
       rows: rows,
       pageTitle: "Churches in Abra",
-      route: "church",
+      route: "Church",
       userDetail: userDetail
     });
   });
@@ -78,7 +78,7 @@ exports.church_View = (req, res) => {
                   moment: moment,
                   comments: comments,
                   pageTitle: "Church Information",
-                  route: "church",
+                  route: "Church",
                   userDetail: userDetail
                 });
               });
@@ -105,7 +105,7 @@ exports.church_comments = (req, res) => {
   publicIp.v4().then(ip => {
     db.query(comment_query(), [id, data.estab_no, data.spot_no, data.comm_guest, data.comm_content, data.comm_email, ip, data.comm_date], (err, rows) => {
       if (err) throw err;
-      res.redirect(`/church/${data.estab_no}`);
+      res.redirect(`/Church/${data.estab_no}`);
     });
   });
 };
@@ -123,7 +123,7 @@ exports.church_ratings = (req, res) => {
   publicIp.v4().then(ip => {
     db.query(ratings_query(id, data.estab_no, data.spot_no, data.rating_value, ip, data.rating_date), (err, result) => {
       if (err) throw err;
-      res.redirect(`/church/${data.estab_no}`);
+      res.redirect(`/Church/${data.estab_no}`);
     });
   });
 };

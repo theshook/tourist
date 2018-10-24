@@ -52,6 +52,10 @@ const clientLoginRoutes = require("./routes/Client/LoginClient");
 
 const logOut = require("./routes/Logout");
 
+const aboutUs = require("./routes/Client/About");
+const map = require("./routes/Client/Map");
+const tour = require("./routes/Client/Tour");
+
 app.use("/admin/login", authenticateRoutes);
 app.use("/admin/", dashboardRouters);
 app.use("/admin/user", userRoutes);
@@ -62,16 +66,20 @@ app.use("/admin/establishment", establishmentRoutes);
 app.use("/admin/spot", spotRoutes);
 
 app.use("/", homeRoutes);
-app.use("/restaurant", restaurantRoutes);
-app.use("/island", islandRoutes);
-app.use("/hotel", hotelRoutes);
-app.use("/church", churchRoutes);
-app.use("/beach", beachRoutes);
-app.use("/waterfall", waterfallRoutes);
+app.use("/Restaurants", restaurantRoutes);
+app.use("/Island", islandRoutes);
+app.use("/Hotels", hotelRoutes);
+app.use("/Church", churchRoutes);
+app.use("/Beach", beachRoutes);
+app.use("/Waterfalls", waterfallRoutes);
 
 app.use("/register", clientRegisterRoutes);
 app.use("/login", clientLoginRoutes);
 app.use("/logout", logOut);
+
+app.use("/about", aboutUs);
+app.use("/map", map);
+app.use("/tour", tour);
 
 // const port = process.env.PORT || 8001;
 

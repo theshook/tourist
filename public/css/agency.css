@@ -3,6 +3,17 @@
  * Copyright 2013-2018 Start Bootstrap
  * Licensed under MIT (https://github.com/BlackrockDigital/startbootstrap-agency/blob/master/LICENSE)
  */
+
+ /* Custom CSS */
+.map-window {
+  padding-top: 10%;
+}
+@media (min-width: 768px) {
+  .map-window {
+    padding-top: 4%;
+  }
+}
+
 body {
   overflow-x: hidden;
   font-family: 'Roboto Slab', 'Helvetica Neue', Helvetica, Arial, sans-serif;
