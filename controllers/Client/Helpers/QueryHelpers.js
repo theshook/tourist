@@ -187,3 +187,32 @@ exports.visited_spot = (spot_no, user_no, visit_date) => {
   (${spot_no}, 0, ${user_no}, '${visit_date}');
   `;
 };
+
+// TOP DESTINATIONS
+exports.top_destination_estab = () => {
+  return `SELECT 
+  round(SUM(rating_value)/COUNT(*), 2) as RATES,
+  image_filename,
+  estab_name,
+  ec_name,
+  establistments.estab_no
+  FROM ratings 
+  INNER JOIN establistments_photo ON ratings.estab_no = establistments_photo.estab_no
+  INNER JOIN establistments ON ratings.estab_no = establistments.estab_no
+  INNER JOIN establistments_category ON establistments.ec_no = establistments_category.ec_no
+  WHERE (rating_inactive=0 AND rating_delete=0) AND image_isprimary=1 GROUP BY ratings.estab_no HAVING RATES >= 4`;
+};
+
+exports.top_destination_spot = () => {
+  return `SELECT 
+  round(SUM(rating_value)/COUNT(*), 2) as RATES,
+  img_filename,
+  spot_name,
+  sc_name,
+  spots.spot_no
+  FROM ratings 
+  INNER JOIN spots_photo ON ratings.spot_no = spots_photo.spot_no
+  INNER JOIN spots ON ratings.spot_no = spots.spot_no
+  INNER JOIN spots_category ON spots.sc_no = spots_category.sc_no
+  WHERE (rating_inactive=0 AND rating_delete=0) AND img_isprimary=1 GROUP BY ratings.spot_no HAVING RATES >= 4`;
+}

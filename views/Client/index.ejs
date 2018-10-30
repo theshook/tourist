@@ -95,7 +95,36 @@
         <h2 class="section-heading text-uppercase">Explore the Province</h2>
         <h3 class="section-subheading text-muted">Sighseeing tours,  hotels, restaurants, rivers and waterfalls</h3>
       </div>
+      <!-- Multiple Item in Carousel -->
+      <div class="container-fluid pb-5">
+        <div id="carouselExample" class="carousel slide" data-ride="carousel" data-interval="5000">
+          <div class="carousel-inner row w-100 mx-auto" role="listbox">
+            <% top_estab.forEach(function(estab){ %>
+              <div class="carousel-item col-md-3">
+                <a href="/<%= estab.ec_name %>/<%= estab.estab_no %>">
+                  <img class="img-fluid mx-auto d-block" 
+                    src="<%= estab.image_filename %>" 
+                    alt="<%= estab.estab_name %>"
+                  >
+                </a>
+              </div>
+            <% }); %>
+            <% top_spot.forEach(function(spot){ %>
+              <div class="carousel-item col-md-3">
+                <a href="/<%= spot.sc_name %>/<%= spot.spot_no %>">
+                  <img class="img-fluid mx-auto d-block" 
+                    src="<%= spot.img_filename %>" 
+                    alt="<%= spot.spot_name %>"
+                  >
+                </a>
+              </div>
+            <% }); %>
+          </div>
+        </div>
+      </div>
+      <!-- END -->
     </div>
+    
     <div class="row">
       <% rows.forEach(function(row){ %>
       <div class="col-md-4 col-sm-6 portfolio-item">
