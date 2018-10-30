@@ -25,8 +25,8 @@ exports.get_all_Church = (req, res) => {
     }
     res.render("Client/Church", {
       rows: rows,
-      pageTitle: "Churches in Abra",
-      route: "Church",
+      pageTitle: "Pasalubong / Shopping Center",
+      route: "Pasalubong",
       userDetail: userDetail
     });
   });
@@ -84,8 +84,8 @@ exports.church_View = (req, res) => {
                     user: req.user == undefined ? "null" : req.user.user_no,
                     moment: moment,
                     comments: comments,
-                    pageTitle: "Church Information",
-                    route: "Church",
+                    pageTitle: "Shopping Center Information",
+                    route: "Pasalubong",
                     userDetail: userDetail
                   });
                 });
@@ -113,7 +113,7 @@ exports.church_comments = (req, res) => {
   publicIp.v4().then(ip => {
     db.query(comment_query(), [id, data.estab_no, data.spot_no, data.comm_guest, data.comm_content, data.comm_email, ip, data.comm_date], (err, rows) => {
       if (err) throw err;
-      res.redirect(`/Church/${data.estab_no}`);
+      res.redirect(`/Pasalubong/${data.estab_no}`);
     });
   });
 };
@@ -131,7 +131,7 @@ exports.church_ratings = (req, res) => {
   publicIp.v4().then(ip => {
     db.query(ratings_query(id, data.estab_no, data.spot_no, data.rating_value, ip, data.rating_date), (err, result) => {
       if (err) throw err;
-      res.redirect(`/Church/${data.estab_no}`);
+      res.redirect(`/Pasalubong/${data.estab_no}`);
     });
   });
 };

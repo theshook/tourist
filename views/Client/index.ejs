@@ -34,7 +34,9 @@
 <header class="masthead">
   <div class="container">
     <div class="intro-text">
-      <div class="intro-lead-in">Welcome To Our Website!</div>
+      <div class="intro-lead-in">
+        <input type="text" class="form-control w-50 mx-auto" aria-describedby="SearchHere" placeholder="Search Here...">
+      </div>
       <div class="intro-heading text-uppercase">Abra Tourist Assistant</div>
       <!-- <a class="btn btn-primary btn-xl text-uppercase js-scroll-trigger" href="#services">Tell Me More</a> -->
     </div>
@@ -47,7 +49,7 @@
     <div class="row">
       <div class="col-lg-12 text-center">
         <h2 class="section-heading text-uppercase">Services</h2>
-        <h3 class="section-subheading text-muted">Lorem ipsum dolor sit amet consectetur.</h3>
+        <h3 class="section-subheading text-muted">Abra offers the best for you! Tour PROVIDES  you  the best tourist attractions. Maps will show you how to take you there, and About Us will give you contact details to let you connect with the system administrator</h3>
       </div>
     </div>
     <div class="row text-center">
@@ -58,9 +60,7 @@
             <i class="fa fa-location-arrow fa-stack-1x fa-inverse"></i>
           </span>
           <h4 class="service-heading">Tour</h4>
-          <p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minima maxime quam architecto
-            quo inventore harum ex
-            magni, dicta impedit.</p>
+          <p class="text-muted">Skip pricey bus or walking tours on your next trip instead click this button to let you see tourist attractions in the province. </p>
         </a>
       </div>
       <div class="col-md-4">
@@ -70,9 +70,7 @@
             <i class="fa fa-map fa-stack-1x fa-inverse"></i>
           </span>
           <h4 class="service-heading">Maps</h4>
-          <p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minima maxime quam architecto
-            quo inventore harum ex
-            magni, dicta impedit.</p>
+          <p class="text-muted">How to get there? Use this button to take you there.</p>
         </a>
       </div>
       <div class="col-md-4">
@@ -82,9 +80,7 @@
             <i class="fa fa-info fa-stack-1x fa-inverse"></i>
           </span>
           <h4 class="service-heading">About Us</h4>
-          <p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minima maxime quam architecto
-            quo inventore harum ex
-            magni, dicta impedit.</p>
+          <p class="text-muted">Abra is a province geographically located in the northern archipelago of Luzon particularly on the western side of the Cordillera... Read more</p>
         </a>
       </div>
     </div>
@@ -97,7 +93,7 @@
     <div class="row">
       <div class="col-lg-12 text-center">
         <h2 class="section-heading text-uppercase">Explore the Province</h2>
-        <h3 class="section-subheading text-muted">Lorem ipsum dolor sit amet consectetur.</h3>
+        <h3 class="section-subheading text-muted">Sighseeing tours,  hotels, restaurants, rivers and waterfalls</h3>
       </div>
     </div>
     <div class="row">
@@ -111,8 +107,8 @@
             <a class="portfolio-link" href="/Beach">
               <% } else if(row.ec_name == 'Waterfalls') { %>
               <a class="portfolio-link" href="/Waterfalls">
-                <% } else if(row.ec_name == 'Church') { %>
-                <a class="portfolio-link" href="/Church">
+                <% } else if(row.ec_name == 'Pasalubong') { %>
+                <a class="portfolio-link" href="/Pasalubong">
                   <% } else if(row.ec_name == 'Hotels') { %>
                   <a class="portfolio-link" href="/Hotels">
                     <% } %>
@@ -130,9 +126,9 @@
                         <% } else if(row.ec_name == 'Waterfalls') { %>
                         <i class="fa fa-tint fa-3x"></i>
                         <p class="text-muted">Waterfalls</p>
-                        <% } else if(row.ec_name == 'Church') { %>
+                        <% } else if(row.ec_name == 'Pasalubong') { %>
                         <i class="fa fa-bank fa-3x"></i>
-                        <p class="text-muted">Church</p>
+                        <p class="text-muted">Pasalubong / Shopping Centers</p>
                         <% } else if(row.ec_name == 'Hotels') { %>
                         <i class="fa fa-hotel fa-3x"></i>
                         <p class="text-muted">Hotels</p>
@@ -147,7 +143,7 @@
                     <img class="img-fluid" src="beach.jpg" alt="" height="300" width="400">
                     <% } else if(row.ec_name == 'Waterfalls') { %>
                     <img class="img-fluid" src="waterfalls.jpg" alt="" height="300" width="400">
-                    <% } else if(row.ec_name == 'Church') { %>
+                    <% } else if(row.ec_name == 'Pasalubong') { %>
                     <img class="img-fluid" src="church.jpg" alt="" height="300" width="400">
                     <% } else if(row.ec_name == 'Hotels') { %>
                     <img class="img-fluid" src="hotels.jpg" alt="" height="300" width="400">

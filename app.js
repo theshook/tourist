@@ -69,7 +69,7 @@ app.use("/", homeRoutes);
 app.use("/Restaurants", restaurantRoutes);
 app.use("/Island", islandRoutes);
 app.use("/Hotels", hotelRoutes);
-app.use("/Church", churchRoutes);
+app.use("/Pasalubong", churchRoutes);
 app.use("/Beach", beachRoutes);
 app.use("/Waterfalls", waterfallRoutes);
 
