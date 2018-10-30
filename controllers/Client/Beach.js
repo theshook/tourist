@@ -12,7 +12,8 @@ const {
   spot_ratings_check_ip,
   spot_ratings_rate,
   comment_query,
-  ratings_query
+  ratings_query,
+  visited_spot
 } = require('./Helpers/QueryHelpers');
 
 var ipAddress;
@@ -39,6 +40,8 @@ exports.get_all_beach = (req, res) => {
 };
 
 exports.beach_View = (req, res) => {
+  let user_no = (req.user == undefined) ? 0 : req.user.user_no;
+
   let userDetail = req.user || '';
   let current_page = req.query.page || 1;
   let items_per_page = 4;
@@ -70,23 +73,28 @@ exports.beach_View = (req, res) => {
               
               db.query(spot_ratings_rate(id), (log_errs, rating) => {
                 if (log_errs) { throw log_errs; }
-                res.render("Client/Spot/Beach/view", {
-                  info_rows,
-                  sl_latitude: maps_rows.length ? maps_rows[0].sl_latitude : "N/A",
-                  sl_lontitude: maps_rows.length ? maps_rows[0].sl_lontitude : "N/A",
-                  sl_route: maps_rows.length ? maps_rows[0].sl_route : "N/A",
-                  images_rows: images_rows.length ? images_rows : "N/A",
-                  id: id,
-                  rating: rating,
-                  isRated: isRated,
-                  rated: rated,
-                  total_pages: total_pages,
-                  user: req.user == undefined ? "null" : req.user.user_no,
-                  moment: moment,
-                  comments: comments,
-                  pageTitle: "Beach Information",
-                  route: "Beach",
-                  userDetail: userDetail
+
+                db.query(visited_spot(id, user_no, moment().format()), (visited_errs, visited_res) => {
+                  if( visited_errs ) { throw visited_errs; }
+
+                  res.render("Client/Spot/Beach/view", {
+                    info_rows,
+                    sl_latitude: maps_rows.length ? maps_rows[0].sl_latitude : "N/A",
+                    sl_lontitude: maps_rows.length ? maps_rows[0].sl_lontitude : "N/A",
+                    sl_route: maps_rows.length ? maps_rows[0].sl_route : "N/A",
+                    images_rows: images_rows.length ? images_rows : "N/A",
+                    id: id,
+                    rating: rating,
+                    isRated: isRated,
+                    rated: rated,
+                    total_pages: total_pages,
+                    user: req.user == undefined ? "null" : req.user.user_no,
+                    moment: moment,
+                    comments: comments,
+                    pageTitle: "Beach Information",
+                    route: "Beach",
+                    userDetail: userDetail
+                  });
                 });
               });
             });

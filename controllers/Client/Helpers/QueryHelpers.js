@@ -164,3 +164,26 @@ exports.ratings_rate = (id) => {
 // **************************************************************************************************
 // Visited Query
 // **************************************************************************************************
+exports.visited_estab = (estab_no, user_no, visit_date) => {
+  return `
+  INSERT INTO visited
+  (spot_no,
+  estab_no,
+  user_no,
+  visit_date)
+  VALUES
+  (0, ${estab_no}, ${user_no}, '${visit_date}');
+  `;
+};
+
+exports.visited_spot = (spot_no, user_no, visit_date) => {
+  return `
+  INSERT INTO visited
+  (spot_no,
+  estab_no,
+  user_no,
+  visit_date)
+  VALUES
+  (${spot_no}, 0, ${user_no}, '${visit_date}');
+  `;
+};

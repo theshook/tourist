@@ -8,7 +8,8 @@ let {
   estab_single_images,
   comment_query,
   estab_comments, estab_count_comments,
-  ratings_check_ip, ratings_query, ratings_rate
+  ratings_check_ip, ratings_query, ratings_rate,
+  visited_estab
 } = require("./Helpers/QueryHelpers");
 
 var ipAddress;
@@ -32,6 +33,8 @@ exports.get_all_Church = (req, res) => {
 };
 
 exports.church_View = (req, res) => {
+  let user_no = (req.user == undefined) ? 0 : req.user.user_no;
+
   let userDetail = req.user || '';
   let current_page = req.query.page || 1;
   let items_per_page = 4;
@@ -63,23 +66,28 @@ exports.church_View = (req, res) => {
 
               db.query(ratings_rate(id), (log_errs, rating) => {
                 if (log_errs) { throw log_errs; }
-                res.render("Client/Church/view", {
-                  info_rows,
-                  el_latitude: maps_rows.length ? maps_rows[0].el_latitude : "N/A",
-                  el_lontitude: maps_rows.length ? maps_rows[0].el_lontitude : "N/A",
-                  el_route: maps_rows.length ? maps_rows[0].el_route : "N/A",
-                  images_rows: images_rows.length ? images_rows : "N/A",
-                  id: id,
-                  rating: rating,
-                  isRated: isRated,
-                  rated: rated,
-                  total_pages: total_pages,
-                  user: req.user == undefined ? "null" : req.user.user_no,
-                  moment: moment,
-                  comments: comments,
-                  pageTitle: "Church Information",
-                  route: "Church",
-                  userDetail: userDetail
+
+                db.query(visited_estab(id, user_no, moment().format()), (visited_errs, visited_res) => {
+                  if (visited_errs) { throw visited_errs; }
+
+                  res.render("Client/Church/view", {
+                    info_rows,
+                    el_latitude: maps_rows.length ? maps_rows[0].el_latitude : "N/A",
+                    el_lontitude: maps_rows.length ? maps_rows[0].el_lontitude : "N/A",
+                    el_route: maps_rows.length ? maps_rows[0].el_route : "N/A",
+                    images_rows: images_rows.length ? images_rows : "N/A",
+                    id: id,
+                    rating: rating,
+                    isRated: isRated,
+                    rated: rated,
+                    total_pages: total_pages,
+                    user: req.user == undefined ? "null" : req.user.user_no,
+                    moment: moment,
+                    comments: comments,
+                    pageTitle: "Church Information",
+                    route: "Church",
+                    userDetail: userDetail
+                  });
                 });
               });
             });
