@@ -46,6 +46,7 @@ const hotelRoutes = require("./routes/Client/Hotel");
 const churchRoutes = require("./routes/Client/Church");
 const beachRoutes = require("./routes/Client/Beach");
 const waterfallRoutes = require("./routes/Client/Waterfall");
+const caveRoutes = require("./routes/Client/Cave");
 
 const clientRegisterRoutes = require("./routes/Client/RegisterClient");
 const clientLoginRoutes = require("./routes/Client/LoginClient");
@@ -72,6 +73,7 @@ app.use("/Hotels", hotelRoutes);
 app.use("/Pasalubong", churchRoutes);
 app.use("/River", beachRoutes);
 app.use("/Waterfalls", waterfallRoutes);
+app.use("/Cave", caveRoutes);
 
 app.use("/register", clientRegisterRoutes);
 app.use("/login", clientLoginRoutes);
