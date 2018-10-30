@@ -46,7 +46,7 @@ exports.cave_View = (req, res) => {
   let current_page = req.query.page || 1;
   let items_per_page = 4;
   let start_index = (current_page - 1) * items_per_page;
-  let id = req.params.island_id;
+  let id = req.params.cave_id;
   db.query(spot_get_single_query(id), (err, info_rows) => {
     if (err) {
       throw err;
@@ -108,7 +108,7 @@ exports.spot_comments = (req, res) => {
   let id = (req.user == undefined) ? "null" : req.user.user_no;
   let data = {
     estab_no: 0,
-    spot_no: req.params.island_id,
+    spot_no: req.params.cave_id,
     comm_guest: req.body.name || req.user.user_lname + ', ' + req.user.user_fname || "yes",
     comm_content: req.body.comment_content,
     comm_email: req.body.email || req.user.user_email || null,
@@ -128,7 +128,7 @@ exports.spot_ratings = (req, res) => {
   let id = (req.user == undefined) ? "null" : req.user.user_no;
   let data = {
     estab_no: 0,
-    spot_no: req.params.island_id,
+    spot_no: req.params.cave_id,
     rating_value: req.body.ratings,
     rating_ip: null,
     rating_date: moment().format()
