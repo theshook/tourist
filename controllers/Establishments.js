@@ -53,7 +53,13 @@ exports.establishments_gets_all = (req, res) => {
   let start_index = (current_page - 1) * items_per_page;
 
   db.query(
-    "SELECT COUNT(*) as total FROM establistments WHERE encode_inactive=0 and      encode_delete=0",
+    `SELECT 
+    count(*) as total
+    FROM establistments 
+    INNER JOIN towns ON establistments.town_no = towns.town_no 
+    INNER JOIN barangays ON establistments.bar_no = barangays.bar_no 
+    INNER JOIN establistments_category ON establistments.ec_no = establistments_category.ec_no 
+    WHERE encode_delete=0 AND encode_inactive=0`,
     (err, total_items) => {
       if (err) {
         throw err;
@@ -61,7 +67,7 @@ exports.establishments_gets_all = (req, res) => {
 
       let total_pages = Math.ceil(total_items[0].total / items_per_page);
       let towns_q = search_towns == null ? null : search_towns;
-
+      console.log(total_items[0].total)
       let query =
         towns_q == null
           ? `SELECT establistments_category.ec_name, 

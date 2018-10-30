@@ -8,7 +8,13 @@ exports.spots_gets_all = (req, res) => {
   let start_index = (current_page - 1) * items_per_page;
 
   db.query(
-    "SELECT COUNT(*) as total FROM spots WHERE spot_inactive=0 AND spot_delete=0",
+    `SELECT 
+    count(*) as total
+    FROM spots 
+    INNER JOIN towns ON spots.town_no = towns.town_no 
+    INNER JOIN barangays ON spots.bar_no = barangays.bar_no 
+    INNER JOIN spots_category ON spots.sc_no = spots_category.sc_no 
+    WHERE spot_delete=0 AND spot_inactive=0`,
     (err, total_items) => {
       if (err) {
         throw err;
