@@ -31,8 +31,8 @@ exports.get_all_island = (req, res) => {
       }
       res.render("Client/Spot/Island", {
         rows: rows,
-        pageTitle: "Island in Abra",
-        route: "Island",
+        pageTitle: "Mountains in Abra",
+        route: "Mountain",
         userDetail: userDetail
       });
     }
@@ -90,8 +90,8 @@ exports.island_View = (req, res) => {
                     user: req.user == undefined ? "null" : req.user.user_no,
                     moment: moment,
                     comments: comments,
-                    pageTitle: "Island Information",
-                    route: "Island",
+                    pageTitle: "Mountain Information",
+                    route: "Mountain",
                     userDetail: userDetail
                   });
                 });
@@ -119,7 +119,7 @@ exports.spot_comments = (req, res) => {
   publicIp.v4().then(ip => {
     db.query(comment_query(), [id, data.estab_no, data.spot_no, data.comm_guest, data.comm_content, data.comm_email, ip, data.comm_date], (err, rows) => {
       if (err) throw err;
-      res.redirect(`/Island/${data.spot_no}`);
+      res.redirect(`/Mountain/${data.spot_no}`);
     });
   });
 };
@@ -137,7 +137,7 @@ exports.spot_ratings = (req, res) => {
   publicIp.v4().then(ip => {
     db.query(ratings_query(id, data.estab_no, data.spot_no, data.rating_value, ip, data.rating_date), (err, result) => {
       if (err) throw err;
-      res.redirect(`/Island/${data.spot_no}`);
+      res.redirect(`/Mountain/${data.spot_no}`);
     });
   });
 };

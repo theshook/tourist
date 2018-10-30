@@ -31,8 +31,8 @@ exports.get_all_beach = (req, res) => {
       }
       res.render("Client/Spot/Beach", {
         rows: rows,
-        pageTitle: "Beach in Abra",
-        route: "Beach",
+        pageTitle: "Rivers in Abra",
+        route: "River",
         userDetail: userDetail
       });
     }
@@ -91,8 +91,8 @@ exports.beach_View = (req, res) => {
                     user: req.user == undefined ? "null" : req.user.user_no,
                     moment: moment,
                     comments: comments,
-                    pageTitle: "Beach Information",
-                    route: "Beach",
+                    pageTitle: "Rivers Information",
+                    route: "River",
                     userDetail: userDetail
                   });
                 });
@@ -120,7 +120,7 @@ exports.spot_comments = (req, res) => {
   publicIp.v4().then(ip => {
     db.query(comment_query(), [id, data.estab_no, data.spot_no, data.comm_guest, data.comm_content, data.comm_email, ip, data.comm_date], (err, rows) => {
       if (err) throw err;
-      res.redirect(`/Beach/${data.spot_no}`);
+      res.redirect(`/River/${data.spot_no}`);
     });
   });
 };
@@ -138,7 +138,7 @@ exports.spot_ratings = (req, res) => {
   publicIp.v4().then(ip => {
     db.query(ratings_query(id, data.estab_no, data.spot_no, data.rating_value, ip, data.rating_date), (err, result) => {
       if (err) throw err;
-      res.redirect(`/Beach/${data.spot_no}`);
+      res.redirect(`/River/${data.spot_no}`);
     });
   });
 };

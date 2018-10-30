@@ -67,10 +67,10 @@ app.use("/admin/spot", spotRoutes);
 
 app.use("/", homeRoutes);
 app.use("/Restaurants", restaurantRoutes);
-app.use("/Island", islandRoutes);
+app.use("/Mountain", islandRoutes);
 app.use("/Hotels", hotelRoutes);
 app.use("/Pasalubong", churchRoutes);
-app.use("/Beach", beachRoutes);
+app.use("/River", beachRoutes);
 app.use("/Waterfalls", waterfallRoutes);
 
 app.use("/register", clientRegisterRoutes);
