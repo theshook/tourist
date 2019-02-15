@@ -1,0 +1,52 @@
+<div class="col-md-12">
+  <div class="card">
+    <div class="card-header card-header-warning">
+      <h3 class="card-title">Spot Table</h3>
+      <p class="card-category"> Hello Admin! Enter new tourist attractions here.</p>
+    </div>
+    <div class="card-body">
+      <div class="table-responsive">
+        <table class="table">
+          <thead class=" text-primary">
+            <tr>
+              <th>Name</th>
+              <th>Sub Name</th>
+              <th>Description</th>
+              <th>Town</th>
+              <th>Barangay</th>
+              <th class="text-right">Actions</th>
+            </tr>
+          </thead>
+          <% rows.forEach(function(row, index){ %>
+          <tr>
+            <td>
+              <a href="/admin/spot/view/<%= row.spot_no %>">
+                <%= row.spot_name %>
+              </a>
+            </td>
+            <td>
+              <%= row.spot_subname %>
+            </td>
+            <td>
+              <%= row.spot_description %>
+            </td>
+            <td>
+              <%= row.town_name %>
+            </td>
+            <td>
+              <%= row.bar_name %>
+            </td>
+            <td class="td-actions text-right">
+              <a href="/admin/featured/<%= row.spot_no %>/feature/remove" title="Featured!" class="btn btn-success">
+                <i class="fa fa-star"></i>
+              </a>
+            </td>
+          </tr>
+          <%	}); %>
+          <tbody>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

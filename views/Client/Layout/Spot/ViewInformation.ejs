@@ -1,73 +1,220 @@
 <section>
+  <!-- Page Content -->
   <div class="container">
-    <div class="row">
-      <div class="col-md-12 mx-auto">
-        <div class="card">
-          <div class="card-header">
-            <h4 class="card-title d-flex justify-content-center">
-              <%= info_rows[0].spot_name.toUpperCase() %>
-            </h4>
-          </div>
-          <img src="/uploads/<%= images_rows[0].img_filename %>" class="card-img-top" alt="Responsive image">
-          <div class="card-footer">
-            <h3>Rating:
-              <% if (rating.length > 0) { %>
-              <%= rating[0].RATES %>
-              <% } %>
-              <span class="float-right">
-                <%- include('../rating/rating.ejs') %>
-              </span>
-            </h3>
-          </div>
-          <div class="card-body">
-            <dl class="row">
-              <dd class="col-sm-12 lead">
-                <%= info_rows[0].spot_description %>
-              </dd>
-              <dd class="col-sm-12 lead">
-                <%= info_rows[0].town_name %>
-              </dd>
-              <dd class="col-sm-12 lead">
-                <%= info_rows[0].bar_name %>
-              </dd>
-              <dd class="col-sm-12 lead">
-                <%= sl_route %>
-              </dd>
-              <dd class="col-sm-12">
-                <div class="col-md-12" id="map" style="height:350px;width:100%;"></div>
-              </dd>
-            </dl>
-          </div>
-          <div class="card-footer text-muted">
-            <% if (images_rows !== "N/A") { %> 
-              <% images_rows.forEach(function(row){ %>
-                <img src="/uploads/<%= row.img_filename %>" alt="/uploads/<%= row.img_filename %>" height="200" width="200" class="img-thumbnail align-baseline">
-              <%	}); %>
-            <% } %>
-          </div>
-          <div class="card-body" id="comments">
-            <dl class="row">
-              <form id="form-comments" class="form-inline" action="/<%= route %>/<%= info_rows[0].spot_no %>" method="post">
-                <dd class="col-sm-12">
-                  <% if (user=="null") { %>
-                  <img src="/guest.ico" alt="..." class="rounded-circle" height="32" width="32">
-                  <input type="email" class="form-control" placeholder="Email (Required)" name="email" id="email">
-                  <input type="text" class="form-control" placeholder="Name (Required)" name="name" id="name">
-                  <% } else { %>
 
-                  <% } %>
-                  <textarea class="form-control" id="content" rows="3" cols="90%" name="comment_content"></textarea>
-                  <button class="btn btn-primary float-right" id="comment">Comment</button>
-                </dd>
-              </form>
-            </dl>
-            <hr />
-            <%- include('../comment/comment.ejs') %>
-          </div>
-        </div>
+    <!-- Navigation -->
+    <div class="row justify-content-md-center">
+      <div class="row">
+        <div class="col-md-auto">
+          <% cat_res.forEach(function(row){ %>
+          <% if(row.ec_name == 'Festival') { %>
+          <a class="portfolio-link" href="/festival">
+            <% } else if(row.ec_name == 'Nature') { %>
+            <a class="portfolio-link" href="/nature">
+              <% } else if(row.ec_name == 'Pasalubong') { %>
+              <a class="portfolio-link" href="/pasalubong">
+                <% } else if(row.ec_name == 'Transportation') { %>
+                <a class="portfolio-link" href="/transportation">
+                  <% } else if(row.ec_name == 'Banks & Atms') { %>
+                  <a class="portfolio-link" href="/banks">
+                    <% } else if(row.ec_name == 'Restaurant') { %>
+                    <a class="portfolio-link" href="/restaurants">
+                      <% } else if(row.ec_name == 'Ilocano Delicacies') { %>
+                      <a class="portfolio-link" href="/ilocano">
+                        <% } else if(row.ec_name == 'Churches & Structures') { %>
+                        <a class="portfolio-link" href="/church">
+                          <% } else if(row.ec_name == 'Hotels') { %>
+                          <a class="portfolio-link" href="/hotels">
+                            <% } %>
+
+                              <% if(row.ec_name == 'Festival') { %>
+                          <img class="img-fluid mb-3" id="link-hover" src="../...png" alt="" height="50" width="70">
+                          <% } else if(row.ec_name == 'Nature') { %>
+                          <img class="img-fluid mb-3" id="link-hover" src="../.....png" alt="" height="50" width="70">
+                          <% } else if(row.ec_name == 'Pasalubong') { %>
+                          <img class="img-fluid mb-3" id="link-hover" src="../....png" alt="" height="50" width="70">
+                          <% } else if(row.ec_name == 'Transportation') { %>
+                          <img class="img-fluid mb-3" id="link-hover" src="../...png" alt="" height="50"
+                            width="70">
+                          <% } else if(row.ec_name == 'Banks & Atms') { %>
+                          <img class="img-fluid mb-3" id="link-hover" src="../...png" alt="" height="50" width="70">
+                          <% } else if(row.ec_name == 'Restaurant') { %>
+                          <img class="img-fluid mb-3" id="link-hover" src="../..png" alt="" height="50"
+                            width="70">
+                          <% } else if(row.ec_name == 'Ilocano Delicacies') { %>
+                          <img class="img-fluid mb-3" id="link-hover" src="../...png" alt="" height="50"
+                            width="70">
+                          <% } else if(row.ec_name == 'Churches & Structures') { %>
+                          <img class="img-fluid mb-3" id="link-hover" src="../...jpg" alt="" height="50" width="70">
+                          <% } else if(row.ec_name == 'Hotels') { %>
+                          <img class="img-fluid mb-3" id="link-hover" src="../...png" alt="" height="50" width="70">
+
+                          <% } %>
+
+                        </a>
+                        <%  }); %>
       </div>
     </div>
-  </div>
+
+    <!-- Portfolio Item Heading -->
+    <!-- <div class="row">
+        <div class="col-md-12">
+          <h1 class="my-4">
+            <%= info_rows[0].spot_name.toUpperCase() %>
+          </h1>
+        </div>
+      </div> -->
+
+    <!-- Portfolio Item Row -->
+    <div class="row">
+      <% if (user=="null") { %>
+      <div class="col-md-8 offset-md-2">
+        <% } %>
+        <% if (user!="null") { %>
+        <div class="col-md-8">
+          <% } %>
+          <div class="card">
+            <!-- Title -->
+            <div class="card-header">
+              <h4 class="card-title d-flex justify-content-center">
+                <%= info_rows[0].spot_name.toUpperCase() %>
+              </h4>
+            </div>
+            <!-- Carousel -->
+            <div id="carouselExampleFade" class="carousel slide carousel-fade" data-ride="carousel">
+              <div class="carousel-inner">
+                <% if (images_rows !== "N/A") { %>
+                <% images_rows.forEach(function(row, index) { %>
+                <div class="carousel-item <% if (index == 0) { %> active <% } %>">
+                  <img class="d-block w-100" src="/uploads/<%= row.img_filename %>" alt="/uploads/<%= row.img_filename %>"
+                    height="350">
+                </div>
+                <%  }); %>
+                <% } %>
+              </div>
+              <a class="carousel-control-prev" href="#carouselExampleFade" role="button" data-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="sr-only">Previous</span>
+              </a>
+              <a class="carousel-control-next" href="#carouselExampleFade" role="button" data-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="sr-only">Next</span>
+              </a>
+            </div>
+            <!-- Rating -->
+            <div class="card-footer">
+              <h3>Rating:
+                <% if (rating.length > 0) { %>
+                <%= rating[0].RATES %>
+                <% } %>
+                <span class="float-right">
+                  <%- include('../rating/rating.ejs') %>
+                </span>
+              </h3>
+            </div>
+            <!-- Information -->
+            <div class="card-body">
+              <dl class="row">
+                <dd class="col-sm-12 lead">
+                  <%= info_rows[0].spot_description %>
+                </dd>
+                <dd class="col-sm-12 lead">
+                  <%= info_rows[0].town_name %>
+                </dd>
+                <dd class="col-sm-12 lead">
+                  <%= info_rows[0].bar_name %>
+                </dd>
+                <dd class="col-sm-12 lead">
+                  <%= sl_route %>
+                </dd>
+                <dd class="col-sm-12">
+                  <div class="col-md-12" id="map" style="height:350px;width:100%;"></div>
+                </dd>
+              </dl>
+            </div>
+            <!-- Comments -->
+            <div class="card-footer">
+              <!-- Comments -->
+              <div class="row">
+                <div class="col-md-12">
+                  <form id="form-comments" class="form-inline" action="/<%= route %>/<%= info_rows[0].spot_no %>"
+                    method="post">
+
+                    <% if (user=="null") { %>
+                    <img src="/guest.ico" alt="..." class="rounded-circle" height="32" width="32">
+                    <input type="email" class="form-control" placeholder="Email (Required)" name="email" id="email">
+                    <input type="text" class="form-control" placeholder="Name (Required)" name="name" id="name">
+                    <% } %>
+                </div>
+              </div>
+              <!-- Comment Input -->
+              <div class="row">
+                <div class="col-md-12">
+                  <textarea class="form-control" id="content" rows="3" style="min-width: 100%" name="comment_content"></textarea>
+                </div>
+              </div>
+              <!-- Comment Submit -->
+              <div class="row">
+                <div class="col-md-12">
+                  <button class="btn btn-primary float-right" id="comment">Comment</button>
+                  </form>
+                </div>
+              </div>
+              <hr>
+              <!-- Comment Output -->
+              <%- include('../comment/comment.ejs') %>
+            </div>
+          </div>
+        </div>
+        <!-- Related Projects Row -->
+        <div class="col-md-4">
+          <% if (user!="null") { %>
+           <h4 class="section-heading text-uppercase">Just For You</h4>
+          <div class="row">
+            <% user_recon.forEach(function(recon) { %>
+            <div class="col-md-12 mt-3">
+              <div class="card">
+                <a href="/<%= recon.sc_name %>/<%= recon.spot_no %>">
+                  <img class="img-fluid rounded" style="height:200px; width:400px;" src="/uploads/<%= recon.img_filename %>"
+                    onerror="if (this.src != 'error.jpg') this.src = '/uploads/default.png';" alt="/uploads/default.png">
+                </a>
+                <div class="card-footer pt-0 mt-0 pb-0 mt-0">
+                  <p class="text-truncate mb-0 pb-0">
+                    <%= recon.spot_name %>
+                  </p>
+                  <p class="mb-0 pb-0">Rating:
+                    <%= recon.RATES %>
+                  </p>
+                </div>
+              </div>
+            </div>
+            <% }); %>
+
+            <% userReconEstab.forEach(function(recon) { %>
+            <div class="col-md-12 mt-3">
+              <div class="card">
+                <a href="/<%= recon.ec_name %>/<%= recon.estab_no %>">
+                  <img class="img-fluid rounded" style="height:200px; width:400px;" src="/uploads/<%= recon.image_filename %>"
+                    onerror="if (this.src != 'error.jpg') this.src = '/uploads/default.png';" alt="<%= recon.estab_name %>">
+                </a>
+                <div class="card-footer pt-0 mt-0 pb-0 mt-0">
+                  <p class="text-truncate mb-0 pb-0">
+                    <%= recon.estab_name %>
+                  </p>
+                  <p class="mb-0 pb-0">Rating:
+                    <%= recon.RATES %>
+                  </p>
+                </div>
+              </div>
+            </div>
+            <% }); %>
+          </div>
+          <% } %>
+        </div>
+      </div>
+      <!-- /.row -->
+    </div>
+    <!-- /.container -->
 </section>
 
 <input type="text" class="form-control" name="el_latitude" id="el_latitude" value="<%= sl_latitude %>" hidden>

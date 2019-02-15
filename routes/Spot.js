@@ -5,10 +5,10 @@ const isLoggedIn = require("../isLoggedIn");
 let multer = require("multer");
 
 const storage = multer.diskStorage({
-  destination: function(req, file, cb) {
+  destination: function (req, file, cb) {
     cb(null, "./public/uploads");
   },
-  filename: function(req, file, cb) {
+  filename: function (req, file, cb) {
     cb(null, new Date().toISOString().replace(/:/g, "-") + file.originalname);
   }
 });
@@ -63,5 +63,10 @@ router.post(
 // Edit/Update information of Spot
 router.get("/:spot_no", isLoggedIn, spotController.spots_edit);
 router.post("/:spot_no", isLoggedIn, spotController.spots_update);
+
+// DELETE
+router.post('/delete/:spot_no', isLoggedIn, spotController.establishment_delete)
+
+router.get("/:spot_no/feature", isLoggedIn, spotController.add_featured)
 
 module.exports = router;

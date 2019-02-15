@@ -1,5 +1,5 @@
 <!-- Navigation -->
-<nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="mainNav">
+<nav class="navbar navbar-expand-lg navbar-dark fixed-top pt-0 pb-0" style="background-color: #212529;" id="mainNav">
   <div class="container">
     <a class="navbar-brand js-scroll-trigger" href="/">Abra Guide</a>
     <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive"
@@ -17,10 +17,18 @@
           <% if (userDetail == '') {%>
           <a class="nav-link" href="/login">Sign In</a>
           <% } else { %>
-          <a class="nav-link" href="/logout">Welcome back
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+            aria-haspopup="true" aria-expanded="false">
+            Welcome back
             <%= userDetail.user_lname %>,
-            <%= userDetail.user_fname %>!</a>
-          <% } %>
+            <%= userDetail.user_fname %>!
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <a class="dropdown-item" href="/logout">Logout</a>
+          </div>
+        </li>
+        <% } %>
         </li>
       </ul>
     </div>

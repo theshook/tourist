@@ -10,10 +10,11 @@ let connection = mysql.createPool({
 
 
 // let connection = mysql.createConnection({
-//   host: "localhost",
-//   user: "root",
-//   password: "",
-//   database: "tourist"
+//   host: "bstech-solutions.com",
+//   port: 3306,
+//   user: "bdvelasc_tourist",
+//   password: "tourist",
+//   database: "bdvelasc_tourist"
 // });
 
 module.exports = connection;

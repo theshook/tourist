@@ -1,0 +1,206 @@
+<%- include('../partials/index') %>
+<!-- Navigation -->
+<nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="mainNav" style="background-color: #212529; padding-top:0px; padding-bottom: 0px;">
+  <div class="container">
+    <a class="navbar-brand js-scroll-trigger" href="/">Abra Travel Guide</a>
+    <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive"
+      aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+      Menu
+      <i class="fa fa-bars"></i>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarResponsive">
+      <ul class="navbar-nav text-uppercase ml-auto">
+        <li class="nav-item">
+          <a class="nav-link js-scroll-trigger" href="/#services">Services</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link js-scroll-trigger" href="/#portfolio">Explore</a>
+        </li>
+        <li class="nav-item">
+          <% if (userDetail == '') {%>
+          <a class="nav-link" href="/login">Sign In</a>
+          <% } else { %>
+          <a class="nav-link" href="/logout">Welcome back
+            <%= userDetail.user_lname %>,
+            <%= userDetail.user_fname %>!</a>
+          <% } %>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<section id="services">
+  <div class="container">
+    <!-- Title -->
+    <div class="row">
+      <div class="col-lg-12 text-center">
+        <h2 class="section-heading text-uppercase">Tour</h2>
+        <h3 class="section-subheading text-muted">Lorem ipsum dolor sit amet consectetur.</h3>
+      </div>
+    </div>
+    <!-- Selected -->
+    <div class="row">
+      <div class="col-md-12">
+        <h2 class="section-heading text-uppercase">
+          <%= days %>
+        </h2>
+      </div>
+    </div>
+    <!-- Select Attractions -->
+    <div class="row">
+      <div class="col-md-4 jumbotron">
+        <% for(var i=1; i <= numSelect; i++) { %>
+        <div class="form-group mx-sm-3 mb-2">
+          <form method="GET" action="/tour/details/">
+            <select class="form-control" id="attraction<%= i %>" name="attraction<%= i %>">
+              <% rows.forEach(function(row) { %>
+              <option value="<%= row.estab_name %>">
+                <%=row.estab_name%>
+              </option>
+              <% });%>
+            </select>
+          </form>
+        </div>
+        <% } %>
+      </div>
+      <div class="col-md-8" id="map" style="height:436px;width:100%;">
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  var establisments;
+  var estabMarker;
+
+  $("#attraction1").change(function () {
+    $.ajax({
+      type: 'POST',
+      data: $(this).val(),
+      contentType: 'application/json',
+      url: 'http://localhost:8080/tour/details/1/' + $(this).val(),
+      success: function (data) {
+        establisments = JSON.parse(data);
+        estabMarker = establisments.map(
+          estabs => ({ lat: estabs.el_latitude, lng: estabs.el_lontitude }));
+        drop();
+        console.log(markers)
+        // $("#bar_no").empty();
+        // $.each(JSON.parse(data), function (i, value) {
+        //   $('#bar_no').append($('<option>').text(value.bar_name).attr('value', value.bar_no));
+        // });
+      }
+    });
+  });
+
+  $("#attraction2").change(function () {
+    $.ajax({
+      type: 'POST',
+      data: $(this).val(),
+      contentType: 'application/json',
+      url: 'http://localhost:8080/tour/details/2/' + $(this).val(),
+      success: function (data) {
+        establisments = JSON.parse(data);
+        estabMarker = establisments.map(
+          estabs => ({ lat: estabs.el_latitude, lng: estabs.el_lontitude }));
+        drop();
+        // $("#bar_no").empty();
+        // $.each(JSON.parse(data), function (i, value) {
+        //   $('#bar_no').append($('<option>').text(value.bar_name).attr('value', value.bar_no));
+        // });
+      }
+    });
+  });
+
+  $("#attraction3").change(function () {
+    $.ajax({
+      type: 'POST',
+      data: $(this).val(),
+      contentType: 'application/json',
+      url: 'http://localhost:8080/tour/details/3/' + $(this).val(),
+      success: function (data) {
+        establisments = JSON.parse(data);
+        estabMarker = establisments.map(
+          estabs => ({ lat: estabs.el_latitude, lng: estabs.el_lontitude }));
+        drop();
+        // $("#bar_no").empty();
+        // $.each(JSON.parse(data), function (i, value) {
+        //   $('#bar_no').append($('<option>').text(value.bar_name).attr('value', value.bar_no));
+        // });
+      }
+    });
+  });
+
+  // Maps
+  var markers = [];
+  var map;
+  var infowindow;
+  function initMap() {
+    map = new google.maps.Map(document.getElementById('map'), {
+      zoom: 10,
+      center: { lat: 17.5951, lng: 120.7983 }
+    });
+    infowindow = new google.maps.InfoWindow();
+  }
+
+  function drop() {
+    for (var i = 0; i < estabMarker.length; i++) {
+      addMarkerWithTimeout(
+        estabMarker[i],
+        i * 200,
+        establisments[i].estab_name.toString(),
+        establisments[i].estab_no,
+        establisments[i].ec_name,
+        establisments[i].image_filename);
+    }
+  }
+
+  function addMarkerWithTimeout(position, timeout, name, estab_no, ec_name, image_filename) {
+    window.setTimeout(function () {
+      marker = new google.maps.Marker({
+        position: position,
+        map: map,
+        title: name,
+        animation: google.maps.Animation.DROP
+      });
+
+      var content = `
+        <div class="container">
+          <div class="row">
+            <div class="col-md-12 mx-auto">
+              <h4 class="card-title d-flex justify-content-center">
+                <a href="/${ec_name}/${estab_no}">${name}
+              </h4>
+              <dl class="row">
+                <dd class="col-sm-12 lead">
+                  <img src="/uploads/${image_filename}" style="height:200px; width:400px;" alt="${image_filename}" >
+                </a>
+                </dd>
+              </dl>
+            </div>
+          </div>
+        </div>
+      `;
+
+      google.maps.event.addListener(marker, "click", (function (marker) {
+        return function (evt) {
+          infowindow.setContent(content);
+          infowindow.open(map, marker);
+        }
+      })(marker));
+
+      markers.push(marker);
+    }, timeout);
+  }
+
+  function clearMarkers() {
+    for (var i = 0; i < markers.length; i++) {
+      markers[i].setMap(null);
+    }
+    markers = [];
+  }
+</script>
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBc7MrXyAOjZ9VAmPCniGxbH5MEn0jpP7Q&callback=initMap"></script>
+<%- include('../partials/footer') %>

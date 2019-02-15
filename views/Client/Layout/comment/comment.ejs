@@ -1,5 +1,5 @@
 <% if (comments.length > 0) { %>
-<dl class="row">
+<div class="col-md-12">
   <div class="card w-100">
     <ul class="list-group list-group-flush">
       <% comments.forEach(function(comment){ %>
@@ -23,25 +23,25 @@
       <%	}); %>
     </ul>
   </div>
-</dl>
+  <nav aria-label="Page navigation example">
+    <ul class="pagination justify-content-center">
+      <li class="page-item">
+        <a class="page-link" href="/<%= route %>/<%= id %>/" aria-label="Previous">
+          <span aria-hidden="true">&laquo;</span>
+          <span class="sr-only">Previous</span>
+        </a>
+      </li>
+      <% for(var i=1; i <= total_pages; i++){ %>
+      <li class="page-item"><a class="page-link" href="/<%= route %>/<%= id %>/?page=<%= i %>#comments">
+          <%= i %></a></li>
+      <% } %>
+      <li class="page-item">
+        <a class="page-link" href="/<%= route %>/<%= id %>/?page=<%= total_pages %>" aria-label="Next">
+          <span aria-hidden="true">&raquo;</span>
+          <span class="sr-only">Next</span>
+        </a>
+      </li>
+    </ul>
+  </nav>
+</div>
 <% } %>
-<nav aria-label="Page navigation example">
-  <ul class="pagination justify-content-center">
-    <li class="page-item">
-      <a class="page-link" href="/<%= route %>/<%= id %>/" aria-label="Previous">
-        <span aria-hidden="true">&laquo;</span>
-        <span class="sr-only">Previous</span>
-      </a>
-    </li>
-    <% for(var i=1; i <= total_pages; i++){ %>
-    <li class="page-item"><a class="page-link" href="/<%= route %>/<%= id %>/?page=<%= i %>#comments">
-        <%= i %></a></li>
-    <% } %>
-    <li class="page-item">
-      <a class="page-link" href="/<%= route %>/<%= id %>/?page=<%= total_pages %>" aria-label="Next">
-        <span aria-hidden="true">&raquo;</span>
-        <span class="sr-only">Next</span>
-      </a>
-    </li>
-  </ul>
-</nav>

@@ -1,5 +1,6 @@
 const db = require("../db.js");
 var moment = require("moment");
+var nl2br = require('nl2br');
 
 exports.esatablishment_view = (req, res) => {
   let id = req.params.estab_no;
@@ -51,6 +52,7 @@ exports.establishments_gets_all = (req, res) => {
   let current_page = req.query.page || 1;
   let items_per_page = 4;
   let start_index = (current_page - 1) * items_per_page;
+  var msg = req.query.msg || null;
 
   db.query(
     `SELECT 
@@ -117,7 +119,8 @@ exports.establishments_gets_all = (req, res) => {
           total_pages: total_pages,
           rows: rows,
           pageTitle: "Establishment Panel",
-          page: "Establishment/establishment"
+          page: "Establishment/establishment",
+          msg
         });
       });
     }
@@ -161,7 +164,7 @@ exports.establishments_create = (req, res) => {
       data.town_no,
       data.bar_no,
       data.estab_name,
-      data.desc,
+      nl2br(data.desc),
       data.address,
       data.contact,
       data.email,
@@ -391,7 +394,7 @@ exports.establishments_update = (req, res) => {
       data.town_no,
       data.bar_no,
       data.estab_name,
-      data.desc,
+      nl2br(data.desc),
       data.address,
       data.contact,
       data.email,
@@ -441,3 +444,32 @@ exports.establishment_delete = (req, res) => {
     }
   );
 };
+
+exports.add_featured = (req, res) => {
+  let data = req.params.estab_no;
+  let date = moment().format("YYYY-MM-DD HH:MM:SS");
+  let user = req.user.user_no;
+  db.query(`SELECT estab_no FROM featured WHERE estab_no = ?`, [data], (serr, srows) => {
+
+    if (srows.length != 0) {
+      res.redirect("/admin/establishment/?msg=" + encodeURIComponent('error'));
+    } else {
+      db.query(`SELECT count(*) AS total FROM featured`, (count_err, count_rows) => {
+
+        if (count_rows[0].total < 5) {
+          db.query(
+            `INSERT INTO featured 
+            (estab_no, featured_encode, featured_encode_date) 
+            values (?, ?, ?)`,
+            [data, user, date],
+            (err, rows) => {
+              if (err) { throw err; }
+              res.redirect("/admin/establishment?msg=" + encodeURIComponent('success'));
+            });
+        } else {
+          res.redirect("/admin/establishment/?msg=" + encodeURIComponent('error'));
+        }
+      });
+    }
+  });
+}

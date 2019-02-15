@@ -5,7 +5,7 @@ const bodyParser = require("body-parser");
 const passport = require("passport");
 let favicon = require("serve-favicon");
 let path = require("path");
-let flash=require("connect-flash");
+let flash = require("connect-flash");
 
 // Favicon ==================================================================
 app.use(favicon(path.join(__dirname, "public", "favicon.ico")));
@@ -38,15 +38,21 @@ const dashboardRouters = require("./routes/Dashboard");
 const categoriesRoutes = require("./routes/ES_Category");
 const establishmentRoutes = require("./routes/Establishment");
 const spotRoutes = require("./routes/Spot");
+const featuredRoutes = require("./routes/Featured");
+const notificationsRoutes = require("./routes/Notification");
 
 const homeRoutes = require("./routes/Client/Home");
+
 const restaurantRoutes = require("./routes/Client/Restaurant");
-const islandRoutes = require("./routes/Client/Island");
 const hotelRoutes = require("./routes/Client/Hotel");
+const pasalubongRoutes = require("./routes/Client/Pasalubong");
+const transportationRoutes = require("./routes/Client/Transportation");
+const banksRoutes = require("./routes/Client/Banks");
 const churchRoutes = require("./routes/Client/Church");
-const beachRoutes = require("./routes/Client/Beach");
-const waterfallRoutes = require("./routes/Client/Waterfall");
-const caveRoutes = require("./routes/Client/Cave");
+
+const festivalRoutes = require("./routes/Client/Festival");
+const natureRoutes = require("./routes/Client/Nature");
+const ilocanoRoutes = require("./routes/Client/Ilocano");
 
 const clientRegisterRoutes = require("./routes/Client/RegisterClient");
 const clientLoginRoutes = require("./routes/Client/LoginClient");
@@ -57,6 +63,8 @@ const aboutUs = require("./routes/Client/About");
 const map = require("./routes/Client/Map");
 const tour = require("./routes/Client/Tour");
 
+const adventureRoutes = require("./routes/Client/Adventure");
+
 app.use("/admin/login", authenticateRoutes);
 app.use("/admin/", dashboardRouters);
 app.use("/admin/user", userRoutes);
@@ -65,15 +73,21 @@ app.use("/admin/barangay", barangayRoutes);
 app.use("/admin/es-category", categoriesRoutes);
 app.use("/admin/establishment", establishmentRoutes);
 app.use("/admin/spot", spotRoutes);
+app.use("/admin/featured", featuredRoutes);
+app.use("/admin/notifications", notificationsRoutes);
 
 app.use("/", homeRoutes);
-app.use("/Restaurants", restaurantRoutes);
-app.use("/Mountain", islandRoutes);
-app.use("/Hotels", hotelRoutes);
-app.use("/Pasalubong", churchRoutes);
-app.use("/River", beachRoutes);
-app.use("/Waterfalls", waterfallRoutes);
-app.use("/Cave", caveRoutes);
+
+app.use("/restaurants", restaurantRoutes);
+app.use("/hotels", hotelRoutes);
+app.use("/pasalubong", pasalubongRoutes);
+app.use("/transportation", transportationRoutes);
+app.use("/banks", banksRoutes);
+app.use("/church", churchRoutes);
+
+app.use("/festival", festivalRoutes);
+app.use("/ilocano", ilocanoRoutes);
+app.use("/nature", natureRoutes);
 
 app.use("/register", clientRegisterRoutes);
 app.use("/login", clientLoginRoutes);
@@ -82,6 +96,8 @@ app.use("/logout", logOut);
 app.use("/about", aboutUs);
 app.use("/map", map);
 app.use("/tour", tour);
+
+app.use("/adventure", adventureRoutes);
 
 // const port = process.env.PORT || 8001;
 

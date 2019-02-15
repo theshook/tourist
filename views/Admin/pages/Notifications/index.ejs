@@ -1,0 +1,88 @@
+<div class="col-md-12">
+  <div class="card">
+    <div class="card-header card-header-warning">
+      <!-- <div class="form-group bmd-form-group float-right w-50">
+        <form action="/admin/barangay/" method="get" onsubmit="myFunction()">
+          <label class="bmd-label-floating text-primary">Search here...</label>
+          <input type="text" class="form-control text-white " name="barangay_q">
+        </form>
+      </div> -->
+      <h3 class="card-title">Notifications Table</h3>
+      <p class="card-category"> Hello Admin! See new notifications here.</p>
+    </div>
+    <div class="card-body">
+      <div class="table-responsive">
+        <table class="table" id="myTable">
+          <thead class=" text-primary">
+            <tr>
+              <th>Establishment</th>
+              <th>Spot</th>
+              <th>Content</th>
+              <th>Action</th>
+              <th>Full Name</th>
+              <th>Date</th>
+              <!-- <th class="text-right">Actions</th> -->
+            </tr>
+          </thead>
+          <tbody>
+            <% estab_rows.forEach(function(estab_row){ %>
+            <tr>
+              <td>
+                <%= estab_row.estab_name %>
+              </td>
+              <td>
+                N/A
+              </td>
+              <td>
+                <%= estab_row.value %>
+              </td>
+              <td>
+                <%= estab_row.action %>
+              </td>
+              <td>
+                <%= estab_row.name %>
+              </td>
+              <td>
+                <%= moment(estab_row.no_date).format('MMM Do YYYY, h:mm:ss a') %>
+              </td>
+            </tr>
+            <%	}); %>
+            <% spot_rows.forEach(function(spot_row){ %>
+            <tr>
+              <td>
+                N/A
+              </td>
+              <td>
+                <%= spot_row.spot_name %>
+              </td>
+              <td>
+                <%= spot_row.value %>
+              </td>
+              <td>
+                <%= spot_row.action %>
+              </td>
+              <td>
+                <%= spot_row.name %>
+              </td>
+              <td>
+                <%= moment(spot_row.no_date).format('MMM Do YYYY, h:mm:ss a') %>
+              </td>
+            </tr>
+            <%	}); %>
+          </tbody>
+        </table>
+        <nav aria-label="Page navigation example">
+          <ul class="pagination justify-content-center">
+            <li class="page-item">
+              <a class="page-link" href="/admin/notifications/" aria-label="Previous">
+                <span aria-hidden="true">&laquo;</span>
+                <span class="sr-only">Previous</span>
+              </a>
+            </li>
+            <!-- Pagination -->
+          </ul>
+        </nav>
+      </div>
+    </div>
+  </div>
+</div>

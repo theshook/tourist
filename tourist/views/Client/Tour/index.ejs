@@ -1,0 +1,58 @@
+<%- include('../partials/index') %>
+<!-- Navigation -->
+<nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="mainNav" style="background-color: #212529; padding-top:0px; padding-bottom: 0px;">
+  <div class="container">
+    <a class="navbar-brand js-scroll-trigger" href="/">Abra Travel Guide</a>
+    <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive"
+      aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+      Menu
+      <i class="fa fa-bars"></i>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarResponsive">
+      <ul class="navbar-nav text-uppercase ml-auto">
+        <li class="nav-item">
+          <a class="nav-link js-scroll-trigger" href="/#services">Services</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link js-scroll-trigger" href="/#portfolio">Explore</a>
+        </li>
+        <li class="nav-item">
+          <% if (userDetail == '') {%>
+          <a class="nav-link" href="/login">Sign In</a>
+          <% } else { %>
+          <a class="nav-link" href="/logout">Welcome back
+            <%= userDetail.user_lname %>,
+            <%= userDetail.user_fname %>!</a>
+          <% } %>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<section id="services">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-12 text-center">
+        <h2 class="section-heading text-uppercase">Tour</h2>
+        <h3 class="section-subheading text-muted">Lorem ipsum dolor sit amet consectetur.</h3>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12 jumbotron">
+        <form class="form-inline justify-content-center" method="GET" action="/tour/details/">
+          <div class="form-group mx-sm-3 mb-2">
+            <select class="form-control" id="exampleFormControlSelect1" name="days">
+              <option>One Day</option>
+              <option>Two Days One Night</option>
+              <option>Three Days Two Nights</option>
+            </select>
+          </div>
+          <button type="submit" class="btn btn-primary mb-2">Go!</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<%- include('../partials/footer') %>

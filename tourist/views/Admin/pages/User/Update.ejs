@@ -1,0 +1,63 @@
+<div class="col-md-10 mx-auto">
+    <div class="card">
+      <div class="card-header card-header-warning">
+        <h4 class="card-title">Edit User Profile</h4>
+      </div>
+      <div class="card-body">
+        <form action="/admin/user/<%= row[0].user_no %>" method="POST">
+          <div class="row">
+            <div class="col-md-4">
+              <div class="form-group bmd-form-group">
+                <label class="bmd-label-floating">First Name</label>
+                <input type="text" class="form-control" name="fname" value="<%= row[0].user_fname %>">
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="form-group bmd-form-group">
+                <label class="bmd-label-floating">Middle Name</label>
+                <input type="text" class="form-control" name="mname" value="<%= row[0].user_mname %>">
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="form-group bmd-form-group">
+                <label class="bmd-label-floating">Last Name</label>
+                <input type="text" class="form-control" name="lname" value="<%= row[0].user_lname %>">
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group bmd-form-group">
+                <label class="bmd-label-floating">Email Address</label>
+                <input type="email" class="form-control" name="email" value="<%= row[0].user_email %>">
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="form-group bmd-form-group">
+                <label class="bmd-label-floating">Mobile Number</label>
+                <input type="number" class="form-control" name="mobile" value="<%= row[0].user_mobile %>">
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="form-group bmd-form-group">
+                <label class="bmd-label-floating">Phone Number</label>
+                <input type="number" class="form-control" name="phone" value="<%= row[0].user_phone %>">
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="btn-group btn-group-toggle mx-auto" data-toggle="buttons">
+              <label class="btn btn-secondary <%= row[0].ut_no == '2' ? 'active' : '' %>">
+                <input type="radio" name="usertype" id="option2" autocomplete="off" value="2" <%= row[0].ut_no == '2' ? 'checked' : '' %>> Admin
+              </label>
+              <label class="btn btn-secondary <%= row[0].ut_no == '1' ? 'active' : '' %>">
+                <input type="radio" name="usertype" id="option3" autocomplete="off" value="1" <%= row[0].ut_no == '1' ? 'checked' : '' %>> Tourist
+              </label>
+            </div>
+          </div>
+          <button type="submit" class="btn btn-info mx-auto d-block w-50">Update User Profile </button>
+          <div class="clearfix"></div>
+        </form>
+      </div>
+    </div>
+  </div>

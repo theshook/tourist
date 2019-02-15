@@ -1,0 +1,149 @@
+<%- include('../partials/index') %>
+<!-- Navigation -->
+<nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="mainNav" 
+  style="background-color: #212529; padding-top:0px; padding-bottom: 0px;">
+  <div class="container">
+    <a class="navbar-brand js-scroll-trigger" href="/">Abra Travel Guide</a>
+    <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive"
+      aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+      Menu
+      <i class="fa fa-bars"></i>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarResponsive">
+      <ul class="navbar-nav text-uppercase ml-auto">
+        <li class="nav-item">
+          <a class="nav-link js-scroll-trigger" href="/#services">Services</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link js-scroll-trigger" href="/#portfolio">Explore</a>
+        </li>
+        <li class="nav-item">
+          <% if (userDetail == '') {%>
+          <a class="nav-link" href="/login">Sign In</a>
+          <% } else { %>
+          <a class="nav-link" href="/logout">Welcome back
+            <%= userDetail.user_lname %>,
+            <%= userDetail.user_fname %>!</a>
+          <% } %>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<section id="services">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-12 text-center">
+        <h2 class="section-heading text-uppercase">About Us</h2>
+<!-- Grid row -->
+<div class="row">
+
+  <!-- Grid column -->
+  <div class="col-lg-4 col-md-12">
+
+    <!--Card Wider-->
+    <div class="card card-cascade wider">
+
+      <!--Card image-->
+      <div class="view view-cascade overlay">
+        <img src="uploads/arpee.jpg" class="card-img-top"
+          alt="wider">
+        <a href="#!">
+          <div class="mask rgba-white-slight"></div>
+        </a>
+      </div>
+      <!--/Card image-->
+
+      <!--Card content-->
+      <div class="card-body card-body-cascade text-center">
+        <!--Title-->
+        <h5 class="card-title"><strong>ARPEE CALLEJO-ARRUEJO</strong></h5>
+        <h6 class="indigo-text"><strong>Developer</strong></h6>
+
+        <p class="card-text">She is currently working as an Instructor at University of Northern Philippines teaching analytics and computer subjects in the College of Business Admininistration and Accountancy in Tamag Vigan City, Ilocos Sur, Philippines. </p>
+
+
+      </div>
+      <!--/.Card content-->
+
+    </div>
+    <!--/.Card Wider-->
+
+  </div>
+  <!-- Grid column -->
+
+  <!-- Grid column -->
+  <div class="col-lg-4 col-md-6">
+
+    <!--Card Narrower-->
+    <div class="card card-cascade narrower">
+
+      <!--Card image-->
+      <div class="view view-cascade overlay">
+        <img src="uploads/bg-header1.jpg" class="card-img-top"
+          alt="narrower">
+        <a>
+          <div class="mask rgba-white-slight"></div>
+        </a>
+      </div>
+      <!--/.Card image-->
+
+      <!--Card content-->
+      <div class="card-body card-body-cascade">
+       <h4 class="card-title"><strong>ABRA iTOUR</strong></h5>
+        <!--Title-->
+        <h4 class="card-title"></h4>
+        <!--Text-->
+        <p class="card-text">This website is a dissertation study entitled Abra iTour: A Semantic Web Recommender Using Hybrid Algorithm developed by Arpee M. Callejo-Arruejo, a Doctor in Information Technology student of Saint Paul University Philippines- Tuguegarao, Cagayan, Philippines. She is also a native of the province.</p>
+
+
+       
+      </div>
+      <!--/.Card content-->
+
+    </div>
+    <!--/.Card Narrower-->
+
+  </div>
+  <!-- Grid column -->
+
+  <!-- Grid column -->
+  <div class="col-lg-4 col-md-6">
+
+    <!--Card Regular-->
+    <div class="card card-cascade">
+
+      <!--Card image-->
+      <div class="view view-cascade overlay">
+        <img src="uploads/singun.jpg" class="card-img-top" alt="normal">
+        <a>
+          <div class="mask rgba-white-slight"></div>
+        </a>
+      </div>
+      <!--/.Card image-->
+
+      <!--Card content-->
+      <div class="card-body card-body-cascade text-center">
+        <!--Title-->
+        <h5 class="card-title"><strong>DR.AMANDO P. SINGUN JR.</strong></h5>
+        <h6>Dissertation Adviser</h6>
+
+        <p class="card-text">He is currently working as a professor at Moscat, Oman and studied Doctor in Information Technology at Saint Paul University- Philippines in Tguegarao City Cagayan.
+        </p>
+
+        
+      </div>
+      <!--/.Card content-->
+
+    </div>
+    <!--/.Card Regular-->
+
+  </div>
+  <!-- Grid column -->
+
+</div>
+<p class="card-text">Abra is a province geographically located in the northern archipelago of Luzon particularly on the western side of the Cordillera, surrounded by Ilocos Norte and Apayao on the North, Mountain Province and Ilocos Sur on the South, Kalinga on the East and Ilocos Sur on the West. Abra is a majestic mountainous province and very rich in natural resources composing of rivers, lakes, water falls, caves and other tourist destinations that Abrenians can be proud of all over the world.
+
+Long time ago, the province had been unpopular or a blank spot on the Philippine tourist map until it was discovered and gone viral by bloggers and adventurers who are posting online and through the social media and web logs. Adventurers, tourists and travelers are now starting to explore the landlocked province tourist spots destinations. Abra is often skipped by tourists because of its location which is very far from Manila and the province is also known as a political hotspot. But there is more to offer when you explore the province. It is surrounded by popular tourists destinations, such as: (1) Ilocos where the Vigan City, one of the Seven Wonders of the World, is located and (2) Cordillera in the east where Baguio City, the Summer Capital City of the Philippines, is situated. There are many tourist attractions which Abreňos can be proud of, that are still unknown.</p>
+          

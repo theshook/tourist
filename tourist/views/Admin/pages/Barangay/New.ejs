@@ -1,0 +1,42 @@
+<div class="col-md-6 mx-auto">
+  <div class="card">
+    <div class="card-header card-header-warning">
+      <h4 class="card-title">New Barangay</h4>
+    </div>
+    <div class="card-body">
+      <form action="/admin/barangay" method="POST" id="myForm">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="form-group bmd-form-group">
+              <label class="bmd-label-floating">Barangay Name</label>
+              <input type="text" class="form-control" name="barangay_name" id="bar_name"> 
+            </div>
+            <label for="inputState">Town</label>
+            <select class="form-control" name="town_no" id="town_no">
+              <% data.forEach(function(row){ %>
+              <option value="<%= row.town_no %>"><%= row.town_name %></option>
+              <%	}); %>  
+            </select>
+          </div>
+        </div>
+        <button type="submit" class="btn btn-info pull-right">Save Record</button>
+        <div class="clearfix"></div>
+      </form>
+    </div>
+  </div>
+</div>
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.4/socket.io.js"></script>
+<script>
+$(document).ready(function() {
+    var socket = io.connect();
+    var form = $('#myForm');
+    var bar_name = $('#bar_name');
+    var town_no = $('#town_no');;
+
+    form.submit(function(e) {
+      e.preventDefault();
+      socket.emit('sending message', {bar_name: bar_name.val(), town_no: town_no.val()});
+      bar_name.val('');
+    });
+});
+</script> -->

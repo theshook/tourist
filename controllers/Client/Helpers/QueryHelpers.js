@@ -216,3 +216,186 @@ exports.top_destination_spot = () => {
   INNER JOIN spots_category ON spots.sc_no = spots_category.sc_no
   WHERE (rating_inactive=0 AND rating_delete=0) AND img_isprimary=1 GROUP BY ratings.spot_no HAVING RATES >= 4`;
 }
+
+exports.searchHomePage = (search_q) => {
+  return `SELECT 
+  establistments.estab_no,
+  estab_name,
+  estab_description,
+  towns.town_name,
+  establistments_photo.image_filename,
+  establistments_category.ec_name
+  FROM establistments 
+  INNER JOIN towns ON establistments.town_no = towns.town_no 
+  INNER JOIN establistments_category ON establistments.ec_no = establistments_category.ec_no 
+  INNER JOIN establistments_photo ON establistments.estab_no = establistments_photo.estab_no
+  INNER JOIN establistments_location ON establistments.estab_no = establistments_location.estab_no
+  WHERE ((encode_delete=0 AND encode_inactive=0) AND establistments_photo.image_isprimary=1)
+  AND estab_name LIKE '%${search_q}%' 
+  OR towns.town_name LIKE '%${search_q}%' 
+  OR establistments_category.ec_name LIKE '%${search_q}%'
+  GROUP BY estab_no
+  UNION
+  SELECT 
+  spots.spot_no,
+  spot_name,
+  spot_subname,
+  spot_description, 
+  spots_photo.img_filename,
+  spots_category.sc_name
+  FROM spots
+  INNER JOIN spots_category ON spots_category.sc_no = spots.sc_no
+  INNER JOIN barangays ON barangays.bar_no = spots.bar_no
+  INNER JOIN towns ON towns.town_no = spots.town_no
+  INNER JOIN spots_photo ON spots_photo.spot_no = spots.spot_no
+  INNER JOIN spots_location ON spots_location.spot_no = spots_location.spot_no
+  WHERE spots_photo.img_isprimary=1 
+  AND spot_name LIKE '%${search_q}%' 
+  OR spot_subname LIKE '%${search_q}%' 
+  OR towns.town_name LIKE '%${search_q}%' 
+  OR spots_category.sc_name LIKE '%${search_q}%' 
+  GROUP BY spot_no`;
+}
+
+exports.userRecommendation = (user_id) => {
+  return `SELECT spots.spot_no, spots.spot_name, spots_category.sc_name, spots_photo.img_filename, round(SUM(rating_value)/COUNT(*), 2) as RATES
+  FROM ratings 
+  INNER JOIN spots ON ratings.spot_no = spots.spot_no 
+  INNER JOIN users ON ratings.user_no = ratings.user_no
+  INNER JOIN spots_category ON spots_category.sc_no = spots.sc_no
+  INNER JOIN spots_photo ON spots_photo.spot_no = spots.spot_no
+  WHERE NOT ratings.user_no = '${user_id}' AND NOT ratings.user_no = 0
+    AND spots_photo.img_isprimary = 1
+  GROUP BY ratings.spot_no
+  ORDER BY RAND() LIMIT 0,3`;
+}
+
+exports.userReconEstab = (user_id) => {
+  return `SELECT establistments.ec_no, establistments.estab_no, ratings.user_no, 
+  establistments.estab_name, establistments_category.ec_name, establistments_photo.image_filename,
+  round(SUM(rating_value)/COUNT(*), 2) as RATES
+FROM ratings 
+INNER JOIN establistments ON ratings.estab_no = establistments.estab_no 
+INNER JOIN users ON ratings.user_no = ratings.user_no
+INNER JOIN establistments_category ON establistments_category.ec_no = establistments.ec_no
+INNER JOIN establistments_photo ON establistments_photo.estab_no = establistments.estab_no
+WHERE NOT ratings.user_no = '${user_id}'
+AND NOT ratings.user_no = 0
+AND establistments_photo.image_isprimary = 1
+GROUP BY ratings.estab_no
+ORDER BY RAND() LIMIT 0,3`;
+}
+
+exports.featured = () => {
+  return `SELECT 
+	spots.spot_no,
+	spots_category.sc_name,
+	spots_photo.img_filename
+	FROM featured
+	INNER JOIN spots ON featured.spot_no = spots.spot_no
+	INNER JOIN spots_category ON spots_category.sc_no = spots.sc_no
+	INNER JOIN spots_photo ON spots_photo.spot_no = featured.spot_no
+	WHERE spots.spot_no = featured.spot_no AND spots_photo.img_isprimary = 1
+
+UNION
+
+SELECT 
+	establistments.estab_no, 
+	establistments_category.ec_name, 
+	establistments_photo.image_isprimary
+    FROM featured
+    INNER JOIN establistments ON establistments.estab_no = featured.estab_no
+	INNER JOIN establistments_category ON establistments_category.ec_no = establistments.ec_no
+	INNER JOIN establistments_photo ON establistments_photo.estab_no = featured.estab_no
+	WHERE establistments.estab_no = featured.estab_no AND establistments_photo.image_isprimary = 1
+    
+    `;
+}
+
+exports.tour_query = () => {
+  return `SELECT 
+  establistments.estab_no,
+  estab_name,
+  estab_description,
+  towns.town_name,
+  establistments_photo.image_filename,
+  establistments_category.ec_name
+  FROM establistments 
+  INNER JOIN towns ON establistments.town_no = towns.town_no 
+  INNER JOIN establistments_category ON establistments.ec_no = establistments_category.ec_no 
+  INNER JOIN establistments_photo ON establistments.estab_no = establistments_photo.estab_no
+  INNER JOIN establistments_location ON establistments.estab_no = establistments_location.estab_no
+  WHERE ((encode_delete=0 AND encode_inactive=0) AND establistments_photo.image_isprimary=1)
+  GROUP BY estab_no
+  UNION
+  SELECT 
+  spots.spot_no,
+  spot_name,
+  spot_subname,
+  spot_description, 
+  spots_photo.img_filename,
+  spots_category.sc_name
+  FROM spots
+  INNER JOIN spots_category ON spots_category.sc_no = spots.sc_no
+  INNER JOIN barangays ON barangays.bar_no = spots.bar_no
+  INNER JOIN towns ON towns.town_no = spots.town_no
+  INNER JOIN spots_photo ON spots_photo.spot_no = spots.spot_no
+  INNER JOIN spots_location ON spots_location.spot_no = spots_location.spot_no
+  WHERE spots_photo.img_isprimary=1 
+  GROUP BY spot_no`;
+}
+
+exports.tour_fetch = (name) => {
+  return `SELECT 
+  establistments.estab_no,
+  estab_name,
+  estab_description,
+  towns.town_name,
+  establistments_photo.image_filename,
+  establistments_category.ec_name,
+  establistments_location.el_latitude,
+  establistments_location.el_lontitude
+  FROM establistments 
+  INNER JOIN towns ON establistments.town_no = towns.town_no 
+  INNER JOIN establistments_category ON establistments.ec_no = establistments_category.ec_no 
+  INNER JOIN establistments_photo ON establistments.estab_no = establistments_photo.estab_no
+  INNER JOIN establistments_location ON establistments.estab_no = establistments_location.estab_no
+  WHERE ((encode_delete=0 AND encode_inactive=0) AND establistments_photo.image_isprimary=1) 
+  AND establistments.estab_name = "${name}"
+  GROUP BY estab_no
+  UNION
+  SELECT 
+  spots.spot_no,
+  spot_name,
+  spot_subname,
+  spot_description, 
+  spots_photo.img_filename,
+  spots_category.sc_name,
+  spots_location.sl_latitude,
+  spots_location.sl_lontitude
+  FROM spots
+  INNER JOIN spots_category ON spots_category.sc_no = spots.sc_no
+  INNER JOIN barangays ON barangays.bar_no = spots.bar_no
+  INNER JOIN towns ON towns.town_no = spots.town_no
+  INNER JOIN spots_photo ON spots_photo.spot_no = spots.spot_no
+  INNER JOIN spots_location ON spots_location.spot_no = spots_location.spot_no
+  WHERE spots_photo.img_isprimary=1 
+  AND spots.spot_name = "${name}"
+  GROUP BY spot_no`;
+}
+
+exports.notifications = () => {
+  return `INSERT INTO notifications (spot_no, estab_no, value, name, action, no_date) VALUES (?,?,?,?,?,?)`;
+}
+
+exports.notifications_spots = () => {
+  return `SELECT notifications.spot_no, spot_name, value, name, action, no_date
+	  FROM notifications
+    INNER JOIN spots ON spots.spot_no = notifications.spot_no`;
+}
+
+exports.notifications_estab = () => {
+  return `SELECT notifications.estab_no, estab_name, value, name, action, no_date
+	  FROM notifications
+    INNER JOIN establistments ON establistments.estab_no = notifications.estab_no`;
+}

@@ -1,0 +1,72 @@
+const db = require("../../db.js");
+const {
+  top_destination_estab,
+  top_destination_spot,
+  searchHomePage,
+  userRecommendation,
+  userReconEstab,
+  featured
+} = require('./Helpers/QueryHelpers');
+
+exports.get_all_Category = (req, res) => {
+  let user = req.user || '';
+  let search = req.query.search || null;
+
+  db.query(
+    `SELECT ec_name FROM establistments_category
+    UNION
+    SELECT sc_name FROM spots_category`,
+    (err, rows) => {
+      if (err) { throw err; }
+
+      db.query(top_destination_estab(), (error, top_estab) => {
+        if (error) { throw error; }
+
+        db.query(top_destination_spot(), (spot_error, top_spot) => {
+          if (spot_error) { throw spot_error; }
+
+          db.query(searchHomePage(search), (search_err, search_res) => {
+
+            db.query(userRecommendation(user), (user_err, user_recon) => {
+              if (user_err) { throw user_err; }
+
+              db.query(userReconEstab(user), (user_estab_err, userReconEstab) => {
+                if (user_estab_err) { throw user_estab_err; }
+
+                db.query(featured(), (fea_err, fea_row) => {
+                  if (fea_err) { throw fea_err; }
+                  console.log(search_res)
+                  if (search_res.length === 0) {
+                    res.render("Client/", {
+                      rows,
+                      search_res: "N/A",
+                      pageTitle: "Abra Travel Guide",
+                      user: user,
+                      user_recon,
+                      userReconEstab,
+                      fea_row,
+                      top_estab,
+                      top_spot
+                    });
+                  } else {
+                    res.render("Client/", {
+                      rows: "N/A",
+                      search,
+                      search_res,
+                      pageTitle: "Abra Travel Guide",
+                      user: user,
+                      user_recon,
+                      userReconEstab,
+                      fea_row,
+                      top_estab,
+                      top_spot
+                    });
+                  }
+                });
+              });
+            });
+          });
+        });
+      });
+    });
+};

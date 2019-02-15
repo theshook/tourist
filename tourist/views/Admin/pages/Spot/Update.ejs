@@ -1,0 +1,56 @@
+<div class="col-md-7 mx-auto">
+  <div class="card">
+    <div class="card-header card-header-warning">
+      <h4 class="card-title">Edit Spot <%= info[0].spot_name %></h4>
+    </div>
+    <div class="card-body">
+      <form action="/admin/spot/<%= info[0].spot_no %>" method="POST">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="form-group bmd-form-group">
+              <label for="barangay_name" class="bmd-label-floating">Spot Name</label>
+              <input type="text" class="form-control" name="spot_name" value="<%= info[0].spot_name %>">
+            </div>
+            <div class="form-group bmd-form-group">
+              <label for="address" class="bmd-label-floating">Spot Subname</label>
+              <input type="text" class="form-control" name="spot_subname" value="<%= info[0].spot_subname%>">
+            </div>
+            <div class="form-group bmd-form-group">
+              <label for="inputState">Category</label>
+              <select id="inputState" class="form-control" name="sc_no">
+                <% data.forEach(function(row){ %>
+                <option value="<%= row.sc_no %>" <%= info[0].sc_no === row.ec_no ? 'selected' : '' %>>
+                  <%= row.sc_name %>
+                </option>
+                <%	}); %>  
+              </select>
+            </div>
+            <div class="form-group bmd-form-group">
+              <label for="inputState">Town</label>
+              <select id="inputState" class="form-control" name="town_no">
+                <% towns.forEach(function(town){ %>
+                <option value="<%= town.town_no %>" <%= info[0].town_no === town.town_no ? 'selected' : '' %>>
+                  <%= town.town_name %>
+                </option>
+                <%	}); %>  
+              </select>
+            </div>
+            <div class="form-group bmd-form-group">
+              <label for="inputState">Barangay</label>
+              <select id="inputState" class="form-control" name="bar_no">
+                <% towns.forEach(function(town){ %>
+                <option value="<%= town.bar_no %>" <%= info[0].bar_no === town.bar_no ? 'selected' : '' %>>
+                  <%= town.bar_name %>
+                </option>
+                <%	}); %>  
+              </select>
+            </div>
+            <label for="exampleFormControlTextarea1">Description</label>
+            <textarea class="form-control" name="desc" rows="3"><%= info[0].spot_description %></textarea>
+          </div>
+        <button type="submit" class="btn btn-info pull-right">Update Record</button>
+        <div class="clearfix"></div>
+      </form>
+    </div>
+  </div>
+</div>

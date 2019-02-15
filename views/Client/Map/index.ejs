@@ -2,7 +2,7 @@
 <!-- Navigation -->
 <nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="mainNav" style="background-color: #212529; padding-top:0px; padding-bottom: 0px;">
   <div class="container">
-    <a class="navbar-brand js-scroll-trigger" href="/">Abra Guide</a>
+    <a class="navbar-brand js-scroll-trigger" href="/">Abra Travel Guide</a>
     <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive"
       aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
       Menu
@@ -39,7 +39,7 @@
 <script type="text/javascript">
   var establisments = <%- JSON.stringify(estab) %>;
   var estabMarker = establisments.map(
-                    estabs => ({ lat: estabs.el_latitude, lng: estabs.el_lontitude }));
+    estabs => ({ lat: estabs.el_latitude, lng: estabs.el_lontitude }));
 
   var markers = [];
   var map;
@@ -47,18 +47,18 @@
   function initMap() {
     map = new google.maps.Map(document.getElementById('map'), {
       zoom: 10,
-      center: {lat: 16.0433, lng: 120.3333}
+      center: { lat: 17.5951, lng: 120.7983 }
     });
     infowindow = new google.maps.InfoWindow();
     drop()
   }
-  
+
   function drop() {
     clearMarkers();
     for (var i = 0; i < estabMarker.length; i++) {
       addMarkerWithTimeout(
-        estabMarker[i], 
-        i * 200, 
+        estabMarker[i],
+        i * 200,
         establisments[i].estab_name.toString(),
         establisments[i].estab_no,
         establisments[i].ec_name,
@@ -67,14 +67,14 @@
   }
 
   function addMarkerWithTimeout(position, timeout, name, estab_no, ec_name, description) {
-    window.setTimeout(function() {
+    window.setTimeout(function () {
       marker = new google.maps.Marker({
         position: position,
         map: map,
         title: name,
         animation: google.maps.Animation.DROP
       });
-      
+
       var content = `
         <div class="container">
           <div class="row">
@@ -92,8 +92,8 @@
         </div>
       `;
 
-      google.maps.event.addListener(marker, "click", (function(marker) {
-        return function(evt) {
+      google.maps.event.addListener(marker, "click", (function (marker) {
+        return function (evt) {
           infowindow.setContent(content);
           infowindow.open(map, marker);
         }

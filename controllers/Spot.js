@@ -1,5 +1,6 @@
 const db = require("../db.js");
 var moment = require("moment");
+var nl2br = require('nl2br');
 
 exports.spots_gets_all = (req, res) => {
   let search_towns = req.query.town_q || null;
@@ -37,7 +38,7 @@ exports.spots_gets_all = (req, res) => {
     INNER JOIN barangays ON spots.bar_no = barangays.bar_no 
     INNER JOIN spots_category ON spots.sc_no = spots_category.sc_no 
     WHERE spot_delete=0 AND spot_inactive=0
-    order by spot_no ASC 
+    order by spot_name ASC 
     LIMIT ?, ?`
           : `SELECT spots_category.sc_name, 
     spot_no,
@@ -51,7 +52,7 @@ exports.spots_gets_all = (req, res) => {
     INNER JOIN barangays ON spots.bar_no = barangays.bar_no 
     INNER JOIN spots_category ON spots.sc_no = spots_category.sc_no 
     WHERE spot_name=? OR spot_subname=? AND (spot_delete=0 AND spot_inactive=0)
-    order by spot_no ASC 
+    order by spot_name ASC 
     LIMIT ?, ?`;
 
       let data =
@@ -60,15 +61,19 @@ exports.spots_gets_all = (req, res) => {
           : [towns_q, towns_q, start_index, items_per_page];
 
       db.query(query, data, (err, rows) => {
-        if (err) {
-          throw err;
-        }
-        res.render("Admin/template", {
-          user: req.user,
-          total_pages: total_pages,
-          rows: rows,
-          pageTitle: "Spot Panel",
-          page: "Spot/Spot"
+        if (err) { throw err; }
+
+        db.query(`SELECT spot_no from featured`, (sel_err, sel_row) => {
+          if (sel_err) { throw sel_err; }
+
+          res.render("Admin/template", {
+            user: req.user,
+            total_pages: total_pages,
+            sel_row,
+            rows: rows,
+            pageTitle: "Spot Panel",
+            page: "Spot/Spot"
+          });
         });
       });
     }
@@ -89,13 +94,18 @@ exports.spots_new = (req, res) => {
               if (errors) {
                 throw err;
               }
-              res.render("Admin/template", {
-                user: req.user,
-                data: rows,
-                towns: towns,
-                bars: bars,
-                pageTitle: "Spot Panel",
-                page: "Spot/New"
+
+              db.query(`SELECT sa_no, sa_name FROM spots_actualuse WHERE sa_inactive = 0 and sa_delete = 0`, (actual_errs, actuals) => {
+                if (actual_errs) { throw actual_errs; }
+                res.render("Admin/template", {
+                  user: req.user,
+                  actuals,
+                  data: rows,
+                  towns: towns,
+                  bars: bars,
+                  pageTitle: "Spot Panel",
+                  page: "Spot/New"
+                });
               });
             }
           );
@@ -130,14 +140,15 @@ exports.spots_create = (req, res) => {
   let date = moment().format("YYYY-MM-DD HH:MM:SS");
   let user = req.user.user_no;
   db.query(
-    "INSERT INTO spots (sc_no, town_no, bar_no, spot_name, spot_subname, spot_description, spot_encode, spot_encode_date) values (?, ?, ?, ?, ?, ?, ?, ?)",
+    "INSERT INTO spots (sa_no, sc_no, town_no, bar_no, spot_name, spot_subname, spot_description, spot_encode, spot_encode_date) values (?, ?, ?, ?, ?, ?, ?, ?, ?)",
     [
+      data.sa_no,
       data.sc_no,
       data.town_no,
       data.bar_no,
       data.spot_name,
       data.spot_subname,
-      data.desc,
+      nl2br(data.desc),
       user,
       date
     ],
@@ -322,13 +333,19 @@ exports.spots_edit = (req, res) => {
               if (error) {
                 throw err;
               }
-              res.render("Admin/template", {
-                user: req.user,
-                info: info,
-                data: rows,
-                towns: result,
-                pageTitle: "Spot Panel",
-                page: "Spot/Update"
+
+              db.query(`SELECT sa_no, sa_name FROM spots_actualuse WHERE sa_inactive = 0 and sa_delete = 0`, (actual_err, actuals) => {
+                if (actual_err) { throw actual_err; }
+
+                res.render("Admin/template", {
+                  user: req.user,
+                  info: info,
+                  actuals,
+                  data: rows,
+                  towns: result,
+                  pageTitle: "Spot Panel",
+                  page: "Spot/Update"
+                });
               });
             }
           );
@@ -349,13 +366,14 @@ exports.spots_update = (req, res) => {
   let id = req.params.spot_no;
   let data = req.body;
   db.query(
-    "UPDATE `spots` SET `sc_no`=?,`town_no`=?,`bar_no`=?,`spot_name`=?,`spot_description`=?, spot_subname=?, `spot_encode`=? WHERE spot_no=?",
+    "UPDATE `spots` SET `sa_no`=?, `sc_no`=?,`town_no`=?,`bar_no`=?,`spot_name`=?,`spot_description`=?, spot_subname=?, `spot_encode`=? WHERE spot_no=?",
     [
+      data.sa_no,
       data.sc_no,
       data.town_no,
       data.bar_no,
       data.spot_name,
-      data.desc,
+      nl2br(data.desc),
       data.spot_subname,
       user,
       id
@@ -374,34 +392,115 @@ exports.spot_view = (req, res) => {
   let id = req.params.spot_no;
   db.query(
     `SELECT 
-  spot_name,
-  spot_subname,
-  spot_description, 
-  spots_category.sc_name,
-  towns.town_name,
-  barangays.bar_name,
-  spots_location.sl_latitude,
-  spots_location.sl_lontitude,
-  spots_location.sl_route,
-  spots_photo.img_filename
-  FROM spots
-  INNER JOIN spots_photo ON spots_photo.spot_no = spots.spot_no
-  INNER JOIN spots_location ON spots_location.spot_no = spots.spot_no
-  INNER JOIN spots_category ON spots_category.sc_no = spots.sc_no
-  INNER JOIN barangays ON barangays.bar_no = spots.bar_no
-  INNER JOIN towns ON towns.town_no = spots.town_no
-  WHERE spots.spot_no = ?`,
-    [id],
-    (err, rows) => {
-      if (err) {
-        throw err;
-      }
-      res.render("Admin/template", {
-        user: req.user,
-        rows: rows,
-        pageTitle: "Spot Panel",
-        page: "Spot/View"
-      });
+    spot_name,
+    spot_subname,
+    spot_description, 
+    spots_category.sc_name,
+    towns.town_name,
+    barangays.bar_name
+    FROM spots
+    INNER JOIN spots_category ON spots_category.sc_no = spots.sc_no
+    INNER JOIN barangays ON barangays.bar_no = spots.bar_no
+    INNER JOIN towns ON towns.town_no = spots.town_no
+    WHERE spots.spot_no = ?`,
+    [id], (err, rows) => {
+      if (err) { throw err; }
+
+      db.query(`SELECT 
+        spots_location.sl_latitude,
+        spots_location.sl_lontitude,
+        spots_location.sl_route
+        FROM spots
+        INNER JOIN spots_location ON spots_location.spot_no = spots.spot_no
+        WHERE spots.spot_no = ?`,
+        [id], (errs, locations) => {
+          if (errs) { throw errs; }
+
+          db.query(`SELECT 
+          spots_photo.img_filename
+          FROM spots
+          INNER JOIN spots_photo ON spots_photo.spot_no = spots.spot_no
+          WHERE spots.spot_no = ?`,
+            [id], (errss, images) => {
+              if (errss) { throw errss; }
+
+              res.render("Admin/template", {
+                user: req.user,
+                rows: rows,
+                images,
+                sl_latitude: locations.length ? locations[0].sl_latitude : "N/A",
+                sl_lontitude: locations.length ? locations[0].sl_lontitude : "N/A",
+                sl_route: locations.length ? locations[0].sl_route : "N/A",
+                pageTitle: "Spot Panel",
+                page: "Spot/View"
+              });
+            });
+        });
     }
   );
 };
+
+exports.establishment_delete = (req, res) => {
+  let date = moment().format("YYYY-MM-DD HH:mm:ss");
+  let user = req.user.user_no;
+  let id = req.params.spot_no;
+  db.query(
+    "DELETE FROM spots WHERE spot_no = ?",
+    [id],
+    (err, row) => {
+      if (err) {
+        throw err;
+      }
+      db.query(
+        "DELETE FROM spots_location WHERE spot_no=?",
+        [id],
+        (err, ro) => {
+          if (err) {
+            throw err;
+          }
+          db.query(
+            "DELETE FROM spots_photo WHERE spot_no=?",
+            [id],
+            (err, r) => {
+              if (err) {
+                throw err;
+              }
+              res.redirect("/admin/spot");
+            }
+          );
+        }
+      );
+    }
+  );
+};
+
+exports.add_featured = (req, res) => {
+  let data = req.params.spot_no;
+  let date = moment().format("YYYY-MM-DD HH:MM:SS");
+  let user = req.user.user_no;
+
+  db.query(`SELECT spot_no FROM featured WHERE spot_no = ?`, [data], (serr, srows) => {
+
+    if (srows.length != 0) {
+      res.redirect("/admin/spot");
+    } else {
+      db.query(`SELECT count(*) AS total FROM featured`, (count_err, count_rows) => {
+
+        if (count_rows[0].total < 5) {
+          db.query(
+            `INSERT INTO featured 
+            (spot_no, featured_encode, featured_encode_date) 
+            values (?, ?, ?)`,
+            [data, user, date],
+            (err, rows) => {
+              if (err) { throw err; }
+              res.redirect("/admin/spot");
+            });
+        } else {
+          res.redirect("/admin/spot");
+        }
+      });
+    }
+  });
+
+}

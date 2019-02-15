@@ -17,10 +17,18 @@
           <% if (userDetail == '') {%>
           <a class="nav-link" href="/login">Sign In</a>
           <% } else { %>
-          <a class="nav-link" href="/logout">Welcome back
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+            aria-haspopup="true" aria-expanded="false">
+            Welcome back
             <%= userDetail.user_lname %>,
-            <%= userDetail.user_fname %>!</a>
-          <% } %>
+            <%= userDetail.user_fname %>!
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <a class="dropdown-item" href="/logout">Logout</a>
+          </div>
+        </li>
+        <% } %>
         </li>
       </ul>
     </div>

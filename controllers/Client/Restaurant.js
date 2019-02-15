@@ -9,7 +9,10 @@ let {
   comment_query,
   estab_comments, estab_count_comments,
   ratings_check_ip, ratings_query, ratings_rate,
-  visited_estab
+  visited_estab,
+  userRecommendation,
+  userReconEstab,
+  notifications
 } = require("./Helpers/QueryHelpers");
 
 var ipAddress;
@@ -26,7 +29,7 @@ exports.get_all_Restaurant = (req, res) => {
     res.render("Client/Restaurant", {
       rows: rows,
       pageTitle: "Restaurants in Abra",
-      route: "Restaurants",
+      route: "restaurants",
       userDetail: userDetail
     });
   });
@@ -70,24 +73,43 @@ exports.restaurant_View = (req, res) => {
                 db.query(visited_estab(id, user_no, moment().format()), (visited_errs, visited_res) => {
                   if (visited_errs) { throw visited_errs; }
 
-                  res.render("Client/Restaurant/view", {
-                    info_rows,
-                    el_latitude: maps_rows.length ? maps_rows[0].el_latitude : "N/A",
-                    el_lontitude: maps_rows.length ? maps_rows[0].el_lontitude : "N/A",
-                    el_route: maps_rows.length ? maps_rows[0].el_route : "N/A",
-                    images_rows: images_rows.length ? images_rows : "N/A",
-                    id: id,
-                    rating: rating,
-                    isRated: isRated,
-                    rated: rated,
-                    total_pages: total_pages,
-                    user: req.user == undefined ? "null" : req.user.user_no,
-                    moment: moment,
-                    comments: comments,
-                    pageTitle: "Restaurant Information",
-                    route: "Restaurants",
-                    userDetail: userDetail
-                  });
+                  db.query(
+                    `SELECT ec_name FROM establistments_category
+                    UNION
+                    SELECT sc_name FROM spots_category`, (cat_errs, cat_res) => {
+                      if (cat_errs) { throw cat_errs; }
+
+                      db.query(userRecommendation(user_no), (user_err, user_recon) => {
+                        if (user_err) { throw user_err; }
+
+                        db.query(userReconEstab(user_no), (user_estab_err, userReconEstab) => {
+                          if (user_estab_err) { throw user_estab_err; }
+
+                          res.render("Client/Restaurant/view", {
+                            cat_res,
+                            user_recon,
+                            userReconEstab,
+                            info_rows,
+                            el_latitude: maps_rows.length ? maps_rows[0].el_latitude : "N/A",
+                            el_lontitude: maps_rows.length ? maps_rows[0].el_lontitude : "N/A",
+                            el_route: maps_rows.length ? maps_rows[0].el_route : "N/A",
+                            images_rows: images_rows.length ? images_rows : "N/A",
+                            id: id,
+                            rating: rating,
+                            isRated: isRated,
+                            rated: rated,
+                            total_pages: total_pages,
+                            user: req.user == undefined ? "null" : req.user.user_no,
+                            moment: moment,
+                            comments: comments,
+                            pageTitle: "Restaurant Information",
+                            route: "restaurants",
+                            userDetail: userDetail
+                          });
+                        });
+                      });
+
+                    });
                 });
               });
             });
@@ -113,7 +135,11 @@ exports.restaurant_comments = (req, res) => {
   publicIp.v4().then(ip => {
     db.query(comment_query(), [id, data.estab_no, data.spot_no, data.comm_guest, data.comm_content, data.comm_email, ip, data.comm_date], (err, rows) => {
       if (err) throw err;
-      res.redirect(`/Restaurants/${data.estab_no}`);
+
+      db.query(notifications(), [data.spot_no, data.estab_no, data.comm_content, data.comm_guest, 'COMMENT', data.comm_date], (errs, notif) => {
+        if (errs) throw err;
+        res.redirect(`/restaurants/${data.estab_no}`);
+      });
     });
   });
 };
@@ -125,13 +151,18 @@ exports.restaurant_ratings = (req, res) => {
     spot_no: null,
     rating_value: req.body.ratings,
     rating_ip: null,
-    rating_date: moment().format()
+    rating_date: moment().format(),
+    comm_guest: (req.user == undefined) ? "Guest" : req.user.user_lname + ', ' + req.user.user_fname
   };
 
   publicIp.v4().then(ip => {
     db.query(ratings_query(id, data.estab_no, data.spot_no, data.rating_value, ip, data.rating_date), (err, result) => {
       if (err) throw err;
-      res.redirect(`/Restaurants/${data.estab_no}`);
+
+      db.query(notifications(), [0, data.estab_no, data.rating_value, data.comm_guest, 'RATING', data.rating_date], (errs, notif) => {
+        if (errs) throw err;
+        res.redirect(`/restaurants/${data.estab_no}`);
+      });
     });
   });
 };

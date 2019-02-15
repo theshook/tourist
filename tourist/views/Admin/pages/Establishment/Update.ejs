@@ -1,0 +1,64 @@
+<div class="col-md-7 mx-auto">
+  <div class="card">
+    <div class="card-header card-header-warning">
+      <h4 class="card-title">Edit Establishment <%= info[0].estab_name%></h4>
+    </div>
+    <div class="card-body">
+      <form action="/admin/establishment/<%= info[0].estab_no %>" method="POST">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="form-group bmd-form-group">
+              <label for="barangay_name" class="bmd-label-floating">Establishment Name</label>
+              <input type="text" class="form-control" name="estab_name" value="<%= info[0].estab_name%>">
+            </div>
+            <div class="form-group bmd-form-group">
+              <label for="inputState">Category</label>
+              <select id="inputState" class="form-control" name="ec_no">
+                <% data.forEach(function(row){ %>
+                <option value="<%= row.ec_no %>" <%= info[0].ec_no === row.ec_no ? 'selected' : '' %>>
+                  <%= row.ec_name %>
+                </option>
+                <%	}); %>  
+              </select>
+            </div>
+            <div class="form-group bmd-form-group">
+              <label for="inputState">Town</label>
+              <select id="inputState" class="form-control" name="town_no">
+                <% towns.forEach(function(town){ %>
+                <option value="<%= town.town_no %>" <%= info[0].town_no === town.town_no ? 'selected' : '' %>>
+                  <%= town.town_name %>
+                </option>
+                <%	}); %>  
+              </select>
+            </div>
+            <div class="form-group bmd-form-group">
+              <label for="inputState">Barangay</label>
+              <select id="inputState" class="form-control" name="bar_no">
+                <% towns.forEach(function(town){ %>
+                <option value="<%= town.bar_no %>" <%= info[0].bar_no === town.bar_no ? 'selected' : '' %>>
+                  <%= town.bar_name %>
+                </option>
+                <%	}); %>  
+              </select>
+            </div>
+            <label for="exampleFormControlTextarea1">Description</label>
+            <textarea class="form-control" name="desc" rows="3"><%= info[0].estab_description %></textarea>
+            <div class="form-group bmd-form-group">
+              <label for="address" class="bmd-label-floating">Address</label>
+              <input type="text" class="form-control" name="address" value="<%= info[0].estab_address%>">
+            </div>
+            <div class="form-group bmd-form-group">
+              <label for="email" class="bmd-label-floating">Email</label>
+              <input type="text" class="form-control" name="email" value="<%= info[0].estab_email%>">
+            </div>
+            <div class="form-group bmd-form-group">
+              <label for="contact" class="bmd-label-floating">Contact Number</label>
+              <input type="text" class="form-control" name="contact" value="<%= info[0].estab_contact%>">
+            </div>
+          </div>
+        <button type="submit" class="btn btn-info pull-right">Update Record</button>
+        <div class="clearfix"></div>
+      </form>
+    </div>
+  </div>
+</div>
