@@ -69,7 +69,7 @@
       type: 'POST',
       data: 3,
       contentType: 'application/json',
-      url: 'https://abra-tourist.herokuapp.com/admin/spot/new/barangays/3',
+      url: 'https://kku0vs6-abra.wedeploy.io/admin/spot/new/barangays/3',
       success: function (data) {
         $.each(JSON.parse(data), function (i, value) {
           $('#bar_no').append($('<option>').text(value.bar_name).attr('value', value.bar_no));
@@ -82,7 +82,7 @@
         type: 'POST',
         data: $(this).val(),
         contentType: 'application/json',
-        url: 'https://abra-tourist.herokuapp.com/admin/spot/new/barangays/' + $(this).val(),
+        url: 'https://kku0vs6-abra.wedeploy.io/admin/spot/new/barangays/' + $(this).val(),
         success: function (data) {
           $("#bar_no").empty();
           $.each(JSON.parse(data), function (i, value) {
