@@ -31,13 +31,16 @@ exports.estab_get_all_query = ec_no => {
   estab_name,
   estab_description,
   towns.town_name,
-  establistments_photo.image_filename
+  establistments_photo.image_filename,
+  round(SUM(rating_value)/COUNT(*), 2) as RATES 
   FROM establistments 
   INNER JOIN towns ON establistments.town_no = towns.town_no 
   INNER JOIN establistments_category ON establistments.ec_no = establistments_category.ec_no 
   INNER JOIN establistments_photo ON establistments.estab_no = establistments_photo.estab_no
+  LEFT JOIN ratings ON establistments.estab_no = ratings.estab_no
   WHERE (encode_delete=0 AND encode_inactive=0) AND 
   establistments.ec_no=${ec_no} AND establistments_photo.image_isprimary=1
+  GROUP BY estab_no
   order by estab_no ASC`;
 };
 
@@ -88,14 +91,17 @@ exports.spot_get_all_query = sc_no => {
   spot_name,
   spot_subname,
   spot_description, 
-  spots_photo.img_filename
+  spots_photo.img_filename,
+  round(SUM(rating_value)/COUNT(*), 2) as RATES
   FROM spots
   INNER JOIN spots_category ON spots_category.sc_no = spots.sc_no
   INNER JOIN barangays ON barangays.bar_no = spots.bar_no
   INNER JOIN towns ON towns.town_no = spots.town_no
   INNER JOIN spots_photo ON spots_photo.spot_no = spots.spot_no
-  WHERE spots_photo.img_isprimary=1 AND
-	spots.sc_no=${sc_no}`;
+  LEFT JOIN ratings ON spots.spot_no = ratings.spot_no
+  WHERE spots_photo.img_isprimary=1 AND 
+  spots.sc_no=${sc_no}
+	GROUP BY spot_no`;
 };
 
 exports.spot_get_single_query = sc_no => {

@@ -36,6 +36,7 @@ exports.get_all_Restaurant = (req, res) => {
 };
 
 exports.restaurant_View = (req, res) => {
+
   let user_no = (req.user == undefined) ? 0 : req.user.user_no;
 
   let userDetail = req.user || '';
@@ -43,10 +44,9 @@ exports.restaurant_View = (req, res) => {
   let items_per_page = 4;
   let start_index = (current_page - 1) * items_per_page;
   let id = req.params.restaurant_id;
+
   db.query(estab_single_info(id), (err, info_rows) => {
-    if (err) {
-      throw err;
-    }
+    if (err) { throw err; }
 
     db.query(estab_single_maps(id), (maps_err, maps_rows) => {
       if (maps_err) { throw maps_err; }

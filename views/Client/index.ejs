@@ -71,7 +71,7 @@
             <a class="portfolio-link" href="/transportation">
               <% } else if(row.ec_name == 'Banks & Atms') { %>
               <a class="portfolio-link" href="/banks">
-                <% } else if(row.ec_name == 'Restaurant') { %>
+                <% } else if(row.ec_name == 'Restaurants') { %>
                 <a class="portfolio-link" href="/restaurants">
                   <% } else if(row.ec_name == 'Ilocano Delicacies') { %>
                   <a class="portfolio-link" href="/ilocano">
@@ -93,7 +93,7 @@
                           width="100">
                         <% } else if(row.ec_name == 'Banks & Atms') { %>
                         <img class="img-fluid m-2" id="link-hover" src="../banksa.png" alt="" height="300" width="100">
-                        <% } else if(row.ec_name == 'Restaurant') { %>
+                        <% } else if(row.ec_name == 'Restaurants') { %>
                         <img class="img-fluid m-2" id="link-hover" src="../restaurants copy.png" alt="" height="300"
                           width="100">
                         <% } else if(row.ec_name == 'Ilocano Delicacies') { %>
@@ -180,6 +180,10 @@
             <% var cat; %>
             <% if(estab.ec_name == 'Ilocano Delicacies') { %>
             <% cat = 'ilocano' %>
+            <% } else if (estab.ec_name == 'Banks & Atms') { %>
+            <% cat = 'banks' %>
+            <% } else if (estab.ec_name == 'Churches & Structures') { %>
+            <% cat = 'church' %>
             <% } else { %>
             <% cat = estab.ec_name %>
             <% } %>
@@ -315,6 +319,10 @@
           <% var cat; %>
           <% if(recon.sc_name == 'Ilocano Delicacies') { %>
           <% cat = 'ilocano' %>
+          <% } else if (recon.sc_name == 'Banks & Atms') { %>
+          <% cat = 'banks' %>
+          <% } else if (recon.sc_name == 'Churches & Structures') { %>
+          <% cat = 'church' %>
           <% } else { %>
           <% cat = recon.sc_name %>
           <% } %>
@@ -341,6 +349,10 @@
           <% var cat; %>
           <% if(recon.ec_name == 'Ilocano Delicacies') { %>
           <% cat = 'ilocano' %>
+          <% } else if (recon.ec_name == 'Banks & Atms') { %>
+          <% cat = 'banks' %>
+          <% } else if (recon.ec_name == 'Churches & Structures') { %>
+          <% cat = 'church' %>
           <% } else { %>
           <% cat = recon.ec_name %>
           <% } %>
@@ -380,6 +392,10 @@
           <% var cat; %>
           <% if(res.ec_name == 'Ilocano Delicacies') { %>
           <% cat = 'ilocano' %>
+          <% } else if (res.ec_name == 'Banks & Atms') { %>
+          <% cat = 'banks' %>
+          <% } else if (res.ec_name == 'Churches & Structures') { %>
+          <% cat = 'church' %>
           <% } else { %>
           <% cat = res.ec_name %>
           <% } %>

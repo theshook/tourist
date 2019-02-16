@@ -20,6 +20,10 @@
           <% var cat; %>
           <% if(row.sc_name == 'Ilocano Delicacies') { %>
           <% cat = 'ilocano' %>
+          <% } else if (row.sc_name == 'Banks & Atms') { %>
+          <% cat = 'banks' %>
+          <% } else if (row.sc_name == 'Churches & Structures') { %>
+          <% cat = 'church' %>
           <% } else { %>
           <% cat = row.sc_name %>
           <% } %>

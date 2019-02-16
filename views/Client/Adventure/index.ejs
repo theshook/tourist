@@ -3,8 +3,9 @@
 <nav class="navbar navbar-expand-lg navbar-dark fixed-top pt-0 pb-0" style="background-color: #212529;" id="mainNav">
   <div class="container">
     <a class="navbar-brand js-scroll-trigger" href="/">Abra Travel Guide</a>
-    <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive"
-      aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+    <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse"
+      data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false"
+      aria-label="Toggle navigation">
       Menu
       <i class="fa fa-bars"></i>
     </button>
@@ -57,13 +58,17 @@
       <% var cat; %>
       <% if(row.sc_name == 'Ilocano Delicacies') { %>
       <% cat = 'ilocano' %>
+      <% } else if (row.sc_name == 'Banks & Atms') { %>
+      <% cat = 'banks' %>
+      <% } else if (row.sc_name == 'Churches & Structures') { %>
+      <% cat = 'church' %>
       <% } else { %>
       <% cat = row.sc_name %>
       <% } %>
       <div class="col-md-4 d-flex pb-4">
         <div class="card" id="link-hover">
-          <img src="/uploads/<%= row.img_filename %>" style="height:200px;" class="card-img-top" alt="<%= row.spot_name %>"
-            onerror="if (this.src != 'error.jpg') this.src = '/uploads/default.png';">
+          <img src="/uploads/<%= row.img_filename %>" style="height:200px;" class="card-img-top"
+            alt="<%= row.spot_name %>" onerror="if (this.src != 'error.jpg') this.src = '/uploads/default.png';">
           <div class="card-body">
             <h5 class="card-title">
               <%= row.spot_name %>
