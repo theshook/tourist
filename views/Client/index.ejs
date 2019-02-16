@@ -313,10 +313,10 @@
         <div class="row mt-3">
           <% user_recon.forEach(function(recon) { %>
           <% var cat; %>
-          <% if(user_recon.sc_name == 'Ilocano Delicacies') { %>
+          <% if(recon.sc_name == 'Ilocano Delicacies') { %>
           <% cat = 'ilocano' %>
           <% } else { %>
-          <% cat = user_recon.sc_name %>
+          <% cat = recon.sc_name %>
           <% } %>
           <div class="col-md-4 mt-3">
             <div class="card">
@@ -339,10 +339,10 @@
         <div class="row mt-3">
           <% userReconEstab.forEach(function(recon) { %>
           <% var cat; %>
-          <% if(userReconEstab.ec_name == 'Ilocano Delicacies') { %>
+          <% if(recon.ec_name == 'Ilocano Delicacies') { %>
           <% cat = 'ilocano' %>
           <% } else { %>
-          <% cat = userReconEstab.ec_name %>
+          <% cat = recon.ec_name %>
           <% } %>
           <div class="col-md-4 mt-3">
             <div class="card">
