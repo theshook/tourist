@@ -11,6 +11,10 @@
       <i class="fa fa-bars"></i>
     </button>
     <div class="collapse navbar-collapse" id="navbarResponsive">
+      <form action="/" method="get" onsubmit="myFunction()">
+        <input type="text" class="form-control" aria-describedby="SearchHere" placeholder="Search Here..."
+          name="search">
+      </form>
       <ul class="navbar-nav text-uppercase ml-auto">
         <li class="nav-item">
           <a class="nav-link js-scroll-trigger" href="#services">Services</a>
@@ -45,10 +49,7 @@
   <div class="container">
     <div class="intro-text">
       <div class="intro-lead-in">
-        <form action="/" method="get" onsubmit="myFunction()">
-          <input type="text" class="form-control w-50 mx-auto" aria-describedby="SearchHere"
-            placeholder="Search Here..." name="search">
-        </form>
+        <p style="opacity: 0; cursor: default;">opacity</p>
       </div>
       <!--  <div class="intro-heading text-uppercase">Abra Travel Guide</div>
     <a class="btn btn-primary btn-xl text-uppercase js-scroll-trigger" href="#services">Tell Me More</a> -->
