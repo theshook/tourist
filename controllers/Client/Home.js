@@ -85,10 +85,10 @@ exports.get_search = (req, res) => {
 
   db.query(searchHomePage(search), (search_err, search_res) => {
     if (search_err) { throw search_err; }
-    console.log(search_res)
+    console.log(search_res.length)
     res.render("Client/search", {
       search,
-      search_res,
+      search_res: (search_res.length == 0) ? 'N/A' : search_res,
       pageTitle: "Abra Travel Guide",
       user: user,
     });
