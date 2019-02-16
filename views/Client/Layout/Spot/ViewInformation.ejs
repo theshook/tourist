@@ -3,7 +3,7 @@
   <div class="container">
 
     <!-- Navigation -->
-    <div class="row justify-content-md-center">
+    <!-- <div class="row justify-content-md-center">
       <div class="row">
         <div class="col-md-auto">
           <% cat_res.forEach(function(row){ %>
@@ -54,7 +54,7 @@
                         </a>
                         <%  }); %>
       </div>
-    </div>
+    </div> -->
 
     <!-- Portfolio Item Heading -->
     <!-- <div class="row">
@@ -86,8 +86,8 @@
                 <% if (images_rows !== "N/A") { %>
                 <% images_rows.forEach(function(row, index) { %>
                 <div class="carousel-item <% if (index == 0) { %> active <% } %>">
-                  <img class="d-block w-100" src="/uploads/<%= row.img_filename %>" alt="/uploads/<%= row.img_filename %>"
-                    height="350">
+                  <img class="d-block w-100" src="/uploads/<%= row.img_filename %>"
+                    alt="/uploads/<%= row.img_filename %>" height="350">
                 </div>
                 <%  }); %>
                 <% } %>
@@ -150,7 +150,8 @@
               <!-- Comment Input -->
               <div class="row">
                 <div class="col-md-12">
-                  <textarea class="form-control" id="content" rows="3" style="min-width: 100%" name="comment_content"></textarea>
+                  <textarea class="form-control" id="content" rows="3" style="min-width: 100%"
+                    name="comment_content"></textarea>
                 </div>
               </div>
               <!-- Comment Submit -->
@@ -169,14 +170,16 @@
         <!-- Related Projects Row -->
         <div class="col-md-4">
           <% if (user!="null") { %>
-           <h4 class="section-heading text-uppercase">Just For You</h4>
+          <h4 class="section-heading text-uppercase">Just For You</h4>
           <div class="row">
             <% user_recon.forEach(function(recon) { %>
             <div class="col-md-12 mt-3">
               <div class="card">
                 <a href="/<%= recon.sc_name %>/<%= recon.spot_no %>">
-                  <img class="img-fluid rounded" style="height:200px; width:400px;" src="/uploads/<%= recon.img_filename %>"
-                    onerror="if (this.src != 'error.jpg') this.src = '/uploads/default.png';" alt="/uploads/default.png">
+                  <img class="img-fluid rounded" style="height:200px; width:400px;"
+                    src="/uploads/<%= recon.img_filename %>"
+                    onerror="if (this.src != 'error.jpg') this.src = '/uploads/default.png';"
+                    alt="/uploads/default.png">
                 </a>
                 <div class="card-footer pt-0 mt-0 pb-0 mt-0">
                   <p class="text-truncate mb-0 pb-0">
@@ -194,8 +197,10 @@
             <div class="col-md-12 mt-3">
               <div class="card">
                 <a href="/<%= recon.ec_name %>/<%= recon.estab_no %>">
-                  <img class="img-fluid rounded" style="height:200px; width:400px;" src="/uploads/<%= recon.image_filename %>"
-                    onerror="if (this.src != 'error.jpg') this.src = '/uploads/default.png';" alt="<%= recon.estab_name %>">
+                  <img class="img-fluid rounded" style="height:200px; width:400px;"
+                    src="/uploads/<%= recon.image_filename %>"
+                    onerror="if (this.src != 'error.jpg') this.src = '/uploads/default.png';"
+                    alt="<%= recon.estab_name %>">
                 </a>
                 <div class="card-footer pt-0 mt-0 pb-0 mt-0">
                   <p class="text-truncate mb-0 pb-0">
@@ -239,7 +244,8 @@
     });
   }   
 </script>
-<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBc7MrXyAOjZ9VAmPCniGxbH5MEn0jpP7Q&callback=initMap"></script>
+<script async defer
+  src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBc7MrXyAOjZ9VAmPCniGxbH5MEn0jpP7Q&callback=initMap"></script>
 
 <script>
   $(document).ready(function () {
