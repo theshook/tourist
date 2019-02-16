@@ -78,3 +78,19 @@ exports.get_all_Category = (req, res) => {
       });
     });
 };
+
+exports.get_search = (req, res) => {
+  let user = req.user || '';
+  let search = req.query.search || null;
+
+  db.query(searchHomePage(search), (search_err, search_res) => {
+    if (search_err) { throw search_err; }
+    console.log(search_res)
+    res.render("Client/search", {
+      search,
+      search_res,
+      pageTitle: "Abra Travel Guide",
+      user: user,
+    });
+  });
+};

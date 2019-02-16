@@ -1,0 +1,94 @@
+<%- include('./partials/index') %>
+
+<nav class="navbar navbar-expand-lg navbar-dark fixed-top pt-0 pb-0" style="background-color: #212529;" id="mainNav">
+  <div class="container">
+    <a class="navbar-brand js-scroll-trigger" href="/">Abra Travel Guide </a>
+    <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse"
+      data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false"
+      aria-label="Toggle navigation">
+      Menu
+      <i class="fa fa-bars"></i>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarResponsive">
+      <form action="/search" method="get" class="form-inline my-2 my-lg-0">
+        <input class="form-control mr-sm-2" type="text" placeholder="Search" name="search">
+        <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
+      </form>
+
+      <ul class="navbar-nav text-uppercase ml-auto">
+        <li class="nav-item">
+          <a class="nav-link js-scroll-trigger" href="/#services">Services</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link js-scroll-trigger" href="/#portfolio">Explore</a>
+        </li>
+        <li class="nav-item">
+          <% if (user == '') {%>
+          <a class="nav-link" href="/login">Sign In</a>
+          <% } else { %>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+            aria-haspopup="true" aria-expanded="false">
+            Welcome back
+            <%= user.user_lname %>,
+            <%= user.user_fname %>!
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <a class="dropdown-item" href="/logout">Logout</a>
+          </div>
+        </li>
+        <% } %>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<!-- Search -->
+<div class="container pb-auto mt-5 pt-5">
+  <div class="row">
+    <% if(search_res != 'N/A') { %>
+    <div class="col-md-12">
+      <h4 class="section-heading text-uppercase">
+        Search Keyword for '
+        <%= search %>'
+      </h4>
+    </div>
+    <% search_res.forEach(function(res) { %>
+    <% var cat; %>
+    <% if(res.ec_name == 'Ilocano Delicacies') { %>
+    <% cat = 'ilocano' %>
+    <% } else if (res.ec_name == 'Banks & Atms') { %>
+    <% cat = 'banks' %>
+    <% } else if (res.ec_name == 'Churches & Structures') { %>
+    <% cat = 'church' %>
+    <% } else { %>
+    <% cat = res.ec_name %>
+    <% } %>
+    <div class="col-md-4 col-sm-6 portfolio-item pb-3">
+      <div class="card">
+        <a class="portfolio-link" href="/<%= cat %>/<%= res.estab_no %>">
+          <img src="/uploads/<%= res.image_filename %>" class="img-fluid" style="height:200px; width:400px;"
+            onerror="if (this.src != 'error.jpg') this.src = '/uploads/default.png';" alt="<%= res.estab_name %>">
+        </a>
+        <div class="card-body">
+          <h5 class="card-title text-truncate mb-0 pb-0">
+            <%= res.estab_name %>
+          </h5>
+          <p class="card-text text-dark pb-0 mb-0">
+            RATING: <%= (res.RATES) ? res.RATES : 'N/A' %>
+          </p>
+          <p class="card-text text-muted">
+            <%= res.estab_description.substring(0, 100) %>...
+          </p>
+          <a class="portfolio-link btn btn-primary float-right" href="/<%= cat %>/<%= res.estab_no %>">
+            Explore
+          </a>
+        </div>
+      </div>
+    </div>
+    <% }); %>
+    <% } %>
+  </div>
+</div>
+<%- include('./partials/footer') %>

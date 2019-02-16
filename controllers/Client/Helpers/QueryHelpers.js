@@ -228,14 +228,15 @@ exports.searchHomePage = (search_q) => {
   establistments.estab_no,
   estab_name,
   estab_description,
-  towns.town_name,
   establistments_photo.image_filename,
-  establistments_category.ec_name
+  establistments_category.ec_name,
+  round(SUM(rating_value)/COUNT(*), 2) as RATES
   FROM establistments 
   INNER JOIN towns ON establistments.town_no = towns.town_no 
   INNER JOIN establistments_category ON establistments.ec_no = establistments_category.ec_no 
   INNER JOIN establistments_photo ON establistments.estab_no = establistments_photo.estab_no
   INNER JOIN establistments_location ON establistments.estab_no = establistments_location.estab_no
+  LEFT JOIN ratings ON ratings.estab_no = establistments.estab_no
   WHERE ((encode_delete=0 AND encode_inactive=0) AND establistments_photo.image_isprimary=1)
   AND estab_name LIKE '%${search_q}%' 
   OR towns.town_name LIKE '%${search_q}%' 
@@ -245,15 +246,16 @@ exports.searchHomePage = (search_q) => {
   SELECT 
   spots.spot_no,
   spot_name,
-  spot_subname,
   spot_description, 
   spots_photo.img_filename,
-  spots_category.sc_name
+  spots_category.sc_name,
+  round(SUM(rating_value)/COUNT(*), 2) as RATES
   FROM spots
   INNER JOIN spots_category ON spots_category.sc_no = spots.sc_no
   INNER JOIN barangays ON barangays.bar_no = spots.bar_no
   INNER JOIN towns ON towns.town_no = spots.town_no
   INNER JOIN spots_photo ON spots_photo.spot_no = spots.spot_no
+  LEFT JOIN ratings ON ratings.spot_no = spots.spot_no
   INNER JOIN spots_location ON spots_location.spot_no = spots_location.spot_no
   WHERE spots_photo.img_isprimary=1 
   AND spot_name LIKE '%${search_q}%' 

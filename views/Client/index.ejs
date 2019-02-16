@@ -11,10 +11,12 @@
       <i class="fa fa-bars"></i>
     </button>
     <div class="collapse navbar-collapse" id="navbarResponsive">
-      <form action="/" method="get" onsubmit="myFunction()">
-        <input type="text" class="form-control" aria-describedby="SearchHere" placeholder="Search Here..."
-          name="search">
+
+      <form action="/search" method="GET" class="form-inline my-2 my-lg-0">
+        <input class="form-control mr-sm-2" type="text" placeholder="Search" name="search">
+        <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
       </form>
+
       <ul class="navbar-nav text-uppercase ml-auto">
         <li class="nav-item">
           <a class="nav-link js-scroll-trigger" href="#services">Services</a>
@@ -222,6 +224,7 @@
 
       <!-- Adventure -->
       <div class="container-fluid pt-5 pb-5">
+        <h4 class="section-heading text-uppercase">Adventures</h4>
         <div class="row">
           <% sa_rows.forEach(function(sa_row){ %>
           <% if(sa_row.sa_name == 'Water Adventure') { %>
@@ -377,41 +380,6 @@
         </div>
       </div>
       <% } %>
-
-      <!-- Search -->
-      <div class="container-fluid pb-auto">
-        <div class="row">
-          <% if(search_res != 'N/A') { %>
-          <div class="col-md-12">
-            <h4 class="section-heading text-uppercase">
-              Search Keyword for '
-              <%= search %>'
-            </h4>
-          </div>
-          <% search_res.forEach(function(res) { %>
-          <% var cat; %>
-          <% if(res.ec_name == 'Ilocano Delicacies') { %>
-          <% cat = 'ilocano' %>
-          <% } else if (res.ec_name == 'Banks & Atms') { %>
-          <% cat = 'banks' %>
-          <% } else if (res.ec_name == 'Churches & Structures') { %>
-          <% cat = 'church' %>
-          <% } else { %>
-          <% cat = res.ec_name %>
-          <% } %>
-          <div class="col-md-4 col-sm-6 portfolio-item">
-            <div class="card">
-              <a class="portfolio-link" href="/<%= cat %>/<%= res.estab_no %>">
-                <img src="/uploads/<%= res.image_filename %>" class="img-fluid rounded"
-                  style="height:200px; width:400px;"
-                  onerror="if (this.src != 'error.jpg') this.src = '/uploads/default.png';" alt="<%= res.estab_name %>">
-              </a>
-            </div>
-          </div>
-          <% }); %>
-          <% } %>
-        </div>
-      </div>
 </section>
 <script src="/js/carouselDisplayMorethanOne.js"></script>
 <%- include('partials/footer') %>
