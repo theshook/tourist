@@ -89,8 +89,19 @@ exports.get_search = (req, res) => {
     res.render("Client/search", {
       search,
       search_res: (search_res.length == 0) ? 'N/A' : search_res,
+      search_count: (search_res.length == 0) ? '0' : search_res.length,
       pageTitle: "Abra Travel Guide",
       user: user,
     });
+  });
+};
+
+exports.get_search_api = (req, res) => {
+  let search = req.query.search || null;
+
+  db.query(searchHomePage(search), (api_err, api_res) => {
+    if (api_err) { throw api_err; }
+
+    return res.json({ api_res });
   });
 };

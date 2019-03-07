@@ -1,4 +1,31 @@
 <%- include('./partials/index') %>
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<style>
+  .ui-autocomplete-loading {
+    background: white url("img/lightbox/preloader.gif") right center no-repeat;
+  }
+</style>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+<script>
+  $(function () {
+
+    $("#tags").autocomplete({
+      source: (request, response) => {
+        fetch("/api/search?search=" + $("#tags").val(), { method: 'get' })
+          .then(res => res.json())
+          .then(data => {
+            const names = data.api_res.map(name => name.estab_name);
+            response(names)
+          })
+          .catch(err => console.log(err))
+      },
+      minLength: 3,
+    });
+
+  });
+</script>
+
 
 <nav class="navbar navbar-expand-lg navbar-dark fixed-top pt-0 pb-0" style="background-color: #212529;" id="mainNav">
   <div class="container">
@@ -11,7 +38,7 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarResponsive">
       <form action="/search" method="get" class="form-inline my-2 my-lg-0">
-        <input class="form-control mr-sm-2" type="text" placeholder="Search" name="search">
+        <input class="form-control mr-sm-2" type="text" placeholder="Search" id="tags" name="search">
         <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
       </form>
 
@@ -50,8 +77,7 @@
     <% if(search_res != 'N/A') { %>
     <div class="col-md-12">
       <h4 class="section-heading text-uppercase">
-        Search Keyword for '
-        <%= search %>'
+        Search Keyword for '<%= search %>' (<%= search_count %>)
       </h4>
     </div>
     <% search_res.forEach(function(res) { %>
@@ -92,8 +118,9 @@
     <div class="jumbotron mx-auto">
       <div class="container">
         <h1 class="display-4">Sorry</h1>
-        <p class="lead">There are no results for the <strong>Search Keyword for '
-            <%= search %>'</strong></p>
+        <p class="lead">There are no results for the
+          <strong>Search Keyword for '<%= search %>'</strong>
+        </p>
       </div>
     </div>
     <% } %>
