@@ -1,5 +1,32 @@
 <%- include('./partials/index') %>
 <link href="/css/carouselDisplayMorethanOne.css" rel="stylesheet">
+
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<style>
+  .ui-autocomplete-loading {
+    background: white url("img/lightbox/preloader.gif") right center no-repeat;
+  }
+</style>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+<script>
+  $(function () {
+
+    $("#tags").autocomplete({
+      source: (request, response) => {
+        fetch("/api/search?search=" + $("#tags").val(), { method: 'get' })
+          .then(res => res.json())
+          .then(data => {
+            const names = data.api_res.map(name => name.estab_name);
+            response(names)
+          })
+          .catch(err => console.log(err))
+      },
+      minLength: 3,
+    });
+
+  });
+</script>
 <!-- Navigation -->
 <nav class="navbar navbar-expand-lg navbar-dark fixed-top pt-0 pb-0" style="background-color: #212529;" id="mainNav">
   <div class="container">
@@ -13,7 +40,7 @@
     <div class="collapse navbar-collapse" id="navbarResponsive">
 
       <form action="/search" method="GET" class="form-inline my-2 my-lg-0">
-        <input class="form-control mr-sm-2" type="text" placeholder="Search" name="search">
+        <input class="form-control mr-sm-2" type="text" placeholder="Search" id="tags" name="search">
         <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
       </form>
 
