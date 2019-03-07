@@ -4,12 +4,18 @@
       <h4 class="card-title">New Spot</h4>
     </div>
     <div class="card-body">
-      <form action="/admin/spot" method="POST">
+      <p class="text-danger">* fields are required</p>
+      <form action="/admin/spot" method="POST" id="create_spot">
         <div class="row">
           <div class="col-md-12">
             <div class="form-group bmd-form-group">
-              <label for="barangay_name" class="bmd-label-floating">Spot Name</label>
-              <input type="text" class="form-control" name="spot_name">
+              <label for="barangay_name" class="bmd-label-floating">
+                <span class="text-danger">*</span>
+                Spot Name</label>
+              <input type="text" class="form-control" id="spot_name" name="spot_name">
+              <div class="invalid-feedback">
+                Spot Name required.
+              </div>
             </div>
             <div class="form-group bmd-form-group">
               <label for="barangay_name" class="bmd-label-floating">Sub Name</label>
@@ -46,15 +52,21 @@
               </select>
             </div>
             <div class="form-group bmd-form-group">
+              <span class="text-danger">*</span>
               <label for="bar_no">Barangay</label>
               <select id="bar_no" class="form-control" name="bar_no">
-                <option value="">
+                <option value="0">
                   Select Barangay...
                 </option>
               </select>
+              <div class="invalid-feedback">
+                Barangay required.
+              </div>
             </div>
-            <label for="exampleFormControlTextarea1">Description</label>
-            <textarea class="form-control" name="desc" rows="3"></textarea>
+            <label for="exampleFormControlTextarea1">
+              <span class="text-danger">*</span>
+              Description</label>
+            <textarea class="form-control" name="desc" id="description" rows="3"></textarea>
           </div>
           <button type="submit" class="btn btn-info pull-right">Save Record</button>
           <div class="clearfix"></div>
@@ -118,5 +130,32 @@
         }
       });
     });
+
+
+    $('#create_spot').submit((e) => {
+      // Validation
+      var spot_name = $.trim($('#spot_name').val());
+      var spot_description = $.trim($('#description').val());
+      var bar_no = $('#bar_no').val();
+
+      if (spot_name === '') {
+        e.preventDefault()
+        alert('Spot name is required.');
+        $('#spot_name').addClass('is-invalid');
+      }
+
+      if (spot_description === '') {
+        e.preventDefault()
+        alert('Description is required.');
+      }
+
+      if (bar_no == 0) {
+        e.preventDefault()
+        alert('Barangay is required.');
+        $('#bar_no').addClass('is-invalid');
+      }
+
+    });
+
   });
 </script>

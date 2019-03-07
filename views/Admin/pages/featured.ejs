@@ -43,7 +43,8 @@
               <%= row.bar_name %>
             </td>
             <td class="td-actions text-right">
-              <a href="/admin/featured/<%= row.spot_no %>/feature/<%= cat %>" title="Featured!" class="btn btn-success">
+              <a href="/admin/featured/<%= row.spot_no %>/feature/<%= cat %>" title="Featured!" class="btn btn-success"
+                onclick="return confirm('Are you sure you want to remove this item?');">
                 <i class="fa fa-star"></i>
               </a>
             </td>

@@ -18,10 +18,19 @@
             <br>
             <br>
             <br>
-            <p class="card-text text-muted float-left">
-
-              <%= (row.RATES) ? 'RATING: ' + row.RATES : '' %>
-            </p>
+            <h3>
+              <% if (row.RATES) { %>
+              <span class="float-left">
+                Rating:
+              </span>
+              <span class="badge badge-secondary float-left">
+                <%= row.RATES %>
+              </span>
+              <span class="float-left">
+                (<%= row.Num_of_Rates %> reviews)
+              </span>
+              <% } %>
+            </h3>
           </div>
         </div>
       </div>

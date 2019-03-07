@@ -43,7 +43,6 @@ exports.details = (req, res) => {
 
 exports.fetch_selected1 = (req, res) => {
   let attraction1 = req.params.attraction1 || '';
-
   if (attraction1 != '') {
     db.query(tour_fetch(attraction1), (err, result) => {
       if (err) { throw err; }

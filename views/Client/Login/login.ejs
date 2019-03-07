@@ -1,40 +1,47 @@
 <%- include('../partials/index') %>
-  <!-- Navigation -->
-  <nav class="navbar navbar-expand-lg navbar-dark fixed-top pt-0 pb-0" id="mainNav" style="background-color: #212529;">
-    <div class="container">
-      <a class="navbar-brand" href="/">Abra Travel Guide</a>
-      <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive"
-        aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-        Menu
-        <i class="fa fa-bars"></i>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarResponsive">
-        <ul class="navbar-nav text-uppercase ml-auto">
-          <li class="nav-item">
-            <a class="nav-link js-scroll-trigger" href="/">explore</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/login">Sign in</a>
-          </li>
-        </ul>
-      </div>
+<!-- Navigation -->
+<nav class="navbar navbar-expand-lg navbar-dark fixed-top pt-0 pb-0" id="mainNav" style="background-color: #212529;">
+  <div class="container">
+    <a class="navbar-brand" href="/">Abra Travel Guide</a>
+    <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse"
+      data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false"
+      aria-label="Toggle navigation">
+      Menu
+      <i class="fa fa-bars"></i>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarResponsive">
+      <ul class="navbar-nav text-uppercase ml-auto">
+        <li class="nav-item">
+          <a class="nav-link js-scroll-trigger" href="/">explore</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/login">Sign in</a>
+        </li>
+      </ul>
     </div>
-  </nav>
+  </div>
+</nav>
 
 <section>
   <div class="row">
     <div class="col-md-6 mx-auto">
       <div class="card shadow p-3 mb-5 bg-white rounded ">
         <div class="card-body">
+          <% if (verified !== '') { %>
+          <div class="alert alert-primary" role="alert">
+            <%= verified %>
+          </div>
+          <% } %>
           <% if (message.length != 0) { %>
-            <div class="alert alert-danger" role="alert" >
-              <%= message[0] %>
-            </div>
+          <div class="alert alert-danger" role="alert">
+            <%= message[0] %>
+          </div>
           <% } %>
           <form id="form-login" method="POST" action="/login">
             <div class="form-group">
               <label for="exampleInputEmail1">Email address/Username</label>
-              <input type="text" class="form-control" id="email" name="username" aria-describedby="emailHelp" placeholder="Enter email">
+              <input type="text" class="form-control" id="email" name="username" aria-describedby="emailHelp"
+                placeholder="Enter email">
             </div>
             <div class="form-group">
               <label for="exampleInputPassword1">Password</label>
@@ -61,7 +68,7 @@
       if (email === '' || inputPassword === '') {
         alert('Email and Password must be fill.');
         return false;
-      }  
+      }
     });
   });
 </script>

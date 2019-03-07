@@ -4,18 +4,19 @@
       <h4 class="card-title">New Barangay</h4>
     </div>
     <div class="card-body">
+      <p class="text-danger">* fields are required</p>
       <form action="/admin/barangay" method="POST" id="myForm">
         <div class="row">
           <div class="col-md-12">
             <div class="form-group bmd-form-group">
-              <label class="bmd-label-floating">Barangay Name</label>
-              <input type="text" class="form-control" name="barangay_name" id="bar_name"> 
+              <label class="bmd-label-floating"><span class="text-danger">*</span> Barangay Name</label>
+              <input type="text" class="form-control" name="barangay_name" id="bar_name">
             </div>
-            <label for="inputState">Town</label>
+            <label for="inputState"><span class="text-danger">*</span> Town</label>
             <select class="form-control" name="town_no" id="town_no">
               <% data.forEach(function(row){ %>
               <option value="<%= row.town_no %>"><%= row.town_name %></option>
-              <%	}); %>  
+              <%	}); %>
             </select>
           </div>
         </div>
@@ -25,18 +26,16 @@
     </div>
   </div>
 </div>
-<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.4/socket.io.js"></script>
 <script>
-$(document).ready(function() {
-    var socket = io.connect();
-    var form = $('#myForm');
-    var bar_name = $('#bar_name');
-    var town_no = $('#town_no');;
-
-    form.submit(function(e) {
-      e.preventDefault();
-      socket.emit('sending message', {bar_name: bar_name.val(), town_no: town_no.val()});
-      bar_name.val('');
+  $(document).ready(function () {
+    $('#myForm').submit((e) => {
+      // Validation
+      var bar_name = $.trim($('#bar_name').val());
+      if (bar_name === '') {
+        e.preventDefault()
+        alert('Barangay name is required.');
+        $('#bar_name').addClass('is-invalid');
+      }
     });
-});
-</script> -->
+  });
+</script>

@@ -4,12 +4,17 @@
       <h4 class="card-title">New Establishment</h4>
     </div>
     <div class="card-body">
-      <form action="/admin/establishment" method="POST">
+      <p class="text-danger">* fields are required</p>
+      <form id="create_estab" action="/admin/establishment" method="POST">
         <div class="row">
           <div class="col-md-12">
             <div class="form-group bmd-form-group">
-              <label for="barangay_name" class="bmd-label-floating">Establishment Name</label>
-              <input type="text" class="form-control" name="estab_name">
+              <label for="barangay_name" class="bmd-label-floating"><span class="text-danger">*</span> Establishment
+                Name</label>
+              <input type="text" class="form-control" name="estab_name" id="estab_name">
+              <div class="invalid-feedback">
+                Establishment Name required.
+              </div>
             </div>
             <div class="form-group bmd-form-group">
               <label for="inputState">Category</label>
@@ -32,26 +37,32 @@
               </select>
             </div>
             <div class="form-group bmd-form-group">
-              <label for="bar_no">Barangay</label>
-              <select id="bar_no" class="form-control" name="bar_no">
-                <option value="">
+              <label for="bar_no"><span class="text-danger">*</span> Barangay</label>
+              <select id="bar_no" class="form-control" id="bar_no" name="bar_no">
+                <option value="0">
                   Select Barangay . . .
                 </option>
               </select>
+              <div class="invalid-feedback">
+                Barangay required.
+              </div>
             </div>
-            <label for="exampleFormControlTextarea1">Description</label>
-            <textarea class="form-control" name="desc" rows="3"></textarea>
+            <label for="exampleFormControlTextarea1"><span class="text-danger">*</span> Description</label>
+            <textarea class="form-control" id="desc" name="desc" rows="3"></textarea>
             <div class="form-group bmd-form-group">
-              <label for="address" class="bmd-label-floating">Address</label>
-              <input type="text" class="form-control" name="address">
+              <label for="address" class="bmd-label-floating"><span class="text-danger">*</span> Address</label>
+              <input type="text" class="form-control" id="address" name="address">
+              <div class="invalid-feedback">
+                Address required.
+              </div>
             </div>
             <div class="form-group bmd-form-group">
               <label for="email" class="bmd-label-floating">Email</label>
-              <input type="text" class="form-control" name="email">
+              <input type="email" class="form-control" name="email">
             </div>
             <div class="form-group bmd-form-group">
               <label for="contact" class="bmd-label-floating">Contact Number</label>
-              <input type="text" class="form-control" name="contact">
+              <input type="number" class="form-control" id="contact" name="contact">
             </div>
           </div>
           <button type="submit" class="btn btn-info pull-right">Save Record</button>
@@ -116,5 +127,56 @@
         }
       });
     });
+
+    disableKeysForNumbers(contact)
+    function disableKeysForNumbers(input) {
+      $(input).keydown(function (evt) {
+        var keycode = evt.charCode || evt.keyCode;
+        if (keycode == 69 || keycode == 110 || keycode == 190 || keycode == 189 || keycode == 109 || keycode == 107 || keycode == 187) { //Enter key's keycode
+          return false;
+        }
+      });
+    }
+
+    $('#create_estab').submit((e) => {
+      // Validation
+      var estab_name = $.trim($('#estab_name').val());
+      var desc = $.trim($('#desc').val());
+      var bar_no = $('#bar_no').val();
+      var address = $.trim($('#address').val());
+      var contact = $.trim($('#contact').val());
+
+      if (estab_name === '') {
+        e.preventDefault()
+        alert('Establishemnt name is required.');
+        $('#estab_name').addClass('is-invalid');
+      }
+
+      if (desc === '') {
+        e.preventDefault()
+        alert('Description is required.');
+      }
+
+      if (bar_no == 0) {
+        e.preventDefault()
+        alert('Barangay is required.');
+        $('#bar_no').addClass('is-invalid');
+      }
+
+      if (address === '') {
+        e.preventDefault()
+        alert('Address is required.');
+        $('#address').addClass('is-invalid');
+      }
+
+      if (!contact == '') {
+        if (!$.isNumeric(contact) || contact <= 0) {
+          alert('Enter a valid contact number');
+          return false;
+        }
+      }
+    });
+
+
   });
 </script>

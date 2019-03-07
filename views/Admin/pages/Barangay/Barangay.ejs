@@ -3,8 +3,8 @@
     <div class="card-header card-header-warning">
       <div class="form-group bmd-form-group float-right w-50">
         <form action="/admin/barangay/" method="get" onsubmit="myFunction()">
-        <label class="bmd-label-floating text-primary">Search here...</label>
-        <input type="text" class="form-control text-white " name="barangay_q">
+          <label class="bmd-label-floating text-primary">Search here...</label>
+          <input type="text" class="form-control text-white " name="barangay_q">
         </form>
       </div>
       <h3 class="card-title">Barangay Table</h3>
@@ -21,21 +21,22 @@
               <th class="text-right">Actions</th>
             </tr>
           </thead>
-          <tbody>  
+          <tbody>
             <% rows.forEach(function(row){ %>
-              <tr>
-                <td><%= row.bar_name %></td>
-                <td><%= row.town_name %></td>
-                <td class="td-actions text-right">
-                  <a href="/admin/barangay/<%= row.bar_no %>" rel="tooltip" class="btn btn-success">
-                      <i class="material-icons">edit</i>
-                  </a>
-                  <form class="d-inline" action="/admin/barangay/delete/<%= row.bar_no %>" method="POST">
-                    <button class="btn btn-danger"><i class="material-icons">close</i></button>
-                  </form>
-                </td>
-              </tr>
-            <%	}); %>   
+            <tr>
+              <td><%= row.bar_name %></td>
+              <td><%= row.town_name %></td>
+              <td class="td-actions text-right">
+                <a href="/admin/barangay/<%= row.bar_no %>" rel="tooltip" class="btn btn-success">
+                  <i class="material-icons">edit</i>
+                </a>
+                <form class="d-inline" action="/admin/barangay/delete/<%= row.bar_no %>" method="POST"
+                  onclick="return confirm('Are you sure you want to delete this item?');">
+                  <button class="btn btn-danger" type="submit"><i class="material-icons">close</i></button>
+                </form>
+              </td>
+            </tr>
+            <%	}); %>
           </tbody>
         </table>
         <nav aria-label="Page navigation example">
@@ -47,7 +48,7 @@
               </a>
             </li>
             <% for(var i=1; i <= total_pages; i++){ %>
-              <li class="page-item"><a class="page-link" href="/admin/barangay/?page=<%= i %>"><%= i %></a></li>
+            <li class="page-item"><a class="page-link" href="/admin/barangay/?page=<%= i %>"><%= i %></a></li>
             <% } %>
             <li class="page-item">
               <a class="page-link" href="/admin/barangay/?page=<%= total_pages %>" aria-label="Next">
@@ -61,14 +62,3 @@
     </div>
   </div>
 </div>
-<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.4/socket.io.js"></script>
-<script>
-jQuery(document).ready(function() {
-    var socket = io.connect();
-    var chatArea = jQuery('#myTable');
-
-    socket.on('new message', function(bar_info){
-      chatArea.append('<tr><td>'+bar_info.bar_name+'</td><td>'+ bar_info.town_no +'</td></tr>');
-    });
-});
-</script> -->

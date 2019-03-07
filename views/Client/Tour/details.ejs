@@ -1,11 +1,13 @@
 <%- include('../partials/index') %>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
 <!-- Navigation -->
-<nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="mainNav" style="background-color: #212529; padding-top:0px; padding-bottom: 0px;">
+<nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="mainNav"
+  style="background-color: #212529; padding-top:0px; padding-bottom: 0px;">
   <div class="container">
     <a class="navbar-brand js-scroll-trigger" href="/">Abra Travel Guide</a>
-    <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive"
-      aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+    <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse"
+      data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false"
+      aria-label="Toggle navigation">
       Menu
       <i class="fa fa-bars"></i>
     </button>
@@ -37,7 +39,6 @@
     <div class="row">
       <div class="col-lg-12 text-center">
         <h2 class="section-heading text-uppercase">Tour</h2>
-        <h3 class="section-subheading text-muted">Lorem ipsum dolor sit amet consectetur.</h3>
       </div>
     </div>
     <!-- Selected -->
@@ -87,13 +88,10 @@
   var infowindow;
 
   $("#attraction1").change(function () {
-    $.ajax({
-      type: 'POST',
-      data: $(this).val(),
-      contentType: 'application/json',
-      url: 'http://localhost:8080/tour/details/1/' + $(this).val(),
-      success: function (data) {
-        establisments = JSON.parse(data);
+    fetch("http://localhost:8080/tour/details/1/" + $(this).val(), { method: 'post' })
+      .then(response => response.json())
+      .then(data => {
+        establisments = data;
         estabMarker = establisments.map(
           estabs => ({ lat: estabs.el_latitude, lng: estabs.el_lontitude }));
 
@@ -102,23 +100,16 @@
         }
 
         drop(0);
-
-        // $("#bar_no").empty();
-        // $.each(JSON.parse(data), function (i, value) {
-        //   $('#bar_no').append($('<option>').text(value.bar_name).attr('value', value.bar_no));
-        // });
-      }
-    });
+      })
+      .catch(err => console.log(err))
   });
 
   $("#attraction2").change(function () {
-    $.ajax({
-      type: 'POST',
-      data: $(this).val(),
-      contentType: 'application/json',
-      url: 'http://localhost:8080/tour/details/2/' + $(this).val(),
-      success: function (data) {
-        establisments = JSON.parse(data);
+
+    fetch("http://localhost:8080/tour/details/2/" + $(this).val(), { method: 'post' })
+      .then(response => response.json())
+      .then(data => {
+        establisments = data;
         estabMarker = establisments.map(
           estabs => ({ lat: estabs.el_latitude, lng: estabs.el_lontitude }));
 
@@ -127,23 +118,17 @@
         }
 
         drop(1);
+      })
+      .catch(err => console.log(err))
 
-        // $("#bar_no").empty();
-        // $.each(JSON.parse(data), function (i, value) {
-        //   $('#bar_no').append($('<option>').text(value.bar_name).attr('value', value.bar_no));
-        // });
-      }
-    });
   });
 
   $("#attraction3").change(function () {
-    $.ajax({
-      type: 'POST',
-      data: $(this).val(),
-      contentType: 'application/json',
-      url: 'http://localhost:8080/tour/details/3/' + $(this).val(),
-      success: function (data) {
-        establisments = JSON.parse(data);
+
+    fetch("http://localhost:8080/tour/details/3/" + $(this).val(), { method: 'post' })
+      .then(response => response.json())
+      .then(data => {
+        establisments = data;
         estabMarker = establisments.map(
           estabs => ({ lat: estabs.el_latitude, lng: estabs.el_lontitude }));
 
@@ -152,13 +137,9 @@
         }
 
         drop(2);
+      })
+      .catch(err => console.log(err))
 
-        // $("#bar_no").empty();
-        // $.each(JSON.parse(data), function (i, value) {
-        //   $('#bar_no').append($('<option>').text(value.bar_name).attr('value', value.bar_no));
-        // });
-      }
-    });
   });
 
   function initMap() {
@@ -226,6 +207,7 @@
     }
     markers = [];
   }
+
 </script>
 
 <script>
@@ -304,5 +286,6 @@
     // });
   });
 </script>
-<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBc7MrXyAOjZ9VAmPCniGxbH5MEn0jpP7Q&callback=initMap"></script>
+<script async defer
+  src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBc7MrXyAOjZ9VAmPCniGxbH5MEn0jpP7Q&callback=initMap"></script>
 <%- include('../partials/footer') %>

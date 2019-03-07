@@ -3,8 +3,8 @@
     <div class="card-header card-header-warning">
       <div class="form-group bmd-form-group float-right w-50">
         <form action="/admin/town/" method="get" onsubmit="myFunction()">
-        <label class="bmd-label-floating text-primary">Search here...</label>
-        <input type="text" class="form-control text-white " name="town_q">
+          <label class="bmd-label-floating text-primary">Search here...</label>
+          <input type="text" class="form-control text-white " name="town_q">
         </form>
       </div>
       <h3 class="card-title">Town Table</h3>
@@ -24,20 +24,21 @@
           </thead>
           <tbody>
             <% rows.forEach(function(row){ %>
-              <tr>
-                <td><%= row.town_name %></td>
-                <td><%= row.town_zipcode %></td>
-                <td><%= row.town_iscity === 0 ? 'Town' : 'City' %></td>
-                <td class="td-actions text-right">
-                  <a href="/admin/town/edit/<%= row.town_no %>" rel="tooltip" class="btn btn-success">
-                      <i class="material-icons">edit</i>
-                  </a>
-                  <form class="d-inline" action="/admin/town/delete/<%= row.town_no %>" method="POST">
-                    <button class="btn btn-danger"><i class="material-icons">close</i></button>
-                  </form>
-                </td>
-              </tr>
-            <%	}); %>     
+            <tr>
+              <td><%= row.town_name %></td>
+              <td><%= row.town_zipcode %></td>
+              <td><%= row.town_iscity === 0 ? 'Town' : 'City' %></td>
+              <td class="td-actions text-right">
+                <a href="/admin/town/edit/<%= row.town_no %>" rel="tooltip" class="btn btn-success">
+                  <i class="material-icons">edit</i>
+                </a>
+                <form class="d-inline" action="/admin/town/delete/<%= row.town_no %>" method="POST"
+                  onclick="return confirm('Are you sure you want to delete this item?');">
+                  <button class="btn btn-danger"><i class="material-icons">close</i></button>
+                </form>
+              </td>
+            </tr>
+            <%	}); %>
           </tbody>
         </table>
       </div>
@@ -50,7 +51,7 @@
             </a>
           </li>
           <% for(var i=1; i <= total_pages; i++){ %>
-            <li class="page-item"><a class="page-link" href="/admin/town/?page=<%= i %>"><%= i %></a></li>
+          <li class="page-item"><a class="page-link" href="/admin/town/?page=<%= i %>"><%= i %></a></li>
           <% } %>
           <li class="page-item">
             <a class="page-link" href="/admin/town/?page=<%= total_pages %>" aria-label="Next">

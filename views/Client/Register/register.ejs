@@ -1,25 +1,28 @@
 <%- include('../partials/index') %>
-  <!-- Navigation -->
-  <nav class="navbar navbar-expand-lg navbar-dark fixed-top pt-0 pb-0" id="mainNav" style="background-color: #212529;">
-    <div class="container">
-      <a class="navbar-brand" href="/">Abra Travel Guide</a>
-      <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive"
-        aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-        Menu
-        <i class="fa fa-bars"></i>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarResponsive">
-        <ul class="navbar-nav text-uppercase ml-auto">
-          <li class="nav-item">
-            <a class="nav-link js-scroll-trigger" href="/">Explore</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/login">Sign in</a>
-          </li>
-        </ul>
-      </div>
+<script src='https://www.google.com/recaptcha/api.js'></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
+<!-- Navigation -->
+<nav class="navbar navbar-expand-lg navbar-dark fixed-top pt-0 pb-0" id="mainNav" style="background-color: #212529;">
+  <div class="container">
+    <a class="navbar-brand" href="/">Abra Travel Guide</a>
+    <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse"
+      data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false"
+      aria-label="Toggle navigation">
+      Menu
+      <i class="fa fa-bars"></i>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarResponsive">
+      <ul class="navbar-nav text-uppercase ml-auto">
+        <li class="nav-item">
+          <a class="nav-link js-scroll-trigger" href="/">Explore</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/login">Sign in</a>
+        </li>
+      </ul>
     </div>
-  </nav>
+  </div>
+</nav>
 
 <section>
   <div class="row">
@@ -27,52 +30,93 @@
       <div class="card shadow p-3 mb-5 bg-white rounded ">
         <div class="card-body">
           <form id="form-register" action="#" method="POST">
+            <p class="text-danger">* fields are required</p>
             <div class="form-group row">
-              <label for="fname" class="col-sm-4 col-form-label">First Name</label>
+              <label for="fname" class="col-sm-4 col-form-label">
+                <span class="text-danger">*</span>
+                First Name
+              </label>
               <div class="col-sm-8">
-                <input type="text" class="form-control" id="fname" name="fname" placeholder="First Name">
+                <input type="text" class="form-control" id="fname" name="fname" placeholder="First Name"
+                  value="<%= data !== '' ? data.fname : '' %>">
               </div>
             </div>
             <div class="form-group row">
               <label for="fname" class="col-sm-4 col-form-label">Middle Name</label>
               <div class="col-sm-8">
-                <input type="text" class="form-control" id="mname" name="mname" placeholder="Middle Name">
+                <input type="text" class="form-control" id="mname" name="mname" placeholder="Middle Name"
+                  value="<%= data !== '' ? data.mname : '' %>">
               </div>
             </div>
             <div class="form-group row">
-              <label for="lname" class="col-sm-4 col-form-label">Last Name</label>
+              <label for="lname" class="col-sm-4 col-form-label">
+                <span class="text-danger">*</span>Last Name
+              </label>
               <div class="col-sm-8">
-                <input type="text" class="form-control" id="lname" name="lname" placeholder="Last Name">
+                <input type="text" class="form-control" id="lname" name="lname" placeholder="Last Name"
+                  value="<%= data !== '' ? data.lname : '' %>">
               </div>
             </div>
             <div class="form-group row">
               <label for="lname" class="col-sm-4 col-form-label">Mobile Number</label>
-              <div class="col-sm-8">
-                <input type="number" class="form-control" id="mnumber" name="mnumber" placeholder="09123456789">
+              <div class="col-sm-2">
+                <input type="number" class="form-control" id="cmnumber" name="cmnumber" placeholder="63"
+                  value="<%= data !== '' ? data.cm : '' %>">
+              </div>
+              <div class="col-sm-6">
+                <input type="number" class="form-control" id="mnumber" name="mnumber" placeholder="09123456789"
+                  value="<%= data !== '' ? data.mobile : '' %>">
               </div>
             </div>
             <div class="form-group row">
               <label for="lname" class="col-sm-4 col-form-label">Phone Number</label>
-              <div class="col-sm-8">
-                <input type="number" class="form-control" id="pnumber" name="pnumber" placeholder="5112233">
+              <div class="col-sm-2">
+                <input type="number" class="form-control" id="cpnumber" name="cpnumber" placeholder="075"
+                  value="<%= data !== '' ? data.cp : '' %>">
+              </div>
+              <div class="col-sm-6">
+                <input type="number" class="form-control" id="pnumber" name="pnumber" placeholder="5112233"
+                  value="<%= data !== '' ? data.phone : '' %>">
               </div>
             </div>
             <div class="form-group row">
-              <label for="staticEmail" class="col-sm-4 col-form-label">Email</label>
+              <label for="staticEmail" class="col-sm-4 col-form-label">
+                <span class="text-danger">*</span>
+                Email
+              </label>
               <div class="col-sm-8">
-                <input type="email" class="form-control" id="email" name="email" placeholder="Email Address">
+                <input type="email" class="form-control <%= error !== '' ? 'is-invalid' : '' %> " id="email"
+                  name="email" placeholder="Email Address" value="<%= data !== '' ? data.email : '' %>">
+                <div class="invalid-feedback">
+                  Email already exists.
+                </div>
               </div>
             </div>
             <div class="form-group row">
-              <label for="inputPassword" class="col-sm-4 col-form-label">Password</label>
+              <label for="inputPassword" class="col-sm-4 col-form-label">
+                <span class="text-danger">*</span>
+                Password
+              </label>
               <div class="col-sm-8">
-                <input type="password" class="form-control" id="inputPassword" name="password" placeholder="Password">
+                <input type="password" class="form-control" id="inputPassword" name="password" placeholder="Password"
+                  value="Greenpiece1!">
               </div>
             </div>
             <div class="form-group row">
-              <label for="confirmPassword" class="col-sm-4 col-form-label">Confirm Password</label>
+              <label for="confirmPassword" class="col-sm-4 col-form-label">
+                <span class="text-danger">*</span>
+                Confirm Password
+              </label>
               <div class="col-sm-8">
-                <input type="password" class="form-control" id="confirmPassword" placeholder="confirmPassword">
+                <input type="password" class="form-control" id="confirmPassword" placeholder="confirmPassword"
+                  value="Greenpiece1!">
+              </div>
+            </div>
+            <div class="form-group row">
+              <div class="offset-sm-5">
+                <div class="g-recaptcha" data-sitekey="6LcBjJMUAAAAAFRFIs_8eUm4H3yJvyLSwOUGe4Tx">
+
+                </div>
               </div>
             </div>
             <div class="text-center">
@@ -88,31 +132,144 @@
 
 <script>
   $(document).ready(function () {
+
+    disableKeysForNumbers('#mnumber');
+    disableKeysForNumbers('#pnumber');
+    disableKeysForNumbers('#cmnumber');
+    disableKeysForNumbers('#cpnumber');
+
+    function disableKeysForNumbers(input) {
+      $(input).keydown(function (evt) {
+        var keycode = evt.charCode || evt.keyCode;
+        if (keycode == 69 || keycode == 110 || keycode == 190 || keycode == 189 || keycode == 109 || keycode == 107 || keycode == 187) { //Enter key's keycode
+          return false;
+        }
+      });
+    }
+
     $("#form-register").submit(function (e) {
+      e.preventDefault();
+
+      Swal.fire({
+        title: 'Wait a moment!',
+        html: 'It will close if it\'s done.',
+        allowOutsideClick: false,
+        allowEscapeKey: false,
+        onBeforeOpen: () => {
+          Swal.showLoading()
+        },
+      })
+
       var fname = $.trim($('#fname').val());
       var lname = $.trim($('#lname').val());
       var mname = $.trim($('#mname').val());
       var mnumber = $('#mnumber').val();
+      var cmnumber = $('#cmnumber').val();
       var pnumber = $('#pnumber').val();
+      var cpnumber = $('#cpnumber').val();
       var email = $.trim($('#email').val());
       var inputPassword = $.trim($('#inputPassword').val());
       var confirmPassword = $.trim($('#confirmPassword').val());
+      var captcha = document.querySelector('#g-recaptcha-response').value;
+
+      if (!mnumber == '') {
+        if (!$.isNumeric(mnumber) || cmnumber == '') {
+          alert('Country code is required, only numbers are allowed');
+          return false;
+        }
+      }
+
+      if (!pnumber == '') {
+        if (!$.isNumeric(pnumber) || cpnumber == '') {
+          alert('Country code is required, only numbers are allowed');
+          return false;
+        }
+      }
 
       // Check if empty of not
-      if (fname === '' || lname === '' || mname === '' || email === '') {
-        alert('Name, Email and Comment must be filled.');
+      if (fname === '' || lname === '' || email === '' || inputPassword === '' || confirmPassword === '') {
+        alert('Please enter text in mandatory field/s in a message box ');
         return false;
       }
-      
-      if (inputPassword.length <= 5) {
-        alert('Password must be at least 6 characters');
+
+      if (!validatePassword(inputPassword)) {
+        alert('Should have 8 to 16 characters, must contain one special character, at least one uppercase character, and have a numerical.');
         return false;
       }
 
       if (inputPassword !== confirmPassword) {
         alert('Password doesn\'t match.');
         return false;
-      }      
+      }
+
+      function validatePassword(password) {
+        let customRegExp = new RegExp("^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$");
+        return customRegExp.test(password);
+      }
+
+
+
+      fetch('/register', {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json, text/plain, */*',
+          'Content-type': 'application/json'
+        },
+        body: JSON.stringify({
+          captcha: captcha,
+          fname: fname,
+          mname: mname,
+          lname: lname,
+          email: email,
+          cmnumber: cmnumber,
+          mnumber: mnumber,
+          cpnumber: cpnumber,
+          pnumber: pnumber,
+          username: email,
+          password: inputPassword
+        })
+      })
+        .then((res) => res.json())
+        .then((data) => {
+
+          Swal.hideLoading()
+
+          if (data.created !== '') {
+            $("#fname").val('');
+            $("#lname").val('');
+            $("#mname").val('');
+            $("#mnumber").val('');
+            $("#cmnumber").val('');
+            $("#pnumber").val('');
+            $("#cpnumber").val('');
+            $("#email").val('');
+            $("#inputPassword").val('');
+            $("#confirmPassword").val('');
+            Swal.fire({
+              type: 'info',
+              title: '<strong>Needs email verification</strong>',
+              text: 'You need to verify your email first.',
+            })
+          }
+
+          if (data.error !== '') {
+            $("#email").addClass("is-invalid");
+            Swal.fire({
+              type: 'error',
+              title: 'Oops...',
+              text: 'Email already exists.',
+            })
+          }
+
+          if (data.msg !== '') {
+            Swal.fire({
+              type: 'error',
+              title: 'Oops...',
+              text: data.msg,
+            })
+          }
+        });
+
     });
   });
 </script>

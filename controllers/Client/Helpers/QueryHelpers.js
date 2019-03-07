@@ -32,7 +32,8 @@ exports.estab_get_all_query = ec_no => {
   estab_description,
   towns.town_name,
   establistments_photo.image_filename,
-  round(SUM(rating_value)/COUNT(*), 2) as RATES 
+  round(SUM(rating_value)/COUNT(*), 2) as RATES,
+  count(ratings.estab_no) as Num_of_Rates
   FROM establistments 
   INNER JOIN towns ON establistments.town_no = towns.town_no 
   INNER JOIN establistments_category ON establistments.ec_no = establistments_category.ec_no 
@@ -92,7 +93,8 @@ exports.spot_get_all_query = sc_no => {
   spot_subname,
   spot_description, 
   spots_photo.img_filename,
-  round(SUM(rating_value)/COUNT(*), 2) as RATES
+  round(SUM(rating_value)/COUNT(*), 2) as RATES,
+  count(ratings.estab_no) as Num_of_Rates
   FROM spots
   INNER JOIN spots_category ON spots_category.sc_no = spots.sc_no
   INNER JOIN barangays ON barangays.bar_no = spots.bar_no
@@ -198,6 +200,7 @@ exports.visited_spot = (spot_no, user_no, visit_date) => {
 exports.top_destination_estab = () => {
   return `SELECT 
   round(SUM(rating_value)/COUNT(*), 2) as RATES,
+  count(ratings.estab_no) as Num_of_Rates,
   image_filename,
   estab_name,
   ec_name,
