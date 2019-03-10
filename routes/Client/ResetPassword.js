@@ -56,7 +56,9 @@ router.post("/", (req, res) => {
 });
 
 router.get("/:email/:token", (req, res) => {
-
+  if (req.user) {
+    return res.redirect('/');
+  }
   db.query(`SELECT count(login_uname) as username FROM logins 
   WHERE resetPasswordToken = ? AND login_uname = ?`,
     [req.params.token, req.params.email], (err, rows) => {

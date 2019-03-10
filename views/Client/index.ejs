@@ -68,6 +68,8 @@
             <%= user.user_lname %>!
           </a>
           <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <a class="dropdown-item" href="#" data-toggle="modal" data-target="#changePasswordModal">Change
+              Password</a>
             <a class="dropdown-item" href="/logout"
               onclick="return confirm('Are you sure you want to logout?');">Logout</a>
           </div>
@@ -78,6 +80,58 @@
     </div>
   </div>
 </nav>
+
+<!-- Change Password Modal -->
+<div class="modal fade" id="changePasswordModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Change Password</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form id="form-change-pass" action="/changepassword" method="POST">
+          <p class="text-danger">* fields are required</p>
+          <div class="form-group row">
+            <label for="inputPassword" class="col-md-6 col-form-label">
+              <span class="text-danger">*</span>
+              Old Password
+            </label>
+            <div class="col-md-6">
+              <input type="password" class="form-control" id="oldPassword" name="oldpassword"
+                placeholder="Old Password">
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="inputPassword" class="col-md-6 col-form-label">
+              <span class="text-danger">*</span>
+              Password
+            </label>
+            <div class="col-md-6">
+              <input type="password" class="form-control" id="inputPassword" name="password" placeholder="Password">
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="confirmPassword" class="col-md-6 col-form-label">
+              <span class="text-danger">*</span>
+              Confirm Password
+            </label>
+            <div class="col-md-6">
+              <input type="password" class="form-control" id="confirmPassword" placeholder="Confirm Password">
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" id="changePassword">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
 
 <!-- Header -->
 <header class="masthead">
@@ -425,4 +479,58 @@
       <% } %>
 </section>
 <script src="/js/carouselDisplayMorethanOne.js"></script>
+<script type="text/javascript">
+  $(document).ready(function () {
+
+    function validatePassword(password) {
+      let customRegExp = new RegExp("^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$");
+      return customRegExp.test(password);
+    }
+
+    $('#changePassword').click(() => {
+      var oldPassword = $.trim($('#oldPassword').val());
+      var inputPassword = $.trim($('#inputPassword').val());
+      var confirmPassword = $.trim($('#confirmPassword').val());
+
+      if (!validatePassword(inputPassword)) {
+        alert('Should have 8 to 16 characters, must contain one special character, at least one uppercase character, and have a numerical.');
+        return false;
+      }
+
+      if (inputPassword !== confirmPassword) {
+        alert('Password doesn\'t match.');
+        return false;
+      }
+
+      fetch('/changepassword', {
+        method: 'post',
+        headers: {
+          'Accept': 'application/json, text/plain, */*',
+          'Content-type': 'application/json'
+        },
+        body: JSON.stringify({
+          oldPassword: oldPassword,
+          inputPassword: inputPassword,
+          confirmPassword: confirmPassword
+        })
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          if (data.error) {
+            return alert(data.err_msg)
+          }
+
+          if (data.success) {
+            $('#changePasswordModal').modal('hide');
+            return alert(data.success_msg);
+          }
+        })
+        .catch((err) => {
+          $('#changePasswordModal').modal('hide');
+          return alert('Ooops something went wrong. Try again later.')
+        });
+
+    });
+  });
+</script>
 <%- include('partials/footer') %>

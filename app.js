@@ -59,6 +59,7 @@ const clientRegisterRoutes = require("./routes/Client/RegisterClient");
 const clientLoginRoutes = require("./routes/Client/LoginClient");
 
 const clientResetPassword = require("./routes/Client/ResetPassword");
+const clientChangePassword = require("./routes/Client/ChangePassword");
 
 const logOut = require("./routes/Logout");
 
@@ -95,6 +96,7 @@ app.use("/nature", natureRoutes);
 app.use("/register", clientRegisterRoutes);
 app.use("/login", clientLoginRoutes);
 app.use("/reset", clientResetPassword);
+app.use("/changepassword", clientChangePassword);
 app.use("/logout", logOut);
 
 app.use("/about", aboutUs);
