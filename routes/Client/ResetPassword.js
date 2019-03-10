@@ -9,7 +9,7 @@ const bcrypt = require('bcrypt-nodejs');
 router.get("/", (req, res) => {
   let message = req.session.valid != '' ? req.session.valid : '';
   let success = req.session.success != '' ? req.session.success : '';
-
+  req.session.destroy();
   if (req.user) {
     res.redirect('/');
   } else {
@@ -25,7 +25,7 @@ router.get("/", (req, res) => {
 router.post("/", (req, res) => {
   let data = req.body;
 
-  db.query(`SELECT count(user_email) AS count_email, users.user_no AS user_id FROM users
+  db.query(`SELECT count(user_email) AS count_email, users.user_no AS user_id, user_email FROM users
 	INNER JOIN logins ON
   users.user_no = logins.user_no
   WHERE user_email = ? AND 
@@ -43,13 +43,12 @@ router.post("/", (req, res) => {
         db.query(`UPDATE logins
       SET resetPasswordToken = ?,
       resetPasswordExpires = ?
-      WHERE login_uname = ? and user_no = ?`, [
+      WHERE user_no = ?`, [
             token,
             moment().add(1, 'h').format(), // 1 hour
-            data.username,
             rows[0].user_id
           ], (ex_err, ex_rows) => {
-            sendEmail(data.username, token, req, res);
+            sendEmail(rows[0].user_email, token, req, res);
           });
       });
     });
@@ -59,8 +58,8 @@ router.get("/:email/:token", (req, res) => {
   if (req.user) {
     return res.redirect('/');
   }
-  db.query(`SELECT count(login_uname) as username FROM logins 
-  WHERE resetPasswordToken = ? AND login_uname = ?`,
+  db.query(`SELECT count(login_uname) as username FROM logins INNER JOIN users ON logins.user_no = users.user_no
+  WHERE resetPasswordToken = ? AND user_email = ?`,
     [req.params.token, req.params.email], (err, rows) => {
       if (rows[0].username <= 0) {
         return res.render('Client/Reset Password/error', {
@@ -109,13 +108,13 @@ router.post("/:email/:token", (req, res) => {
     });
 });
 
-sendEmail = (username, token, req, res) => {
+sendEmail = (email, token, req, res) => {
   const output = `
                 We notice that you've requested to reset your password.
                 You must reset your password within an hour.
                 <br>
                 Click here! 
-                <a href="http://localhost:8080/reset/${username}/${token}">Create New Password</a>
+                <a href="http://localhost:8080/reset/${email}/${token}">Create New Password</a>
                 `;
 
   // async..await is not allowed in global scope, must use a wrapper
@@ -136,7 +135,7 @@ sendEmail = (username, token, req, res) => {
     // setup email data with unicode symbols
     let mailOptions = {
       from: '"Abra Tourist Guide" <info@bstech-solutions.com>', // sender address
-      to: username, // list of receivers
+      to: email, // list of receivers
       subject: "Welcome to Abra!", // Subject line
       html: output // html body
     };

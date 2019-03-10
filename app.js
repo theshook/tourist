@@ -42,6 +42,8 @@ const spotRoutes = require("./routes/Spot");
 const featuredRoutes = require("./routes/Featured");
 const notificationsRoutes = require("./routes/Notification");
 
+const adminChangePassword = require("./routes/ChangePassword");
+
 const homeRoutes = require("./routes/Client/Home");
 
 const restaurantRoutes = require("./routes/Client/Restaurant");
@@ -79,6 +81,7 @@ app.use("/admin/establishment", establishmentRoutes);
 app.use("/admin/spot", spotRoutes);
 app.use("/admin/featured", featuredRoutes);
 app.use("/admin/notifications", notificationsRoutes);
+app.use("/admin/change", adminChangePassword);
 
 app.use("/", homeRoutes);
 

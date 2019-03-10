@@ -8,7 +8,13 @@ router.get('/', (req, res) => {
   if (req.user) {
     res.redirect('/admin');
   } else {
-    res.render('Admin/template', { pageTitle: 'Login Panel', page: 'Login', message: req.flash('loginMessage') })
+    res.render('Admin/template', {
+      pageTitle: 'Login Panel',
+      page: 'Login',
+      success: undefined,
+      error: undefined,
+      message: req.flash('loginMessage')
+    })
   }
 });
 

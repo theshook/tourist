@@ -1,77 +1,77 @@
 <div class="col-md-10 mx-auto">
-    <div class="card">
-      <div class="card-header card-header-warning">
-        <h4 class="card-title">Create User</h4>
-      </div>
-      <div class="card-body">
-        <form action="/admin/user" method="POST">
-          <div class="row">
-            <div class="col-md-4">
-              <div class="form-group bmd-form-group">
-                <label class="bmd-label-floating">First Name</label>
-                <input type="text" class="form-control" name="fname">
-              </div>
-            </div>
-            <div class="col-md-4">
-              <div class="form-group bmd-form-group">
-                <label class="bmd-label-floating">Middle Name</label>
-                <input type="text" class="form-control" name="mname">
-              </div>
-            </div>
-            <div class="col-md-4">
-              <div class="form-group bmd-form-group">
-                <label class="bmd-label-floating">Last Name</label>
-                <input type="text" class="form-control" name="lname">
-              </div>
+  <div class="card">
+    <div class="card-header card-header-warning">
+      <h4 class="card-title">Create User</h4>
+    </div>
+    <div class="card-body">
+      <form action="/admin/user" method="POST">
+        <div class="row">
+          <div class="col-md-4">
+            <div class="form-group bmd-form-group">
+              <label class="bmd-label-floating">First Name</label>
+              <input type="text" class="form-control" name="fname">
             </div>
           </div>
-          <div class="row">
-            <div class="col-md-6">
-              <div class="form-group bmd-form-group">
-                <label class="bmd-label-floating">Email Address</label>
-                <input type="email" class="form-control" name="email">
-              </div>
-            </div>
-            <div class="col-md-3">
-              <div class="form-group bmd-form-group">
-                <label class="bmd-label-floating">Mobile Number</label>
-                <input type="number" class="form-control" name="mobile">
-              </div>
-            </div>
-            <div class="col-md-3">
-              <div class="form-group bmd-form-group">
-                <label class="bmd-label-floating">Phone Number</label>
-                <input type="number" class="form-control" name="phone">
-              </div>
+          <div class="col-md-4">
+            <div class="form-group bmd-form-group">
+              <label class="bmd-label-floating">Middle Name</label>
+              <input type="text" class="form-control" name="mname">
             </div>
           </div>
-          <div class="row">
-            <div class="col-md-6">
-              <div class="form-group bmd-form-group">
-                <label class="bmd-label-floating">Username</label>
-                <input type="text" class="form-control" name="username">
-              </div>
-            </div>
-            <div class="col-md-6">
-              <div class="form-group bmd-form-group">
-                <label class="bmd-label-floating">Password</label>
-                <input type="password" class="form-control" name="password">
-              </div>
+          <div class="col-md-4">
+            <div class="form-group bmd-form-group">
+              <label class="bmd-label-floating">Last Name</label>
+              <input type="text" class="form-control" name="lname">
             </div>
           </div>
-          <div class="row">
-            <div class="btn-group btn-group-toggle mx-auto" data-toggle="buttons">
-              <label class="btn btn-secondary active">
-                <input type="radio" name="usertype" id="option2" autocomplete="off" value="2" checked> Admin
-              </label>
-              <label class="btn btn-secondary">
-                <input type="radio" name="usertype" id="option3" autocomplete="off" value="1"> Tourist
-              </label>
+        </div>
+        <div class="row">
+          <div class="col-md-6">
+            <div class="form-group bmd-form-group">
+              <label class="bmd-label-floating">Email Address</label>
+              <input type="email" class="form-control" name="email">
             </div>
           </div>
-          <button type="submit" class="btn btn-info mx-auto d-block w-50">Save Record</button>
-          <div class="clearfix"></div>
-        </form>
-      </div>
+          <div class="col-md-3">
+            <div class="form-group bmd-form-group">
+              <label>Mobile Number</label>
+              <input type="number" class="form-control" name="mobile" min="0" placeholder="639125789784">
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="form-group bmd-form-group">
+              <label>Phone Number</label>
+              <input type="number" class="form-control" name="phone" min="0" placeholder="0755223355">
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6">
+            <div class="form-group bmd-form-group">
+              <label class="bmd-label-floating">Username</label>
+              <input type="text" class="form-control" name="username">
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group bmd-form-group">
+              <label class="bmd-label-floating">Password</label>
+              <input type="password" class="form-control" name="password">
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="btn-group btn-group-toggle mx-auto" data-toggle="buttons">
+            <label class="btn btn-secondary active">
+              <input type="radio" name="usertype" id="option2" autocomplete="off" value="2" checked> Admin
+            </label>
+            <label class="btn btn-secondary">
+              <input type="radio" name="usertype" id="option3" autocomplete="off" value="1"> Tourist
+            </label>
+          </div>
+        </div>
+        <button type="submit" class="btn btn-info mx-auto d-block w-50">Save Record</button>
+        <div class="clearfix"></div>
+      </form>
     </div>
   </div>
+</div>

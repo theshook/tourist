@@ -10,6 +10,7 @@ exports.dashboard_get_all = (req, res) => {
   res.render("Admin/template", {
     user: req.user,
     pageTitle: "Admin Panel",
-    page: "Dashboard/Dashboard"
+    page: "Dashboard/Dashboard",
+    login_message: (req.flash('loginMessage').length == 0) ? '' : req.flash('loginMessage')
   });
 };
