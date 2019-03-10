@@ -61,22 +61,22 @@
               <label for="lname" class="col-sm-4 col-form-label">Mobile Number</label>
               <div class="col-sm-2">
                 <input type="number" class="form-control" id="cmnumber" name="cmnumber" placeholder="63"
-                  value="<%= data !== '' ? data.cm : '' %>">
+                  value="<%= data !== '' ? data.cm : '' %>" min="0">
               </div>
               <div class="col-sm-6">
-                <input type="number" class="form-control" id="mnumber" name="mnumber" placeholder="09123456789"
-                  value="<%= data !== '' ? data.mobile : '' %>">
+                <input type="number" class="form-control" id="mnumber" name="mnumber" placeholder="9123456789"
+                  value="<%= data !== '' ? data.mobile : '' %>" min="0">
               </div>
             </div>
             <div class="form-group row">
               <label for="lname" class="col-sm-4 col-form-label">Phone Number</label>
               <div class="col-sm-2">
                 <input type="number" class="form-control" id="cpnumber" name="cpnumber" placeholder="075"
-                  value="<%= data !== '' ? data.cp : '' %>">
+                  value="<%= data !== '' ? data.cp : '' %>" min="0">
               </div>
               <div class="col-sm-6">
                 <input type="number" class="form-control" id="pnumber" name="pnumber" placeholder="5112233"
-                  value="<%= data !== '' ? data.phone : '' %>">
+                  value="<%= data !== '' ? data.phone : '' %>" min="0">
               </div>
             </div>
             <div class="form-group row">
@@ -98,8 +98,7 @@
                 Password
               </label>
               <div class="col-sm-8">
-                <input type="password" class="form-control" id="inputPassword" name="password" placeholder="Password"
-                  value="Greenpiece1!">
+                <input type="password" class="form-control" id="inputPassword" name="password" placeholder="Password">
               </div>
             </div>
             <div class="form-group row">
@@ -108,8 +107,7 @@
                 Confirm Password
               </label>
               <div class="col-sm-8">
-                <input type="password" class="form-control" id="confirmPassword" placeholder="confirmPassword"
-                  value="Greenpiece1!">
+                <input type="password" class="form-control" id="confirmPassword" placeholder="confirmPassword">
               </div>
             </div>
             <div class="form-group row">
@@ -147,6 +145,22 @@
       });
     }
 
+    function numberValidation(n1, n2, s1) {
+      if (!n1 == '') {
+        if (!$.isNumeric(n1) || n2 == '') {
+          alert('Country code is required, only numbers are allowed');
+          return false;
+        }
+      }
+
+      if (!n2 == '') {
+        if (!$.isNumeric(n2) || n1 == '') {
+          alert(s1 + ' number is required, only numbers are allowed');
+          return false;
+        }
+      }
+    }
+
     $("#form-register").submit(function (e) {
       e.preventDefault();
 
@@ -172,18 +186,17 @@
       var confirmPassword = $.trim($('#confirmPassword').val());
       var captcha = document.querySelector('#g-recaptcha-response').value;
 
-      if (!mnumber == '') {
-        if (!$.isNumeric(mnumber) || cmnumber == '') {
-          alert('Country code is required, only numbers are allowed');
-          return false;
-        }
+      var mobile = numberValidation(mnumber, cmnumber, "Mobile");
+      var phone = numberValidation(pnumber, cpnumber, "Phone");
+
+      if (!mobile) {
+        e.preventDefault();
+        return false;
       }
 
-      if (!pnumber == '') {
-        if (!$.isNumeric(pnumber) || cpnumber == '') {
-          alert('Country code is required, only numbers are allowed');
-          return false;
-        }
+      if (!phone) {
+        e.preventDefault();
+        return false;
       }
 
       // Check if empty of not

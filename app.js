@@ -58,6 +58,8 @@ const ilocanoRoutes = require("./routes/Client/Ilocano");
 const clientRegisterRoutes = require("./routes/Client/RegisterClient");
 const clientLoginRoutes = require("./routes/Client/LoginClient");
 
+const clientResetPassword = require("./routes/Client/ResetPassword");
+
 const logOut = require("./routes/Logout");
 
 const aboutUs = require("./routes/Client/About");
@@ -92,6 +94,7 @@ app.use("/nature", natureRoutes);
 
 app.use("/register", clientRegisterRoutes);
 app.use("/login", clientLoginRoutes);
+app.use("/reset", clientResetPassword);
 app.use("/logout", logOut);
 
 app.use("/about", aboutUs);

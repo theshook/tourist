@@ -8,6 +8,7 @@ const {
   featured
 } = require('./Helpers/QueryHelpers');
 
+
 exports.get_all_Category = (req, res) => {
   let user = req.user || '';
   let search = req.query.search || null;
@@ -52,7 +53,8 @@ exports.get_all_Category = (req, res) => {
                         userReconEstab,
                         fea_row,
                         top_estab,
-                        top_spot
+                        top_spot,
+                        login_message: (req.flash('loginMessage').length == 0) ? '' : req.flash('loginMessage')
                       });
                     } else {
                       res.render("Client/", {

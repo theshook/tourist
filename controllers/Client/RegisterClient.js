@@ -98,12 +98,10 @@ exports.users_verify_email = (req, res) => {
 
 sendEmail = (username, res) => {
   const output = `
-                Good day your destination in Abra are the following:
-                <br />
                 Before you get started, we just need to be sure this is the right email address.
                 Accuracy is kind of our thing.
 
-                <a href="localhost:8080/register/verify/${username}">Verify Now</a>
+                <a href="http://localhost:8080/register/verify/${username}">Verify Now</a>
                 `;
 
   // async..await is not allowed in global scope, must use a wrapper

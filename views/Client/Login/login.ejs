@@ -41,15 +41,16 @@
             <div class="form-group">
               <label for="exampleInputEmail1">Email address/Username</label>
               <input type="text" class="form-control" id="email" name="username" aria-describedby="emailHelp"
-                placeholder="Enter email">
+                placeholder="Enter email" required>
             </div>
             <div class="form-group">
               <label for="exampleInputPassword1">Password</label>
-              <input type="password" name="password" class="form-control" id="password" placeholder="Password">
+              <input type="password" name="password" class="form-control" id="password" placeholder="Password" required>
             </div>
             <div class="text-center">
               <button type="submit" class="btn btn-primary w-75 p-2">Login</button>
-              <p>Don't have an account? Register <a href="/register">here!</a></p>
+              <p class="pb-0 mb-0">Don't have an account? Register <a href="/register">here!</a></p>
+              <p>Forgot password? click <a href="/reset">here!</a></p>
             </div>
           </form>
         </div>
@@ -60,7 +61,7 @@
 
 <script>
   $(document).ready(function () {
-    $("#form-register").submit(function (e) {
+    $("#form-login").submit(function (e) {
       var email = $.trim($('#email').val());
       var inputPassword = $.trim($('#password').val());
 
