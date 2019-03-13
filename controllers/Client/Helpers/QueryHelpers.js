@@ -11,7 +11,7 @@ exports.estab_maps = () => {
   FROM establistments
   INNER JOIN establistments_location ON establistments_location.estab_no = establistments.estab_no
   INNER JOIN establistments_category ON establistments.ec_no = establistments_category.ec_no
-union
+UNION
 SELECT
   spots.spot_no as "estab_no",
   spot_name,
