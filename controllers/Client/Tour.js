@@ -21,6 +21,10 @@ exports.details = (req, res) => {
   let numSelect;
   let firstWord = days.replace(/ .*/, '');
 
+  if (userDetail == '') {
+    return res.redirect('/tour')
+  }
+
   if (firstWord == 'One') {
     numSelect = 1;
   } else if (firstWord == 'Two') {
@@ -73,30 +77,34 @@ exports.fetch_selected3 = (req, res) => {
   }
 };
 
+capitalizeFirstLetter = (string) => {
+  return string[0].toUpperCase() + string.slice(1);
+}
+
 exports.fetch_sendEmail = (req, res) => {
-  let userDetail = req.user || '';
+  let { user_fname, user_lname, user_email } = req.user;
+  let fullName = capitalizeFirstLetter(user_fname) + " " + capitalizeFirstLetter(user_lname)
   const output = `
-  Good day your destination in Abra are the following:
+  Dear Sir/Madam: <br/>
+  Greetings from Abra iTour! <br />
+  Please check the details of your itinerary: <br />
+  RESERVATION HOLDER: ${fullName}
   ${Object.keys(req.body).map(function (key) {
     return `<li>${req.body[key]}</li>`
   }).join("")}
+  We are eagerly anticipating your arrival and would like to advise you of the following in order to help you with your tour. <br />
+  This has been a notification that your itinerary is CONFIRMED. Thank You! <br />
+  <br />
+  <br />
+  <br />
+  <br />
+  Very truly yours, <br />
+  Abra iTour Admin
+
   `;
 
   // async..await is not allowed in global scope, must use a wrapper
   async function main() {
-
-    // create reusable transporter object using the default SMTP transport
-    // let transporter = nodemailer.createTransport({
-    //   host: "mail.bstech-solutions.com",
-    //   port: 25,
-    //   secure: false, // true for 465, false for other ports
-    //   ignoreTLS: true,
-    //   auth: {
-    //     user: "info@bstech-solutions.com", // generated ethereal user
-    //     pass: "market" // generated ethereal password
-    //   },
-    //   tls: { rejectUnauthorized: false },
-    // });
 
     let transporter = nodemailer.createTransport(smtpTransport({
       name: "www.bstech-solutions.com",
@@ -113,7 +121,7 @@ exports.fetch_sendEmail = (req, res) => {
     // setup email data with unicode symbols
     let mailOptions = {
       from: '"Abra Tourist Guide" <info@bstech-solutions.com>', // sender address
-      to: userDetail.user_email, // list of receivers
+      to: user_email, // list of receivers
       subject: "Welcome to Abra!", // Subject line
       html: output // html body
     };

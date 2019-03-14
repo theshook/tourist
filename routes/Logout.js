@@ -7,4 +7,9 @@ router.get('/', (req, res) => {
   res.redirect('/admin');
 });
 
+router.get('/client', (req, res) => {
+  req.logout();
+  res.redirect('/');
+});
+
 module.exports = router;
