@@ -1,69 +1,17 @@
 <section>
   <!-- Page Content -->
   <div class="container">
-
-    <!-- Navigation for Categories -->
-    <!-- <div class="row justify-content-md-center">
-      <div class="col-md-auto">
-        <% cat_res.forEach(function(row){ %>
-        <% if(row.ec_name == 'Festival') { %>
-        <a class="portfolio-link" href="/festival">
-          <% } else if(row.ec_name == 'Nature') { %>
-          <a class="portfolio-link" href="/nature">
-            <% } else if(row.ec_name == 'Pasalubong') { %>
-            <a class="portfolio-link" href="/pasalubong">
-              <% } else if(row.ec_name == 'Transportation') { %>
-              <a class="portfolio-link" href="/transportation">
-                <% } else if(row.ec_name == 'Banks & Atms') { %>
-                <a class="portfolio-link" href="/banks">
-                  <% } else if(row.ec_name == 'Restaurant') { %>
-                  <a class="portfolio-link" href="/restaurants">
-                    <% } else if(row.ec_name == 'Ilocano Delicacies') { %>
-                    <a class="portfolio-link" href="/ilocano">
-                      <% } else if(row.ec_name == 'Churches & Structures') { %>
-                      <a class="portfolio-link" href="/church">
-                        <% } else if(row.ec_name == 'Hotels') { %>
-                        <a class="portfolio-link" href="/hotels">
-                          <% } %>
-
-                          <% if(row.ec_name == 'Festival') { %>
-                          <img class="img-fluid mb-3" id="link-hover" src="../...png" alt="" height="50" width="70">
-                          <% } else if(row.ec_name == 'Nature') { %>
-                          <img class="img-fluid mb-3" id="link-hover" src="../....png" alt="" height="50" width="70">
-                          <% } else if(row.ec_name == 'Pasalubong') { %>
-                          <img class="img-fluid mb-3" id="link-hover" src="../....png" alt="" height="50" width="70">
-                          <% } else if(row.ec_name == 'Transportation') { %>
-                          <img class="img-fluid mb-3" id="link-hover" src="../....png" alt="" height="50"
-                            width="70">
-                          <% } else if(row.ec_name == 'Banks & Atms') { %>
-                          <img class="img-fluid mb-3" id="link-hover" src="../....png" alt="" height="50" width="70">
-                          <% } else if(row.ec_name == 'Restaurant') { %>
-                          <img class="img-fluid mb-3" id="link-hover" src="../....png" alt="" height="50"
-                            width="70">
-                          <% } else if(row.ec_name == 'Ilocano Delicacies') { %>
-                          <img class="img-fluid mb-3" id="link-hover" src="../....png" alt="" height="50"
-                            width="70">
-                          <% } else if(row.ec_name == 'Churches & Structures') { %>
-                          <img class="img-fluid mb-3" id="link-hover" src="../....jpg" alt="" height="50" width="70">
-                          <% } else if(row.ec_name == 'Hotels') { %>
-                          <img class="img-fluid mb-3" id="link-hover" src="../.....png" alt="" height="50" width="70">
-
-                          <% } %>
-
-                        </a>
-                        <%  }); %>
-      </div>
-    </div> -->
-
-    <!-- Portfolio Item Heading -->
-    <!-- <div class="row">
-        <div class="col-md-12">
-          <h1 class="my-4">
-            <%= info_rows[0].estab_name.toUpperCase() %>
-          </h1>
-        </div>
-      </div> -->
-
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="/">Home</a></li>
+        <li class="breadcrumb-item">
+          <a href="/<%= route %>">
+            <%= route.charAt(0).toUpperCase()+route.substring(1) %>
+          </a>
+        </li>
+        <li class="breadcrumb-item active" aria-current="page"><%= info_rows[0].estab_name%></li>
+      </ol>
+    </nav>
     <div class="row">
       <% if (user=="null") { %>
       <div class="col-md-8 offset-md-2">

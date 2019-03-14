@@ -33,52 +33,51 @@
   });
 </script>
 <!-- Navigation -->
-
 <nav class="navbar navbar-expand-lg navbar-dark fixed-top pt-0 pb-0" style="background-color: #212529;" id="mainNav">
-  <div class="container">
-    <a class="navbar-brand js-scroll-trigger" href="#page-top">Abra Travel Guide </a>
-    <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse"
-      data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false"
-      aria-label="Toggle navigation">
-      Menu
-      <i class="fa fa-bars"></i>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarResponsive">
+  <a class="navbar-brand js-scroll-trigger" href="#page-top">Abra Travel Guide </a>
+  <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse"
+    data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false"
+    aria-label="Toggle navigation">
+    Menu
+    <i class="fa fa-bars"></i>
+  </button>
 
-      <form action="/search" method="GET" class="form-inline my-2 my-lg-0">
-        <input class="form-control mr-sm-2" type="text" placeholder="Search" id="tags" name="search">
-        <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
-      </form>
+  <div class="collapse navbar-collapse" id="navbarResponsive">
 
-      <ul class="navbar-nav text-uppercase ml-auto">
-        <li class="nav-item">
-          <a class="nav-link js-scroll-trigger" href="#services">Services</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link js-scroll-trigger" href="#portfolio">Explore</a>
-        </li>
-        <li class="nav-item">
-          <% if (user == '') {%>
-          <a class="nav-link" href="/login">Sign In</a>
-          <% } else { %>
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
-            aria-haspopup="true" aria-expanded="false">
-            Welcome back
-            <%= user.user_lname %>!
-          </a>
-          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <a class="dropdown-item" href="#" data-toggle="modal" data-target="#changePasswordModal">Change
-              Password</a>
-            <a class="dropdown-item" href="/logout"
-              onclick="return confirm('Are you sure you want to logout?');">Logout</a>
-          </div>
-        </li>
-        <% } %>
-        </li>
-      </ul>
-    </div>
+    <form action="/search" method="GET" class="form-inline my-2 my-lg-0">
+      <input class="form-control mr-sm-2" type="text" placeholder="Search" id="tags" name="search">
+      <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
+    </form>
+
+    <ul class="navbar-nav text-uppercase ml-auto">
+      <li class="nav-item">
+        <a class="nav-link js-scroll-trigger" href="#services">Services</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link js-scroll-trigger" href="#portfolio">Explore</a>
+      </li>
+      <li class="nav-item">
+        <% if (user == '') {%>
+        <a class="nav-link" href="/login">Sign In</a>
+        <% } else { %>
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+          aria-haspopup="true" aria-expanded="false">
+          Welcome back
+          <%= user.user_lname %>!
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <a class="dropdown-item" href="#" data-toggle="modal" data-target="#changePasswordModal">Change
+            Password</a>
+          <a class="dropdown-item" href="/logout"
+            onclick="return confirm('Are you sure you want to logout?');">Logout</a>
+        </div>
+      </li>
+      <% } %>
+      </li>
+    </ul>
   </div>
+
 </nav>
 
 <!-- Change Password Modal -->
@@ -146,65 +145,68 @@
     </div>
   </div>
 </header>
-
-<div class="container-fluid pt-5 pb-5">
-  <div class="row justify-content-md-center">
-    <div class="col-md-auto">
+<hr>
+<nav class="navbar navbar-expand-lg navbar-light" style="background-color: #FFF;">
+  <div class="container">
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav"
+    aria-expanded="false" aria-label="Toggle navigation">
+    Categories
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarNav">
       <% rows.forEach(function(row){ %>
       <% if(row.ec_name == 'Festival') { %>
-      <a class="portfolio-link" href="/festival">
-        <% } else if(row.ec_name == 'Nature') { %>
+        <a class="portfolio-link" href="/festival">
+          <img class="img-fluid m-2" id="link-hover" src="../festivala111.png" alt="" height="300" width="100">
+        </a>
+      <% } %>
+      <% if(row.ec_name == 'Nature') { %>
         <a class="portfolio-link" href="/nature">
-          <% } else if(row.ec_name == 'Pasalubong') { %>
-          <a class="portfolio-link" href="/pasalubong">
-            <% } else if(row.ec_name == 'Transportation') { %>
-            <a class="portfolio-link" href="/transportation">
-              <% } else if(row.ec_name == 'Banks & Atms') { %>
-              <a class="portfolio-link" href="/banks">
-                <% } else if(row.ec_name == 'Restaurants') { %>
-                <a class="portfolio-link" href="/restaurants">
-                  <% } else if(row.ec_name == 'Ilocano Delicacies') { %>
-                  <a class="portfolio-link" href="/ilocano">
-                    <% } else if(row.ec_name == 'Churches & Structures') { %>
-                    <a class="portfolio-link" href="/church">
-                      <% } else if(row.ec_name == 'Hotels') { %>
-                      <a class="portfolio-link" href="/hotels">
-                        <% } %>
-
-                        <% if(row.ec_name == 'Festival') { %>
-                        <img class="img-fluid m-2" id="link-hover" src="../festivala111.png" alt="" height="300"
-                          width="100">
-                        <% } else if(row.ec_name == 'Nature') { %>
-                        <img class="img-fluid m-2" id="link-hover" src="../natura2.png" alt="" height="300" width="100">
-                        <% } else if(row.ec_name == 'Pasalubong') { %>
-                        <img class="img-fluid m-2" id="link-hover" src="../bag.png" alt="" height="300" width="100">
-                        <% } else if(row.ec_name == 'Transportation') { %>
-                        <img class="img-fluid m-2" id="link-hover" src="../transportation2.png" alt="" height="300"
-                          width="100">
-                        <% } else if(row.ec_name == 'Banks & Atms') { %>
-                        <img class="img-fluid m-2" id="link-hover" src="../banksa.png" alt="" height="300" width="100">
-                        <% } else if(row.ec_name == 'Restaurants') { %>
-                        <img class="img-fluid m-2" id="link-hover" src="../restaurants copy.png" alt="" height="300"
-                          width="100">
-                        <% } else if(row.ec_name == 'Ilocano Delicacies') { %>
-                        <img class="img-fluid m-2" id="link-hover" src="../ilocanodeli12.png" alt="" height="300"
-                          width="100">
-                        <% } else if(row.ec_name == 'Churches & Structures') { %>
-                        <img class="img-fluid m-2" id="link-hover" src="../museums.jpg" alt="" height="300" width="100">
-                        <% } else if(row.ec_name == 'Hotels') { %>
-                        <img class="img-fluid m-2" id="link-hover" src="../hotelsq.png" alt="" height="300" width="100">
-
-                        <% } %>
-
-                      </a>
-
-                      <%  }); %>
-                      <a href="/about" class="portfolio-link">
-                        <img class="img-fluid m-2" id="link-hover" src="../logo1 (2).jpg" alt="" height="300"
-                          width="135"></a>
-    </div>
+          <img class="img-fluid m-2" id="link-hover" src="../natura2.png" alt="" height="300" width="100">
+        </a>
+      <% } %>
+      <% if(row.ec_name == 'Pasalubong') { %>
+      <a class="portfolio-link" href="/pasalubong">
+        <img class="img-fluid m-2" id="link-hover" src="../bag.png" alt="" height="300" width="100">
+      </a>
+      <% } %>
+      <% if(row.ec_name == 'Transportation') { %>
+      <a class="portfolio-link" href="/transportation">
+        <img class="img-fluid m-2" id="link-hover" src="../transportation2.png" alt="" height="300" width="100">
+      </a>
+      <% } %>
+      <% if(row.ec_name == 'Banks & Atms') { %>
+      <a class="portfolio-link" href="/banks">
+        <img class="img-fluid m-2" id="link-hover" src="../banksa.png" alt="" height="300" width="100">
+      </a>
+      <% } %>
+      <% if(row.ec_name == 'Restaurants') { %>
+      <a class="portfolio-link" href="/restaurants">
+        <img class="img-fluid m-2" id="link-hover" src="../restaurants copy.png" alt="" height="300" width="100">
+      </a>
+      <% } %>
+      <% if(row.ec_name == 'Ilocano Delicacies') { %>
+      <a class="portfolio-link" href="/ilocano">
+        <img class="img-fluid m-2" id="link-hover" src="../ilocanodeli12.png" alt="" height="300" width="100">
+      </a>
+      <% } %>
+      <% if(row.ec_name == 'Churches & Structures') { %>
+      <a class="portfolio-link" href="/church">
+        <img class="img-fluid m-2" id="link-hover" src="../museums.jpg" alt="" height="300" width="100">
+      </a>
+      <% } %>
+      <% if(row.ec_name == 'Hotels') { %>
+      <a class="portfolio-link" href="/hotels">
+        <img class="img-fluid m-2" id="link-hover" src="../hotelsq.png" alt="" height="300" width="100">
+      </a>
+      <% } %>
+      <% }); %>
+      <a href="/about" class="portfolio-link">
+        <img class="img-fluid m-2" id="link-hover" src="../logo1 (2).jpg" alt="" height="300" width="135">
+      </a>
   </div>
-</div>
+  </div>
+</nav>
 <hr>
 <!-- Services -->
 <section id="services" class="pt-5">
