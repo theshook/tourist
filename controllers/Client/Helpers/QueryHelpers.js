@@ -7,7 +7,7 @@ exports.log_file_query = () => {
 }
 
 exports.log_file = () => {
-  return `SELECT * FROM log_file ORDER BY log_file_created_at desc`
+  return `SELECT * FROM log_file ORDER BY id_log_file DESC`
 }
 // END LOG_FILE
 

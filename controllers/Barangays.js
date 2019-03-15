@@ -1,4 +1,5 @@
 var moment = require("moment");
+const { log_file_query } = require("./Client/Helpers/QueryHelpers");
 const db = require("../db.js");
 
 exports.barangays_get_all = (req, res) => {
@@ -68,22 +69,28 @@ exports.barangays_new = (req, res) => {
 
 exports.barangays_create = (req, res) => {
   let date = moment().format("YYYY-MM-DD HH:MM:SS");
+
+  let { user_fname, user_lname, user_email } = req.user;
+  let name = `${user_fname} ${user_lname}`;
+
   let user = req.user.user_no;
   let data = {
     town: req.body.town_no,
     barangay: req.body.barangay_name
   };
-  db.query(
-    "INSERT INTO barangays (town_no, bar_name, bar_encode, bar_encode_date) values(?,?,?,?)",
+  db.query("INSERT INTO barangays (town_no, bar_name, bar_encode, bar_encode_date) values(?,?,?,?)",
     [data.town, data.barangay, user, date],
     (err, rows) => {
-      if (err) {
-        throw err;
-      } else {
-        res.redirect("/admin/barangay");
-      }
-    }
-  );
+      if (err) { throw err; }
+
+
+      db.query(log_file_query(),
+        [name, user_email, 'Create Barangay', `Create ${data.barangay}`, moment().format()],
+        (err, rows) => {
+          if (err) { throw err; }
+          res.redirect("/admin/barangay");
+        });
+    });
 };
 
 exports.barangays_edit = (req, res) => {
@@ -115,6 +122,10 @@ exports.barangays_edit = (req, res) => {
 exports.barangays_update = (req, res) => {
   let user = req.user.user_no;
   let date = moment().format("YYYY-MM-DD HH:MM:SS");
+
+  let { user_fname, user_lname, user_email } = req.user;
+  let name = `${user_fname} ${user_lname}`;
+
   let data = {
     town_no: req.body.town_no,
     bar_name: req.body.bar_name,
@@ -124,27 +135,44 @@ exports.barangays_update = (req, res) => {
     "UPDATE barangays SET bar_name=?, town_no=?, bar_encode=?, bar_encode_date=? where bar_no = ?",
     [data.bar_name, data.town_no, user, date, data.id],
     (err, row) => {
-      if (err) {
-        throw err;
-      } else {
-        res.redirect("/admin/barangay");
-      }
-    }
-  );
+      if (err) { throw err; }
+
+      db.query(log_file_query(),
+        [name, user_email, 'Update Barangay', `Update ${data.bar_name}`, moment().format()],
+        (err, rows) => {
+          if (err) { throw err; }
+          res.redirect("/admin/barangay");
+        });
+
+    });
 };
 
 exports.barangays_delete = (req, res) => {
+  let { user_fname, user_lname, user_email } = req.user;
+  let name = `${user_fname} ${user_lname}`;
+
   let date = moment().format("YYYY-MM-DD HH:MM:SS");
   let user = req.user.user_no;
   db.query(
     "UPDATE barangays SET bar_inactive=1, bar_delete=1, bar_encode=?, bar_encode_date=? WHERE bar_no=?",
     [user, date, req.params.barId],
     (err, row) => {
-      if (err) {
-        throw err;
-      } else {
-        res.redirect("/admin/barangay");
-      }
-    }
-  );
+      if (err) { throw err; }
+
+      db.query(`SELECT bar_name FROM barangays WHERE bar_no = ${req.params.barId}`,
+        (err, bar_name) => {
+          if (err) { throw err; }
+
+          db.query(log_file_query(),
+            [name, user_email, 'Delete Barangay', `Delete ${bar_name[0].bar_name}`, moment().format()],
+            (err, rows) => {
+              if (err) { throw err; }
+              res.redirect("/admin/barangay");
+            });
+
+        });
+
+
+
+    });
 };
