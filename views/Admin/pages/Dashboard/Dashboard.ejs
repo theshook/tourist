@@ -1,5 +1,11 @@
 <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+<link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css">
+
 <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
+<script src="/js/addons/datatables.min.js"></script>
+
+
 <script>
   $(function () {
 
@@ -10,3 +16,42 @@
 });
 </script>
 <h1>Dashboard</h1>
+<table id="example" class="table table-striped table-bordered" style="width:100%">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Email</th>
+      <th>Action</th>
+      <th>Target</th>
+      <th>Created At</th>
+    </tr>
+  </thead>
+  <tbody>
+    
+    <% rows.forEach(function(row) { %>
+    <tr>
+      <td><%= row.log_file_name %></td>
+      <td><%= row.log_file_email %></td>
+      <td><%= row.log_file_action %></td>
+      <td><%= row.log_file_target %></td>
+      <td><%= moment(row.log_file_created_at).format('MMMM Do YYYY, h:mm:ss a')  %></td>
+    </tr>
+    <% }); %>
+    
+  </tbody>
+  <tfoot>
+    <tr>
+      <th>Name</th>
+      <th>Email</th>
+      <th>Action</th>
+      <th>Target</th>
+      <th>Created At</th>
+    </tr>
+  </tfoot>
+</table>
+
+<script type="text/javascript">
+$(document).ready(function() {
+    $('#example').DataTable();
+} );
+</script>

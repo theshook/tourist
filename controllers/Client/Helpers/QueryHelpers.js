@@ -1,3 +1,16 @@
+// LOG_FILE INSERT QUERY
+exports.log_file_query = () => {
+  return `
+  INSERT INTO log_file 
+  (log_file_name, log_file_email, log_file_action, log_file_target, log_file_created_at)
+  VALUES (?, ?, ?, ?, ?)`
+}
+
+exports.log_file = () => {
+  return `SELECT * FROM log_file ORDER BY log_file_created_at desc`
+}
+// END LOG_FILE
+
 // ESTABLISHMENTS QUERY
 exports.estab_maps = () => {
   return `SELECT
