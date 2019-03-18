@@ -311,28 +311,38 @@ ORDER BY RAND() LIMIT 0,3`;
 }
 
 exports.featured = () => {
-  return `SELECT 
-	spots.spot_no,
+  return `
+  SELECT 
+  round(SUM(rating_value)/COUNT(*), 2) as RATES,
+  count(ratings.spot_no) as Num_of_Rates,
+  spots.spot_no,
+  spot_name,
 	spots_category.sc_name,
 	spots_photo.img_filename
-	FROM featured
-	INNER JOIN spots ON featured.spot_no = spots.spot_no
+	FROM ratings
+	INNER JOIN spots ON ratings.spot_no = spots.spot_no
 	INNER JOIN spots_category ON spots_category.sc_no = spots.sc_no
+    INNER JOIN featured ON ratings.spot_no = featured.spot_no
 	INNER JOIN spots_photo ON spots_photo.spot_no = featured.spot_no
 	WHERE spots.spot_no = featured.spot_no AND spots_photo.img_isprimary = 1
+    GROUP BY spots.spot_no
 
 UNION
 
 SELECT 
-	establistments.estab_no, 
+round(SUM(rating_value)/COUNT(*), 2) as RATES,
+count(ratings.estab_no) as Num_of_Rates,
+  establistments.estab_no, 
+  estab_name,
 	establistments_category.ec_name, 
 	establistments_photo.image_isprimary
-    FROM featured
-    INNER JOIN establistments ON establistments.estab_no = featured.estab_no
+    FROM ratings
+    INNER JOIN establistments ON ratings.estab_no = establistments.estab_no
 	INNER JOIN establistments_category ON establistments_category.ec_no = establistments.ec_no
+    INNER JOIN featured ON ratings.estab_no = featured.estab_no
 	INNER JOIN establistments_photo ON establistments_photo.estab_no = featured.estab_no
 	WHERE establistments.estab_no = featured.estab_no AND establistments_photo.image_isprimary = 1
-    
+    GROUP BY establistments.estab_no   
     `;
 }
 

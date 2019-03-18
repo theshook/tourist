@@ -1,0 +1,99 @@
+<div class="container-fluid pt-3 pb-5">
+  <h4 class="section-heading text-uppercase">Adventures</h4>
+  <div class="adventure owl-carousel owl-theme">
+    <% sa_rows.forEach(function(sa_row){ %>
+    <% if(sa_row.sa_name == 'Water Adventure') { %>
+    <div class="item">
+      <div class="card">
+        <img src="wATER ADVENTURE.jpg" style="height: 200px;" class="card-img-top" alt="...">
+        <div class="card-body">
+          <a href="/adventure/Water-Adventure" class="btn btn-light w-100">
+            <p class="card-title">Water Adventure</p>
+          </a>
+        </div>
+      </div>
+    </div>
+    <% } else if (sa_row.sa_name == 'Mountain Hiking') { %>
+    <div class="item">
+      <div class="card">
+        <img src="HIKING.jpg" style="height: 200px;" class="card-img-top" alt="...">
+        <div class="card-body">
+          <a href="/adventure/Mountain-Hiking" class="btn btn-light w-100">
+            <p class="card-title">Mountain Hiking</p>
+          </a>
+        </div>
+      </div>
+    </div>
+    <% } else if (sa_row.sa_name == 'Cultural Tourism') { %>
+    <div class="item">
+      <div class="card">
+        <img src="CULTURE.jpg" style="height: 200px;" class="card-img-top" alt="...">
+        <div class="card-body">
+          <a href="/adventure/Cultural-Tourism" class="btn btn-light w-100">
+            <p class="card-title">Cultural Tourism</p>
+          </a>
+        </div>
+      </div>
+    </div>
+    <% } else if (sa_row.sa_name == 'Eco-Tourism') { %>
+    <div class="item">
+      <div class="card">
+        <img src="ECO-TOURISM.jpg" style="height: 200px;" class="card-img-top" alt="...">
+        <div class="card-body">
+          <a href="/adventure/Eco-Tourism" class="btn btn-light w-100">
+            <p class="card-title">EcoTourism</p>
+          </a>
+        </div>
+      </div>
+    </div>
+    <% } else if (sa_row.sa_name == 'Mountain Biking') { %>
+    <div class="item">
+      <div class="card">
+        <img src="BIKING.jpg" style="height: 200px;" class="card-img-top" alt="...">
+        <div class="card-body">
+          <a href="/adventure/Mountain-Biking" class="btn btn-light w-100">
+            <p class="card-title">Mountain Biking</p>
+          </a>
+        </div>
+      </div>
+    </div>
+    <% } else if (sa_row.sa_name == 'Caving') {%>
+    <div class="item">
+      <div class="card">
+        <img src="cAVING.jpg" style="height: 200px;" class="card-img-top">
+        <div class="card-body">
+          <a href="/adventure/Caving" class="btn btn-light w-100">
+            <p class="card-title">Caving</p>
+          </a>
+        </div>
+      </div>
+    </div>
+    <% } %>
+    <%  }); %>
+  </div>
+</div>
+
+<script>
+  $(document).ready(function () {
+    $('.adventure').owlCarousel({
+      loop: true,
+      margin: 10,
+      nav: true,
+      dots: false,
+      autoplay: true,
+      autoplayTimeout: 6000,
+      responsive: {
+        0: {
+          items: 1
+        },
+        600: {
+          items: 3
+        },
+        1000: {
+          items: 4
+        }
+      }
+    })
+
+  });
+</script>

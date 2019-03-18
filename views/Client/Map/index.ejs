@@ -1,20 +1,66 @@
 <%- include('../partials/index') %>
 <!-- Navigation -->
-<nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="mainNav" style="background-color: #212529; padding-top:0px; padding-bottom: 0px;">
+<nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="mainNav"
+  style="background-color: #212529; padding-top:0px; padding-bottom: 0px;">
   <div class="container">
     <a class="navbar-brand js-scroll-trigger" href="/">Abra Travel Guide</a>
-    <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive"
-      aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+    <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse"
+      data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false"
+      aria-label="Toggle navigation">
       Menu
       <i class="fa fa-bars"></i>
     </button>
     <div class="collapse navbar-collapse" id="navbarResponsive">
       <ul class="navbar-nav text-uppercase ml-auto">
-        <li class="nav-item">
-          <a class="nav-link js-scroll-trigger" href="/#services">Services</a>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="servicesDropdown" role="button" data-toggle="dropdown"
+            aria-haspopup="true" aria-expanded="false">
+            Services
+          </a>
+          <div class="dropdown-menu" aria-labelledby="servicesDropdown">
+            <a href="/tour" class="dropdown-item">
+              <span class="fa-stack">
+                <i class="fa fa-circle fa-stack-2x text-primary"></i>
+                <i class="fa fa-location-arrow fa-stack-1x fa-inverse"></i>
+              </span>
+              Tour
+            </a>
+            <a class="dropdown-item" href="/map">
+              <span class="fa-stack">
+                <i class="fa fa-circle fa-stack-2x text-primary"></i>
+                <i class="fa fa-map fa-stack-1x fa-inverse"></i>
+              </span>
+              Maps
+            </a>
+            <a class="dropdown-item" href="/about">
+              <span class="fa-stack">
+                <i class="fa fa-circle fa-stack-2x text-primary"></i>
+                <i class="fa fa-info fa-stack-1x fa-inverse"></i>
+              </span>
+              About Us
+            </a>
+          </div>
         </li>
-        <li class="nav-item">
-          <a class="nav-link js-scroll-trigger" href="/#portfolio">Explore</a>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="exploreDropdown" role="button" data-toggle="dropdown"
+            aria-haspopup="true" aria-expanded="false">
+            Explore
+          </a>
+          <div class="dropdown-menu" aria-labelledby="exploreDropdown">
+            <% rows.forEach(function(row){ %>
+            <% var cat; %>
+            <% if(row.ec_name == 'Ilocano Delicacies') { %>
+            <% cat = 'ilocano' %>
+            <% } else if (row.ec_name == 'Banks & Atms') { %>
+            <% cat = 'banks' %>
+            <% } else if (row.ec_name == 'Churches & Structures') { %>
+            <% cat = 'church' %>
+            <% } else { %>
+            <% cat = row.ec_name %>
+            <% } %>
+            <a class="dropdown-item" href="/<%= cat %>"><%= row.ec_name %></a>
+            <% }); %>
+          </div>
         </li>
         <li class="nav-item">
           <% if (userDetail == '') {%>
@@ -58,7 +104,6 @@
     for (var i = 0; i < estabMarker.length; i++) {
       addMarkerWithTimeout(
         estabMarker[i],
-        i * 200,
         establisments[i].estab_name.toString(),
         establisments[i].estab_no,
         establisments[i].ec_name,
@@ -66,7 +111,7 @@
     }
   }
 
-  function addMarkerWithTimeout(position, timeout, name, estab_no, ec_name, description) {
+  function addMarkerWithTimeout(position, name, estab_no, ec_name, description) {
     window.setTimeout(function () {
       marker = new google.maps.Marker({
         position: position,
@@ -74,13 +119,24 @@
         title: name,
         animation: google.maps.Animation.DROP
       });
+      
+      let cat; 
+      if(ec_name == 'Ilocano Delicacies') { 
+      cat = 'ilocano';
+      } else if (ec_name == 'Banks & Atms') { 
+      cat = 'banks';
+      } else if (ec_name == 'Churches & Structures') { 
+      cat = 'church';
+      } else { 
+      cat = ec_name ;
+      } 
 
       var content = `
         <div class="container">
           <div class="row">
             <div class="col-md-12 mx-auto">
               <h4 class="card-title d-flex justify-content-center">
-                <a href="/${ec_name}/${estab_no}">${name}</a>
+                <a href="/${cat}/${estab_no}">${name}</a>
               </h4>
               <dl class="row">
                 <dd class="col-sm-12 lead">
@@ -100,7 +156,7 @@
       })(marker));
 
       markers.push(marker);
-    }, timeout);
+    });
   }
 
   function clearMarkers() {
@@ -111,4 +167,5 @@
   }
 
 </script>
-<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBc7MrXyAOjZ9VAmPCniGxbH5MEn0jpP7Q&callback=initMap"></script>
+<script async defer
+  src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBc7MrXyAOjZ9VAmPCniGxbH5MEn0jpP7Q&callback=initMap"></script>

@@ -1,0 +1,68 @@
+<div class="container-fluid pb-5 pt-3">
+  <h4 class="section-heading text-uppercase">Popular Destinations</h4>
+  <div class="destination owl-carousel owl-theme">
+    <% top_estab.forEach(function(estab, index){ %>
+    <% var cat; %>
+    <% if(estab.ec_name == 'Ilocano Delicacies') { %>
+    <% cat = 'ilocano' %>
+    <% } else if (estab.ec_name == 'Banks & Atms') { %>
+    <% cat = 'banks' %>
+    <% } else if (estab.ec_name == 'Churches & Structures') { %>
+    <% cat = 'church' %>
+    <% } else { %>
+    <% cat = estab.ec_name %>
+    <% } %>
+    <div class="item">
+      <div class="card">
+        <a href="/<%= cat %>/<%= estab.estab_no %>">
+          <img class="img-fluid" style="height:200px; width:400px;" src="/uploads/<%= estab.image_filename %>"
+            onerror="if (this.src != 'error.jpg') this.src = '/uploads/default.png';" alt="<%= estab.estab_name %>">
+        </a>
+        <div class="card-body">
+          <h5 class="card-title text-truncate mb-0 pb-0">
+            <%= estab.estab_name %>
+          </h5>
+          <h6>
+            <% if (estab.RATES) { %>
+            <span class="float-left">
+              Rating:&nbsp;
+            </span>
+            <span class="badge badge-secondary float-left">
+              <%= estab.RATES %>
+            </span>
+            <span class="float-left">
+              &nbsp;(<%= estab.Num_of_Rates %> reviews)
+            </span>
+            <% } %>
+          </h6>
+        </div>
+      </div>
+    </div>
+    <% }); %>
+  </div>
+</div>
+
+<script>
+  $(document).ready(function () {
+    $('.destination').owlCarousel({
+      loop: true,
+      margin: 10,
+      nav: true,
+      dots: false,
+      autoplay: true,
+      autoplayTimeout: 4000,
+      responsive: {
+        0: {
+          items: 1
+        },
+        600: {
+          items: 3
+        },
+        1000: {
+          items: 4
+        }
+      }
+    })
+
+  });
+</script>

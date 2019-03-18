@@ -1,0 +1,65 @@
+<% if (user != '') {%>
+<div class="container-fluid pb-2">
+  <h4 class="section-heading text-uppercase">Recommended For You</h4>
+  <div class="row mt-3">
+    <% user_recon.forEach(function(recon) { %>
+    <% var cat; %>
+    <% if(recon.sc_name == 'Ilocano Delicacies') { %>
+    <% cat = 'ilocano' %>
+    <% } else if (recon.sc_name == 'Banks & Atms') { %>
+    <% cat = 'banks' %>
+    <% } else if (recon.sc_name == 'Churches & Structures') { %>
+    <% cat = 'church' %>
+    <% } else { %>
+    <% cat = recon.sc_name %>
+    <% } %>
+    <div class="col-md-4 mt-3">
+      <div class="card">
+        <a href="/<%= cat %>/<%= recon.spot_no %>">
+          <img class="img-fluid" style="height:200px; width:400px;" src="/uploads/<%= recon.img_filename %>"
+            onerror="if (this.src != 'error.jpg') this.src = '/uploads/default.png';" alt="/uploads/default.png">
+        </a>
+        <div class="card-body">
+          <h5 class="card-title text-truncate mb-0 pb-0">
+            <%= recon.spot_name %>
+          </h5>
+          <p class="card-text text-muted">Rating:
+            <%= recon.RATES %>
+          </p>
+        </div>
+      </div>
+    </div>
+    <% }); %>
+  </div>
+  <div class="row mt-3">
+    <% userReconEstab.forEach(function(recon) { %>
+    <% var cat; %>
+    <% if(recon.ec_name == 'Ilocano Delicacies') { %>
+    <% cat = 'ilocano' %>
+    <% } else if (recon.ec_name == 'Banks & Atms') { %>
+    <% cat = 'banks' %>
+    <% } else if (recon.ec_name == 'Churches & Structures') { %>
+    <% cat = 'church' %>
+    <% } else { %>
+    <% cat = recon.ec_name %>
+    <% } %>
+    <div class="col-md-4 mt-3">
+      <div class="card">
+        <a href="/<%= cat %>/<%= recon.estab_no %>">
+          <img class="img-fluid" style="height:200px; width:400px;" src="/uploads/<%= recon.image_filename %>"
+            onerror="if (this.src != 'error.jpg') this.src = '/uploads/default.png';" alt="<%= recon.estab_name %>">
+        </a>
+        <div class="card-body">
+          <h5 class="card-title text-truncate mb-0 pb-0">
+            <%= recon.estab_name %>
+          </h5>
+          <p class="card-text text-muted">Rating:
+            <%= recon.RATES %>
+          </p>
+        </div>
+      </div>
+    </div>
+    <% }); %>
+  </div>
+</div>
+<% } %>

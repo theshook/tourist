@@ -85,17 +85,22 @@ exports.get_search = (req, res) => {
   let user = req.user || '';
   let search = req.query.search || null;
 
-  db.query(searchHomePage(search), (search_err, search_res) => {
-    if (search_err) { throw search_err; }
-    console.log(search_res.length)
-    res.render("Client/search", {
-      search,
-      search_res: (search_res.length == 0) ? 'N/A' : search_res,
-      search_count: (search_res.length == 0) ? '0' : search_res.length,
-      pageTitle: "Abra Travel Guide",
-      user: user,
+  db.query(`SELECT ec_name FROM establistments_category
+  UNION SELECT sc_name FROM spots_category`, (err, rows) => {
+      if (err) { throw err; }
+      db.query(searchHomePage(search), (search_err, search_res) => {
+        if (search_err) { throw search_err; }
+        console.log(search_res.length)
+        res.render("Client/search", {
+          rows,
+          search,
+          search_res: (search_res.length == 0) ? 'N/A' : search_res,
+          search_count: (search_res.length == 0) ? '0' : search_res.length,
+          pageTitle: "Abra Travel Guide",
+          user: user,
+        });
+      });
     });
-  });
 };
 
 exports.get_search_api = (req, res) => {

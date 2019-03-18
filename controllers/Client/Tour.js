@@ -8,11 +8,20 @@ let {
 
 exports.tour = (req, res) => {
   let userDetail = req.user || '';
-  res.render("Client/Tour", {
-    pageTitle: "Tour",
-    route: "tour",
-    userDetail: userDetail
-  });
+
+  db.query(`SELECT ec_name FROM establistments_category
+  UNION SELECT sc_name FROM spots_category`, (err, rows) => {
+      if (err) { throw err; }
+
+      res.render("Client/Tour", {
+        rows,
+        pageTitle: "Tour",
+        route: "tour",
+        userDetail: userDetail
+      });
+
+    });
+
 };
 
 exports.details = (req, res) => {
@@ -33,16 +42,24 @@ exports.details = (req, res) => {
     numSelect = 3;
   }
 
-  db.query(tour_query(), (err, rows) => {
-    res.render("Client/Tour/details", {
-      pageTitle: "Tour",
-      days,
-      rows,
-      numSelect,
-      route: "tour",
-      userDetail: userDetail
+  db.query(`SELECT ec_name FROM establistments_category
+  UNION SELECT sc_name FROM spots_category`, (err, rows1) => {
+      if (err) { throw err; }
+
+      db.query(tour_query(), (err, rows) => {
+        res.render("Client/Tour/details", {
+          rows1,
+          pageTitle: "Tour",
+          days,
+          rows,
+          numSelect,
+          route: "tour",
+          userDetail: userDetail
+        });
+      });
+
     });
-  });
+
 }
 
 exports.fetch_selected1 = (req, res) => {

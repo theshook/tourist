@@ -43,11 +43,55 @@
       </form>
 
       <ul class="navbar-nav text-uppercase ml-auto">
-        <li class="nav-item">
-          <a class="nav-link js-scroll-trigger" href="/#services">Services</a>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="servicesDropdown" role="button" data-toggle="dropdown"
+            aria-haspopup="true" aria-expanded="false">
+            Services
+          </a>
+          <div class="dropdown-menu" aria-labelledby="servicesDropdown">
+            <a href="/tour" class="dropdown-item">
+              <span class="fa-stack">
+                <i class="fa fa-circle fa-stack-2x text-primary"></i>
+                <i class="fa fa-location-arrow fa-stack-1x fa-inverse"></i>
+              </span>
+              Tour
+            </a>
+            <a class="dropdown-item" href="/map">
+              <span class="fa-stack">
+                <i class="fa fa-circle fa-stack-2x text-primary"></i>
+                <i class="fa fa-map fa-stack-1x fa-inverse"></i>
+              </span>
+              Maps
+            </a>
+            <a class="dropdown-item" href="/about">
+              <span class="fa-stack">
+                <i class="fa fa-circle fa-stack-2x text-primary"></i>
+                <i class="fa fa-info fa-stack-1x fa-inverse"></i>
+              </span>
+              About Us
+            </a>
+          </div>
         </li>
-        <li class="nav-item">
-          <a class="nav-link js-scroll-trigger" href="/#portfolio">Explore</a>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="exploreDropdown" role="button" data-toggle="dropdown"
+            aria-haspopup="true" aria-expanded="false">
+            Explore
+          </a>
+          <div class="dropdown-menu" aria-labelledby="exploreDropdown">
+            <% rows.forEach(function(row){ %>
+            <% var cat; %>
+            <% if(row.ec_name == 'Ilocano Delicacies') { %>
+            <% cat = 'ilocano' %>
+            <% } else if (row.ec_name == 'Banks & Atms') { %>
+            <% cat = 'banks' %>
+            <% } else if (row.ec_name == 'Churches & Structures') { %>
+            <% cat = 'church' %>
+            <% } else { %>
+            <% cat = row.ec_name %>
+            <% } %>
+            <a class="dropdown-item" href="/<%= cat %>"><%= row.ec_name %></a>
+            <% }); %>
+          </div>
         </li>
         <li class="nav-item">
           <% if (user == '') {%>

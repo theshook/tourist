@@ -1,0 +1,68 @@
+<div class="container-fluid pb-5">
+  <h4 class="section-heading text-uppercase">Featured Attractions</h4>
+  <div class="featured owl-carousel owl-theme">
+    <% fea_row.forEach(function(rows, index){ %>
+    <% var cat; %>
+    <% if(rows.sc_name == 'Ilocano Delicacies') { %>
+    <% cat = 'ilocano' %>
+    <% } else if (rows.sc_name == 'Banks & Atms') { %>
+    <% cat = 'banks' %>
+    <% } else if (rows.sc_name == 'Churches & Structures') { %>
+    <% cat = 'church' %>
+    <% } else { %>
+    <% cat = rows.sc_name %>
+    <% } %>
+    <div class="item">
+      <div class="card">
+        <a href="/<%= cat %>/<%= rows.spot_no %>">
+          <img class="img-fluid" style="height:200px; width:400px;" src="/uploads/<%= rows.img_filename %>"
+            onerror="if (this.src != 'error.jpg') this.src = '/uploads/default.png';" alt="<%= rows.sc_name %>">
+        </a>
+        <div class="card-body">
+          <h5 class="card-title text-truncate mb-0 pb-0">
+            <%= rows.spot_name %>
+          </h5>
+          <h6>
+            <% if (rows.RATES) { %>
+            <span class="float-left">
+              Rating:&nbsp;
+            </span>
+            <span class="badge badge-secondary float-left">
+              <%= rows.RATES %>
+            </span>
+            <span class="float-left">
+              &nbsp;(<%= rows.Num_of_Rates %> reviews)
+            </span>
+            <% } %>
+          </h6>
+        </div>
+      </div>
+    </div>
+    <% }); %>
+  </div>
+</div>
+
+<script>
+  $(document).ready(function () {
+    $('.featured').owlCarousel({
+      loop: true,
+      margin: 10,
+      nav: true,
+      dots: false,
+      autoplay: true,
+      autoplayTimeout: 9000,
+      responsive: {
+        0: {
+          items: 1
+        },
+        600: {
+          items: 3
+        },
+        1000: {
+          items: 4
+        }
+      }
+    })
+
+  });
+</script>

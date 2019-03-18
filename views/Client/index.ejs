@@ -1,14 +1,21 @@
 <%- include('./partials/index') %>
+
+<link href="/vendor/owl/owl.carousel.min.css" rel="stylesheet">
+<link href="/vendor/owl/owl.theme.default.min.css" rel="stylesheet">
+
+
 <link href="/css/carouselDisplayMorethanOne.css" rel="stylesheet">
 <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
 <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+
 <style>
   .ui-autocomplete-loading {
     background: white url("img/lightbox/preloader.gif") right center no-repeat;
   }
 </style>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script src="/vendor/owl/owl.carousel.min.js"></script>
 
 <script>
   $(function () {
@@ -32,52 +39,98 @@
 
   });
 </script>
+
 <!-- Navigation -->
 <nav class="navbar navbar-expand-lg navbar-dark fixed-top pt-0 pb-0" style="background-color: #212529;" id="mainNav">
-  <a class="navbar-brand js-scroll-trigger" href="#page-top">Abra Travel Guide </a>
-  <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse"
-    data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false"
-    aria-label="Toggle navigation">
-    Menu
-    <i class="fa fa-bars"></i>
-  </button>
+  <div class="container">
+    <a class="navbar-brand js-scroll-trigger" href="#page-top">Abra Travel Guide </a>
+    <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse"
+      data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false"
+      aria-label="Toggle navigation">
+      Menu
+      <i class="fa fa-bars"></i>
+    </button>
 
-  <div class="collapse navbar-collapse" id="navbarResponsive">
+    <div class="collapse navbar-collapse" id="navbarResponsive">
 
-    <form action="/search" method="GET" class="form-inline my-2 my-lg-0">
-      <input class="form-control mr-sm-2" type="text" placeholder="Search" id="tags" name="search">
-      <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
-    </form>
+      <form action="/search" method="GET" class="form-inline my-2 my-lg-0">
+        <input class="form-control mr-sm-2" type="text" placeholder="Search" id="tags" name="search">
+        <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
+      </form>
 
-    <ul class="navbar-nav text-uppercase ml-auto">
-      <li class="nav-item">
-        <a class="nav-link js-scroll-trigger" href="#services">Services</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link js-scroll-trigger" href="#portfolio">Explore</a>
-      </li>
-      <li class="nav-item">
-        <% if (user == '') {%>
-        <a class="nav-link" href="/login">Sign In</a>
-        <% } else { %>
-      <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
-          aria-haspopup="true" aria-expanded="false">
-          Welcome back
-          <%= user.user_lname %>!
-        </a>
-        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-          <a class="dropdown-item" href="#" data-toggle="modal" data-target="#changePasswordModal">Change
-            Password</a>
-          <a class="dropdown-item" href="/logout/client"
-            onclick="return confirm('Are you sure you want to logout?');">Logout</a>
-        </div>
-      </li>
-      <% } %>
-      </li>
-    </ul>
+      <ul class="navbar-nav text-uppercase ml-auto">
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="servicesDropdown" role="button" data-toggle="dropdown"
+            aria-haspopup="true" aria-expanded="false">
+            Services
+          </a>
+          <div class="dropdown-menu" aria-labelledby="servicesDropdown">
+            <a href="/tour" class="dropdown-item">
+              <span class="fa-stack">
+                <i class="fa fa-circle fa-stack-2x text-primary"></i>
+                <i class="fa fa-location-arrow fa-stack-1x fa-inverse"></i>
+              </span>
+              Tour
+            </a>
+            <a class="dropdown-item" href="/map">
+              <span class="fa-stack">
+                <i class="fa fa-circle fa-stack-2x text-primary"></i>
+                <i class="fa fa-map fa-stack-1x fa-inverse"></i>
+              </span>
+              Maps
+            </a>
+            <a class="dropdown-item" href="/about">
+              <span class="fa-stack">
+                <i class="fa fa-circle fa-stack-2x text-primary"></i>
+                <i class="fa fa-info fa-stack-1x fa-inverse"></i>
+              </span>
+              About Us
+            </a>
+          </div>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="exploreDropdown" role="button" data-toggle="dropdown"
+            aria-haspopup="true" aria-expanded="false">
+            Explore
+          </a>
+          <div class="dropdown-menu" aria-labelledby="exploreDropdown">
+            <% rows.forEach(function(row){ %>
+            <% var cat; %>
+            <% if(row.ec_name == 'Ilocano Delicacies') { %>
+            <% cat = 'ilocano' %>
+            <% } else if (row.ec_name == 'Banks & Atms') { %>
+            <% cat = 'banks' %>
+            <% } else if (row.ec_name == 'Churches & Structures') { %>
+            <% cat = 'church' %>
+            <% } else { %>
+            <% cat = row.ec_name %>
+            <% } %>
+            <a class="dropdown-item" href="/<%= cat %>"><%= row.ec_name %></a>
+            <% }); %>
+          </div>
+        </li>
+        <li class="nav-item">
+          <% if (user == '') {%>
+          <a class="nav-link" href="/login">Sign In</a>
+          <% } else { %>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+            aria-haspopup="true" aria-expanded="false">
+            Welcome back
+            <%= user.user_lname %>!
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <a class="dropdown-item" href="#" data-toggle="modal" data-target="#changePasswordModal">Change
+              Password</a>
+            <a class="dropdown-item" href="/logout/client"
+              onclick="return confirm('Are you sure you want to logout?');">Logout</a>
+          </div>
+        </li>
+        <% } %>
+        </li>
+      </ul>
+    </div>
   </div>
-
 </nav>
 
 <!-- Change Password Modal -->
@@ -145,6 +198,9 @@
     </div>
   </div>
 </header>
+
+<!-- Nav Categories -->
+<!-- 
 <hr>
 <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #FFF;">
   <div class="container">
@@ -208,282 +264,54 @@
   </div>
 </nav>
 <hr>
-<!-- Services -->
-<section id="services" class="pt-5">
+-->
+
+<!-- Portfolio Grid -->
+<section class="mt-0 pt-0">
   <div class="container">
     <div class="row">
-      <div class="col-lg-12 text-center">
-        <h2 class="section-heading text-uppercase">Services</h2>
-        <h3 class="section-subheading text-muted">Abra Travel Guide is specially designed for you! </h3>
-      </div>
-    </div>
-    <div class="row text-center">
-      <div class="col-md-4">
-        <a href="/tour" style="text-decoration: none" class="text-body">
-          <span class="fa-stack fa-4x">
-            <i class="fa fa-circle fa-stack-2x text-primary"></i>
-            <i class="fa fa-location-arrow fa-stack-1x fa-inverse"></i>
-          </span>
-          <h4 class="service-heading">Tour</h4>
-          <p class="text-muted">Skip pricey bus or walking tours on your next trip instead explore this Travel Guide to
-            know where you really wanna go. </p>
-        </a>
-      </div>
-      <div class="col-md-4">
-        <a href="/map" style="text-decoration: none" class="text-body">
-          <span class="fa-stack fa-4x">
-            <i class="fa fa-circle fa-stack-2x text-primary"></i>
-            <i class="fa fa-map fa-stack-1x fa-inverse"></i>
-          </span>
-          <h4 class="service-heading">Maps</h4>
-          <p class="text-muted">This Travel Guide helps you find your destinations.</p>
-        </a>
-      </div>
-      <div class="col-md-4">
-        <a href="/about" style="text-decoration: none" class="text-body">
-          <span class="fa-stack fa-4x">
-            <i class="fa fa-circle fa-stack-2x text-primary"></i>
-            <i class="fa fa-info fa-stack-1x fa-inverse"></i>
-          </span>
-          <h4 class="service-heading">About Us</h4>
-          <p class="text-muted">Abra is a province geographically located in the northern archipelago of Luzon
-            particularly on the western side of the Cordillera... Read more</p>
-        </a>
-      </div>
+      <!-- Multiple Item in Carousel -->
+      <!-- Popular Destinations -->
+      <%- include('index_presets/destinations') %>
+
+      <!-- Featured Attrations -->
+      <%- include('index_presets/featured') %>
+
+      <!-- Adventure -->
+      <%- include('index_presets/adventure') %>
+
+      <!-- User Recommendations -->
+      <%- include('index_presets/user_recommendations') %>
     </div>
   </div>
 </section>
 
-<!-- Portfolio Grid -->
-<section class="bg-light" id="portfolio">
-  <div class="container">
-    <div class="row">
-      <div class="col-lg-12 text-center">
-        <h2 class="section-heading text-uppercase">Explore</h2>
-        <h3 class="section-subheading text-muted">Sighseeing tours, hotels, restaurants, rivers and waterfalls</h3>
-      </div>
-      <!-- Multiple Item in Carousel -->
-      <!-- Popular Destinations -->
-      <div class="container-fluid pb-5">
-        <h4 class="section-heading text-uppercase">Popular Destinations</h4>
-        <div id="carouselExample" class="carousel slide" data-ride="carousel" data-interval="5000">
-          <div class="carousel-inner row w-100 mx-auto" role="listbox">
-            <% top_estab.forEach(function(estab, index){ %>
-            <% var cat; %>
-            <% if(estab.ec_name == 'Ilocano Delicacies') { %>
-            <% cat = 'ilocano' %>
-            <% } else if (estab.ec_name == 'Banks & Atms') { %>
-            <% cat = 'banks' %>
-            <% } else if (estab.ec_name == 'Churches & Structures') { %>
-            <% cat = 'church' %>
-            <% } else { %>
-            <% cat = estab.ec_name %>
-            <% } %>
-            <div class="carousel-item col-md-4 <% if (index == 0) { %> active <% } %>">
-              <div class="card">
-                <a href="/<%= cat %>/<%= estab.estab_no %>">
-                  <img class="img-fluid" style="height:200px; width:400px;" src="/uploads/<%= estab.image_filename %>"
-                    onerror="if (this.src != 'error.jpg') this.src = '/uploads/default.png';"
-                    alt="<%= estab.estab_name %>">
-                </a>
-                <div class="card-body">
-                  <h5 class="card-title text-truncate mb-0 pb-0">
-                    <%= estab.estab_name %>
-                  </h5>
-                  <h6>
-                    <% if (estab.RATES) { %>
-                    <span class="float-left">
-                      Rating:&nbsp;
-                    </span>
-                    <span class="badge badge-secondary float-left">
-                      <%= estab.RATES %>
-                    </span>
-                    <span class="float-left">
-                      &nbsp;(<%= estab.Num_of_Rates %> reviews)
-                    </span>
-                    <% } %>
-                  </h6>
-                </div>
-              </div>
-            </div>
-            <% }); %>
-          </div>
-          <a class="carousel-control-prev" href="#carouselExample" role="button" data-slide="prev">
-            <i class="fa fa-chevron-left fa-lg text-muted"></i>
-            <span class="sr-only">Previous</span>
-          </a>
-          <a class="carousel-control-next text-faded" href="#carouselExample" role="button" data-slide="next">
-            <i class="fa fa-chevron-right fa-lg text-muted"></i>
-            <span class="sr-only">Next</span>
-          </a>
-        </div>
-      </div>
-
-      <!-- Featured Attrations -->
-      <%- include('featured') %>
-
-      <!-- Adventure -->
-      <div class="container-fluid pt-5 pb-5">
-        <h4 class="section-heading text-uppercase">Adventures</h4>
-        <div class="row">
-          <% sa_rows.forEach(function(sa_row){ %>
-          <% if(sa_row.sa_name == 'Water Adventure') { %>
-          <div class="col-md-4 pb-3">
-            <div class="card" id="link-hover">
-              <img src="wATER ADVENTURE.jpg" class="card-img-top" alt="...">
-              <div class="card-body">
-                <h5 class="card-title">Water Adventure</h5>
-                <p class="card-text">Kayaking has been considered as one of the adventures other than bamboo rafting in
-                  the province.
-                  <br> Photo credits to British Universities Kayaking Expedition 2017 from Facebook.com</p>
-                <a href="/adventure/Water-Adventure" class="btn btn-primary">Explore</a>
-              </div>
-            </div>
-          </div>
-          <% } else if (sa_row.sa_name == 'Mountain Hiking') { %>
-          <div class="col-md-4 pb-3">
-            <div class="card" id="link-hover">
-              <img src="HIKING.jpg" class="card-img-top" alt="...">
-              <div class="card-body">
-                <h5 class="card-title">Mountain Hiking</h5>
-                <p class="card-text">Hiking is an amazing experience to do in the province since it has numerous
-                  destinations for this adventure.
-                  <br>
-                  <br>Photo credits to Grenjhill Molina Corrales from Facebook.com</p>
-                <a href="/adventure/Mountain-Hiking" class="btn btn-primary">Explore</a>
-              </div>
-            </div>
-          </div>
-          <% } else if (sa_row.sa_name == 'Cultural Tourism') { %>
-          <div class="col-md-4 pb-3">
-            <div class="card" id="link-hover">
-              <img src="CULTURE.jpg" class="card-img-top" alt="...">
-              <div class="card-body">
-                <h5 class="card-title">Cultural Tourism</h5>
-                <p class="card-text">Culture and arts are exhibited and featured in the different festivities in the
-                  province.
-                  <br>
-                  <br> Photo credits to Abra Official Site from Abra.gov.ph.</p>
-                <a href="/adventure/Cultural-Tourism" class="btn btn-primary">Explore</a>
-              </div>
-            </div>
-          </div>
-          <% } else if (sa_row.sa_name == 'Eco-Tourism') { %>
-          <div class="col-md-4 pb-3">
-            <div class="card" id="link-hover">
-              <img src="ECO-TOURISM.jpg" class="card-img-top" alt="...">
-              <div class="card-body">
-                <h5 class="card-title">EcoTourism</h5>
-                <p class="card-text">The province offers many natural tourist attractions
-                  for eco tourism.
-                  <br>
-                  <br> Photo credits to Abra Official Site from Abra.gov.ph.</p>
-                <a href="/adventure/Eco-Tourism" class="btn btn-primary">Explore</a>
-              </div>
-            </div>
-          </div>
-          <% } else if (sa_row.sa_name == 'Mountain Biking') { %>
-          <div class="col-md-4 pb-3">
-            <div class="card" id="link-hover">
-              <img src="BIKING.jpg" class="card-img-top" alt="...">
-              <div class="card-body">
-                <h5 class="card-title">Mountain Biking</h5>
-                <p class="card-text">The province offers the best place for mountain biking. The recent discovered
-                  Nagaparan Pine Forests are just one of the places for this adventure.
-                  <br>Photo credits to Google.com</p>
-                <a href="/adventure/Mountain-Biking" class="btn btn-primary">Explore</a>
-              </div>
-            </div>
-          </div>
-          <% } else if (sa_row.sa_name == 'Caving') {%>
-          <div class="col-md-4 pb-3">
-            <div class="card" id="link-hover">
-              <img src="cAVING.jpg" class="card-img-top" alt="...">
-              <div class="card-body">
-                <h5 class="card-title">Caving</h5>
-                <p class="card-text">Caves are many in the province. Caving is just one of the most exciting
-                  and amazing adventure the province can offer for your visit.
-                  <br> Photo credits to Google.com</p>
-                <a href="/adventure/Caving" class="btn btn-primary">Explore</a>
-              </div>
-            </div>
-          </div>
-          <% } %>
-          <%  }); %>
-        </div>
-      </div>
-
-      <!-- User Recommendations -->
-      <% if (user != '') {%>
-      <div class="container-fluid pb-2">
-        <h4 class="section-heading text-uppercase">Recommended For You</h4>
-        <div class="row mt-3">
-          <% user_recon.forEach(function(recon) { %>
-          <% var cat; %>
-          <% if(recon.sc_name == 'Ilocano Delicacies') { %>
-          <% cat = 'ilocano' %>
-          <% } else if (recon.sc_name == 'Banks & Atms') { %>
-          <% cat = 'banks' %>
-          <% } else if (recon.sc_name == 'Churches & Structures') { %>
-          <% cat = 'church' %>
-          <% } else { %>
-          <% cat = recon.sc_name %>
-          <% } %>
-          <div class="col-md-4 mt-3">
-            <div class="card">
-              <a href="/<%= cat %>/<%= recon.spot_no %>">
-                <img class="img-fluid" style="height:200px; width:400px;" src="/uploads/<%= recon.img_filename %>"
-                  onerror="if (this.src != 'error.jpg') this.src = '/uploads/default.png';" alt="/uploads/default.png">
-              </a>
-              <div class="card-body">
-                <h5 class="card-title text-truncate mb-0 pb-0">
-                  <%= recon.spot_name %>
-                </h5>
-                <p class="card-text text-muted">Rating:
-                  <%= recon.RATES %>
-                </p>
-              </div>
-            </div>
-          </div>
-          <% }); %>
-        </div>
-        <div class="row mt-3">
-          <% userReconEstab.forEach(function(recon) { %>
-          <% var cat; %>
-          <% if(recon.ec_name == 'Ilocano Delicacies') { %>
-          <% cat = 'ilocano' %>
-          <% } else if (recon.ec_name == 'Banks & Atms') { %>
-          <% cat = 'banks' %>
-          <% } else if (recon.ec_name == 'Churches & Structures') { %>
-          <% cat = 'church' %>
-          <% } else { %>
-          <% cat = recon.ec_name %>
-          <% } %>
-          <div class="col-md-4 mt-3">
-            <div class="card">
-              <a href="/<%= cat %>/<%= recon.estab_no %>">
-                <img class="img-fluid" style="height:200px; width:400px;" src="/uploads/<%= recon.image_filename %>"
-                  onerror="if (this.src != 'error.jpg') this.src = '/uploads/default.png';"
-                  alt="<%= recon.estab_name %>">
-              </a>
-              <div class="card-body">
-                <h5 class="card-title text-truncate mb-0 pb-0">
-                  <%= recon.estab_name %>
-                </h5>
-                <p class="card-text text-muted">Rating:
-                  <%= recon.RATES %>
-                </p>
-              </div>
-            </div>
-          </div>
-          <% }); %>
-        </div>
-      </div>
-      <% } %>
-</section>
-<script src="/js/carouselDisplayMorethanOne.js"></script>
 <script type="text/javascript">
   $(document).ready(function () {
+
+    $("#carouselExample").on("slide.bs.carousel", function (e) {
+      var $e = $(e.relatedTarget);
+      var idx = $e.index();
+      var itemsPerSlide = 3;
+      var totalItems = $(".carousel-item").length;
+
+      if (idx >= totalItems - (itemsPerSlide - 1)) {
+        var it = itemsPerSlide - (totalItems - idx);
+        for (var i = 0; i < it; i++) {
+          // append slides to end
+          if (e.direction == "left") {
+            $(".carousel-item")
+              .eq(i)
+              .appendTo(".carousel-inner");
+          } else {
+            $(".carousel-item")
+              .eq(0)
+              .appendTo(".carousel-inner");
+          }
+        }
+      }
+    });
+
 
     function validatePassword(password) {
       let customRegExp = new RegExp("^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$");
