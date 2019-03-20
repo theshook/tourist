@@ -1,3 +1,6 @@
+<script src="http://code.jquery.com/color/jquery.color.plus-names-2.1.2.min.js"></script>
+<link rel="stylesheet" href="/vendor/jquery-tags/jquery-tagsinput.min.css">
+<script src="/vendor/jquery-tags/jquery-tagsinput.min.js"></script>
 <div class="col-md-7 mx-auto">
   <div class="card">
     <div class="card-header card-header-warning">
@@ -18,7 +21,7 @@
                 <option value="<%= row.ec_no %>" <%= info[0].ec_no === row.ec_no ? 'selected' : '' %>>
                   <%= row.ec_name %>
                 </option>
-                <%	}); %>  
+                <%	}); %>
               </select>
             </div>
             <div class="form-group bmd-form-group">
@@ -28,7 +31,7 @@
                 <option value="<%= town.town_no %>" <%= info[0].town_no === town.town_no ? 'selected' : '' %>>
                   <%= town.town_name %>
                 </option>
-                <%	}); %>  
+                <%	}); %>
               </select>
             </div>
             <div class="form-group bmd-form-group">
@@ -38,7 +41,7 @@
                 <option value="<%= town.bar_no %>" <%= info[0].bar_no === town.bar_no ? 'selected' : '' %>>
                   <%= town.bar_name %>
                 </option>
-                <%	}); %>  
+                <%	}); %>
               </select>
             </div>
             <label for="exampleFormControlTextarea1">Description</label>
@@ -55,10 +58,26 @@
               <label for="contact" class="bmd-label-floating">Contact Number</label>
               <input type="text" class="form-control" name="contact" value="<%= info[0].estab_contact%>">
             </div>
+            <% tags = ""; %>
+            <% krows.forEach(function(krow){ %>
+            <% tags += krow.k_keyword+";" %>
+            <%});%>
+            <div class="form-group bmd-form-group">
+              <label for="keywords">Keyword(s) <span class="text-muted">press enter for every keywords or you can use
+                  semicolon (;)</span></label>
+              <input type="text" class="form-control" id="keywords" name="keywords" data-role="tags-input"
+                value="<%= tags %>" placeholder="keywords">
+            </div>
           </div>
-        <button type="submit" class="btn btn-info pull-right">Update Record</button>
-        <div class="clearfix"></div>
+          <a href="/admin/establishment/" class="btn btn-danger pull-left">Go Back</a>
+          <button type="submit" class="btn btn-info pull-right">Update Record</button>
+          <div class="clearfix"></div>
       </form>
     </div>
   </div>
 </div>
+<script>
+  $(document).ready(function () {
+    $('[data-role="tags-input"]').tagsInput();
+  });
+</script>

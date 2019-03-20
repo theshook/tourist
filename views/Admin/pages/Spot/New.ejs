@@ -1,3 +1,6 @@
+<script src="http://code.jquery.com/color/jquery.color.plus-names-2.1.2.min.js"></script>
+<link rel="stylesheet" href="/vendor/jquery-tags/jquery-tagsinput.min.css">
+<script src="/vendor/jquery-tags/jquery-tagsinput.min.js"></script>
 <div class="col-md-7 mx-auto">
   <div class="card">
     <div class="card-header card-header-warning">
@@ -67,6 +70,12 @@
               <span class="text-danger">*</span>
               Description</label>
             <textarea class="form-control" name="desc" id="description" rows="3"></textarea>
+            <div class="form-group bmd-form-group">
+              <label for="keywords">Keyword(s) <span class="text-muted">press enter for every keywords or you can use
+                  semicolon (;)</span></label>
+              <input type="text" class="form-control" id="keywords" name="keywords" data-role="tags-input"
+                placeholder="keywords">
+            </div>
           </div>
           <a href="/admin/spot/" class="btn btn-danger pull-left">Go Back</a>
           <button type="submit" class="btn btn-info pull-right">Save Record</button>
@@ -77,6 +86,10 @@
 </div>
 
 <script>
+  $(document).ready(function () {
+    $('[data-role="tags-input"]').tagsInput();
+  });
+
   $(document).ready(function () {
     $.ajax({
       type: 'POST',

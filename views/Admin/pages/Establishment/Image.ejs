@@ -1,4 +1,3 @@
-
 <div class="row">
   <div class="col-md-7 mx-auto">
     <div class="card">
@@ -6,14 +5,15 @@
         <h4 class="card-title">Images for <%= row[0].estab_name %></h4>
       </div>
       <div class="card-body">
-        <form action="/admin/establishment/image/<%= row[0].estab_no %>" method="POST" enctype="multipart/form-data"> 
+        <form action="/admin/establishment/image/<%= row[0].estab_no %>" method="POST" enctype="multipart/form-data">
           <div class="row">
             <div id="InputsWrapper" class="col-md-8">
               <div>
-                <input 
-                type="file" accept="image/*" class="form-control-file" name="image[]" id="field_1" value=""><a href="#" class="removeclass"></a>
+                <input type="file" accept="image/*" class="form-control-file" name="image[]" id="field_1" value=""><a
+                  href="#" class="removeclass"></a>
                 <div class="custom-control custom-radio">
-                  <input type="radio" id="customRadio1" name="customRadio" class="custom-control-input" value="1" checked>
+                  <input type="radio" id="customRadio1" name="customRadio" class="custom-control-input" value="1"
+                    checked>
                   <label class="custom-control-label" for="customRadio1">Set as Primary</label>
                 </div>
               </div>
@@ -22,7 +22,8 @@
               <a href="#" id="AddMoreFileBox" class="btn btn-info">Add field</a><br><br>
             </div>
           </div>
-          <button>Submit</button>
+          <a href="/admin/establishment/" class="btn btn-danger pull-left">Go Back</a>
+          <button class="btn btn-info pull-left">Submit</button>
         </form>
       </div>
     </div>
@@ -30,51 +31,51 @@
 </div>
 
 <script>
-$(document).ready(function() {
+  $(document).ready(function () {
 
-var MaxInputs       = 5; //maximum extra input boxes allowed
-var InputsWrapper   = $("#InputsWrapper"); //Input boxes wrapper ID
-var AddButton       = $("#AddMoreFileBox"); //Add button ID
+    var MaxInputs = 5; //maximum extra input boxes allowed
+    var InputsWrapper = $("#InputsWrapper"); //Input boxes wrapper ID
+    var AddButton = $("#AddMoreFileBox"); //Add button ID
 
-var x = InputsWrapper.length; //initlal text box count
-var FieldCount=1; //to keep track of text box added
+    var x = InputsWrapper.length; //initlal text box count
+    var FieldCount = 1; //to keep track of text box added
 
-//on add input button click
-$(AddButton).click(function (e) {
-  //max input box allowed
-  if(x <= MaxInputs) {
-    FieldCount++; //text box added ncrement
-    //add input box
-    $(InputsWrapper).append('<div><input type="file" accept="image/*" class="form-control-file"  name="image[]" id="field_'+ FieldCount +'"/> <a href="#" class="removeclass">Remove</a> &nbsp; <div class="custom-control custom-radio d-inline"><input type="radio" id="customRadio'+ FieldCount +'" name="customRadio" class="custom-control-input" value="'+ FieldCount +'"><label class="custom-control-label" for="customRadio'+ FieldCount +'">Set as Primary</label></div></div>');
-    x++; //text box increment
-    
-    $("#AddMoreFileId").show();
-    
-    $('AddMoreFileBox').html("Add field");
-    
-    // Delete the "add"-link if there is 3 fields.
-    if(x == 5) {
-        $("#AddMoreFileId").hide();
-      $("#lineBreak").html("<br>");
-    }
-  }
-  return false;
-});
+    //on add input button click
+    $(AddButton).click(function (e) {
+      //max input box allowed
+      if (x <= MaxInputs) {
+        FieldCount++; //text box added ncrement
+        //add input box
+        $(InputsWrapper).append('<div><input type="file" accept="image/*" class="form-control-file"  name="image[]" id="field_' + FieldCount + '"/> <a href="#" class="removeclass">Remove</a> &nbsp; <div class="custom-control custom-radio d-inline"><input type="radio" id="customRadio' + FieldCount + '" name="customRadio" class="custom-control-input" value="' + FieldCount + '"><label class="custom-control-label" for="customRadio' + FieldCount + '">Set as Primary</label></div></div>');
+        x++; //text box increment
 
-$("body").on("click",".removeclass", function(e){ //user click on remove text
-  if( x > 1 ) {
-    $(this).parent('div').remove(); //remove text box
-    x--; //decrement textbox
-  
-    $("#AddMoreFileId").show();
-  
-    $("#lineBreak").html("");
-  
-    // Adds the "add" link again when a field is removed.
-    $('AddMoreFileBox').html("Add field");
-  }
-	return false;
-}) 
+        $("#AddMoreFileId").show();
 
-});
+        $('AddMoreFileBox').html("Add field");
+
+        // Delete the "add"-link if there is 3 fields.
+        if (x == 5) {
+          $("#AddMoreFileId").hide();
+          $("#lineBreak").html("<br>");
+        }
+      }
+      return false;
+    });
+
+    $("body").on("click", ".removeclass", function (e) { //user click on remove text
+      if (x > 1) {
+        $(this).parent('div').remove(); //remove text box
+        x--; //decrement textbox
+
+        $("#AddMoreFileId").show();
+
+        $("#lineBreak").html("");
+
+        // Adds the "add" link again when a field is removed.
+        $('AddMoreFileBox').html("Add field");
+      }
+      return false;
+    })
+
+  });
 </script>

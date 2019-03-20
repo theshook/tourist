@@ -157,6 +157,7 @@ exports.establishments_create = (req, res) => {
   let date = moment().format("YYYY-MM-DD HH:MM:SS");
   let data = req.body;
   let user = req.user.user_no;
+
   db.query(
     "INSERT INTO establistments (ec_no, town_no, bar_no, estab_name, estab_description, estab_address, estab_contact, estab_email, estab_encode, estab_encode_date) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
     [
@@ -172,12 +173,22 @@ exports.establishments_create = (req, res) => {
       date
     ],
     (err, rows) => {
-      if (err) {
-        throw err;
+      if (err) { throw err; }
+
+      var str = data.keywords;
+      var result = str.split(';');
+
+      for (i = 0; i < result.length; i++) {
+        if (result[i] != '') {
+          db.query("INSERT INTO keywords (k_estab_no, k_keyword) VALUES(?, ?)",
+            [rows.insertId, result[i]], (kerr, krows) => {
+              if (kerr) throw kerr;
+            });
+        }
       }
+
       res.redirect("/admin/establishment");
-    }
-  );
+    });
 };
 
 exports.establishments_set_image = (req, res) => {
@@ -360,14 +371,21 @@ exports.establishments_edit = (req, res) => {
               if (error) {
                 throw err;
               }
-              res.render("Admin/template", {
-                user: req.user,
-                info: info,
-                data: rows,
-                towns: result,
-                pageTitle: "Establishment Panel",
-                page: "Establishment/Update"
-              });
+
+              db.query("SELECT k_keyword FROM keywords WHERE k_estab_no = ?",
+                [id], (kerr, krows) => {
+                  if (kerr) throw kerr;
+
+                  res.render("Admin/template", {
+                    user: req.user,
+                    info: info,
+                    data: rows,
+                    towns: result,
+                    krows,
+                    pageTitle: "Establishment Panel",
+                    page: "Establishment/Update"
+                  });
+                });
             }
           );
           if (error) {
@@ -403,10 +421,24 @@ exports.establishments_update = (req, res) => {
       id
     ],
     (err, row) => {
-      if (err) {
-        throw err;
-      }
-      res.redirect("/admin/establishment");
+      if (err) throw err;
+      db.query("DELETE FROM keywords WHERE k_estab_no = ?", [id], (derr, drows) => {
+        if (derr) throw derr;
+
+        var str = data.keywords;
+        var result = str.split(';');
+
+        for (i = 0; i < result.length; i++) {
+          if (result[i] != '') {
+            db.query("INSERT INTO keywords (k_estab_no, k_keyword) VALUES(?, ?)",
+              [id, result[i]], (kerr, krows) => {
+                if (kerr) throw kerr;
+              });
+          }
+        }
+
+        res.redirect("/admin/establishment");
+      });
     }
   );
 };

@@ -1,3 +1,6 @@
+<script src="http://code.jquery.com/color/jquery.color.plus-names-2.1.2.min.js"></script>
+<link rel="stylesheet" href="/vendor/jquery-tags/jquery-tagsinput.min.css">
+<script src="/vendor/jquery-tags/jquery-tagsinput.min.js"></script>
 <div class="col-md-7 mx-auto">
   <div class="card">
     <div class="card-header card-header-warning">
@@ -59,6 +62,16 @@
             </div>
             <label for="exampleFormControlTextarea1">Description</label>
             <textarea class="form-control" name="desc" rows="3"><%= info[0].spot_description %></textarea>
+            <% tags = ""; %>
+            <% drows.forEach(function(krow){ %>
+            <% tags += krow.k_keyword+";" %>
+            <%});%>
+            <div class="form-group bmd-form-group">
+              <label for="keywords">Keyword(s) <span class="text-muted">press enter for every keywords or you can use
+                  semicolon (;)</span></label>
+              <input type="text" class="form-control" id="keywords" name="keywords" data-role="tags-input"
+                value="<%= tags %>" placeholder="keywords">
+            </div>
           </div>
           <a href="/admin/spot/" class="btn btn-danger pull-left">Go Back</a>
           <button type="submit" class="btn btn-info pull-right">Update Record</button>
@@ -67,3 +80,8 @@
     </div>
   </div>
 </div>
+<script>
+  $(document).ready(function () {
+    $('[data-role="tags-input"]').tagsInput();
+  });
+</script>

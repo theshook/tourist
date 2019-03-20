@@ -5,7 +5,7 @@
         <h4 class="card-title">Location for <%= row[0].estab_name %></h4>
       </div>
       <div class="card-body">
-        <form action="/admin/establishment/location/<%= row[0].estab_no %>" method="POST"> 
+        <form action="/admin/establishment/location/<%= row[0].estab_no %>" method="POST">
           <div class="row">
             <div class="col-md-12" id="map" style="height:350px;width:100%;"></div>
           </div>
@@ -29,18 +29,19 @@
               </div>
             </div>
           </div>
-          <button>Submit</button>
+          <a href="/admin/establishment/" class="btn btn-danger pull-left">Go Back</a>
+          <button class="btn btn-info pull-left">Submit</button>
         </form>
       </div>
     </div>
   </div>
 </div>
 <script async defer
-src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBc7MrXyAOjZ9VAmPCniGxbH5MEn0jpP7Q&callback=initMap">
-</script>
+  src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBc7MrXyAOjZ9VAmPCniGxbH5MEn0jpP7Q&callback=initMap">
+  </script>
 <script>
-let map;
-let marker;
+  let map;
+  let marker;
   function initMap() {
     let dagupan = { lat: 16.0433, lng: 120.3333 };
     map = new google.maps.Map(document.getElementById('map'), {
@@ -49,11 +50,11 @@ let marker;
     });
 
     // This event listener calls addMarker() when the map is clicked.
-    map.addListener('click', function(event) {
+    map.addListener('click', function (event) {
       marker.setMap(null);
       addMarker(event.latLng, map);
       document.getElementById('el_latitude').value = event.latLng.lat();
-      document.getElementById('el_longitude').value =  event.latLng.lng();
+      document.getElementById('el_longitude').value = event.latLng.lng();
     });
 
     addMarker(dagupan, map);

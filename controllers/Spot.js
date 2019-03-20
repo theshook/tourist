@@ -153,8 +153,17 @@ exports.spots_create = (req, res) => {
       date
     ],
     (err, rows) => {
-      if (err) {
-        throw err;
+      if (err) { throw err; }
+      var str = data.keywords;
+      var result = str.split(';');
+
+      for (i = 0; i < result.length; i++) {
+        if (result[i] != '') {
+          db.query("INSERT INTO keywords (k_spot_no, k_keyword) VALUES(?, ?)",
+            [rows.insertId, result[i]], (kerr, krows) => {
+              if (kerr) throw kerr;
+            });
+        }
       }
       res.redirect("/admin/spot");
     }
@@ -337,15 +346,21 @@ exports.spots_edit = (req, res) => {
               db.query(`SELECT sa_no, sa_name FROM spots_actualuse WHERE sa_inactive = 0 and sa_delete = 0`, (actual_err, actuals) => {
                 if (actual_err) { throw actual_err; }
 
-                res.render("Admin/template", {
-                  user: req.user,
-                  info: info,
-                  actuals,
-                  data: rows,
-                  towns: result,
-                  pageTitle: "Spot Panel",
-                  page: "Spot/Update"
-                });
+                db.query("SELECT k_keyword FROM keywords WHERE k_spot_no = ?", [id],
+                  (derr, drows) => {
+                    if (derr) throw derr;
+
+                    res.render("Admin/template", {
+                      user: req.user,
+                      info: info,
+                      actuals,
+                      data: rows,
+                      drows,
+                      towns: result,
+                      pageTitle: "Spot Panel",
+                      page: "Spot/Update"
+                    });
+                  });
               });
             }
           );
@@ -379,10 +394,24 @@ exports.spots_update = (req, res) => {
       id
     ],
     (err, row) => {
-      if (err) {
-        throw err;
-      }
-      res.redirect("/admin/spot");
+      if (err) { throw err; }
+      db.query("DELETE FROM keywords WHERE k_spot_no = ?", [id], (derr, drows) => {
+        if (derr) throw derr;
+
+        var str = data.keywords;
+        var result = str.split(';');
+
+        for (i = 0; i < result.length; i++) {
+          if (result[i] != '') {
+            db.query("INSERT INTO keywords (k_spot_no, k_keyword) VALUES(?, ?)",
+              [id, result[i]], (kerr, krows) => {
+                if (kerr) throw kerr;
+              });
+          }
+        }
+
+        res.redirect("/admin/spot");
+      });
     }
   );
 };
