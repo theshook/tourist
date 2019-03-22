@@ -1,7 +1,7 @@
 <% if (user != '') {%>
 <div class="container-fluid pb-2">
   <h4 class="section-heading text-uppercase">Recommended For You</h4>
-  <div class="row mt-3">
+  <div class="recon owl-carousel owl-theme">
     <% user_recon.forEach(function(recon) { %>
     <% var cat; %>
     <% if(recon.sc_name == 'Ilocano Delicacies') { %>
@@ -13,25 +13,33 @@
     <% } else { %>
     <% cat = recon.sc_name %>
     <% } %>
-    <div class="col-md-4 mt-3">
+    <div class="item">
       <div class="card">
         <a href="/<%= cat %>/<%= recon.spot_no %>">
           <img class="img-fluid" style="height:200px; width:400px;" src="/uploads/<%= recon.img_filename %>"
-            onerror="if (this.src != 'error.jpg') this.src = '/uploads/default.png';" alt="/uploads/default.png">
+            onerror="if (this.src != 'error.jpg') this.src = '/uploads/default.png';" alt="<%= recon.sc_name %>">
         </a>
         <div class="card-body">
           <h5 class="card-title text-truncate mb-0 pb-0">
             <%= recon.spot_name %>
           </h5>
-          <p class="card-text text-muted">Rating:
-            <%= recon.RATES %>
-          </p>
+          <h6>
+            <% if (recon.RATES) { %>
+            <span class="float-left">
+              Rating:&nbsp;
+            </span>
+            <span class="badge badge-secondary float-left">
+              <%= recon.RATES %>
+            </span>
+            <span class="float-left">
+              &nbsp;(<%= recon.Num_of_Rates %> reviews)
+            </span>
+            <% } %>
+          </h6>
         </div>
       </div>
     </div>
     <% }); %>
-  </div>
-  <div class="row mt-3">
     <% userReconEstab.forEach(function(recon) { %>
     <% var cat; %>
     <% if(recon.ec_name == 'Ilocano Delicacies') { %>
@@ -43,7 +51,7 @@
     <% } else { %>
     <% cat = recon.ec_name %>
     <% } %>
-    <div class="col-md-4 mt-3">
+    <div class="item">
       <div class="card">
         <a href="/<%= cat %>/<%= recon.estab_no %>">
           <img class="img-fluid" style="height:200px; width:400px;" src="/uploads/<%= recon.image_filename %>"
@@ -53,9 +61,19 @@
           <h5 class="card-title text-truncate mb-0 pb-0">
             <%= recon.estab_name %>
           </h5>
-          <p class="card-text text-muted">Rating:
-            <%= recon.RATES %>
-          </p>
+          <h6>
+            <% if (recon.RATES) { %>
+            <span class="float-left">
+              Rating:&nbsp;
+            </span>
+            <span class="badge badge-secondary float-left">
+              <%= recon.RATES %>
+            </span>
+            <span class="float-left">
+              &nbsp;(<%= recon.Num_of_Rates %> reviews)
+            </span>
+            <% } %>
+          </h6>
         </div>
       </div>
     </div>
@@ -63,3 +81,27 @@
   </div>
 </div>
 <% } %>
+<script>
+  $(document).ready(function () {
+    $('.recon').owlCarousel({
+      loop: true,
+      margin: 10,
+      nav: true,
+      dots: false,
+      autoplay: true,
+      autoplayTimeout: 9000,
+      responsive: {
+        0: {
+          items: 1
+        },
+        600: {
+          items: 3
+        },
+        1000: {
+          items: 4
+        }
+      }
+    })
+
+  });
+</script>

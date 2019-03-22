@@ -1,5 +1,69 @@
 // Spots Similarity
 var similarity = require('cosine-similarity');
+exports.estabGetSimilarity = (db, user_no, callback) => {
+  let iUsers = [];
+  let otherUsers = {};
+  let idSimilar = 0;
+  let cosSimilarity = 0.0;
+  db.query(`SELECT user_no, ratings.estab_no, estab_name, rating_value
+FROM ratings INNER JOIN establistments ON ratings.estab_no = establistments.estab_no 
+  WHERE user_no != 0 AND ratings.estab_no != 0 AND user_no = ${user_no}`, (err, rows) => {
+      db.query(`SELECT user_no, ratings.estab_no, estab_name, rating_value
+    FROM ratings INNER JOIN establistments ON ratings.estab_no = establistments.estab_no 
+      WHERE user_no != 0 AND ratings.estab_no != 0 AND user_no != ${user_no}`, (rerr, ratings) => {
+          if (rerr) throw rerr;
+
+
+          for (i = 0; i < rows.length; i++) {
+            iUsers.push(rows[i].rating_value);
+          }
+
+
+          for (i = 0; i < ratings.length; i++) {
+            otherUsers[ratings[i].user_no] = [];
+          }
+
+          for (let key in otherUsers) {
+            for (i = 0; i < ratings.length; i++) {
+              if (key == ratings[i].user_no) {
+                otherUsers[ratings[i].user_no].push(ratings[i].rating_value)
+              }
+            }
+          }
+
+
+          for (var key in otherUsers) {
+            if (otherUsers.hasOwnProperty(key)) {
+              if (similarity(iUsers, otherUsers[key]) < 1) {
+                if (cosSimilarity < similarity(iUsers, otherUsers[key])) {
+                  cosSimilarity = similarity(iUsers, otherUsers[key]);
+                  idSimilar = key;
+                  // console.log(`User ID:${key} ->`,
+                  //   `Cosine Similarity: ${similarity(iUsers, otherUsers[key])}`);
+                }
+              }
+            }
+          }
+
+          // console.log(idSimilar, cosSimilarity);
+
+          db.query(`SELECT establistments.ec_no, establistments.estab_no, ratings.user_no,establistments.estab_name, establistments_category.ec_name, establistments_photo.image_filename, round(SUM(rating_value)/COUNT(*), 2) as RATES
+          FROM ratings 
+          INNER JOIN establistments ON ratings.estab_no = establistments.estab_no 
+          INNER JOIN users ON ratings.user_no = ratings.user_no
+          INNER JOIN establistments_category ON establistments_category.ec_no = establistments.ec_no
+          INNER JOIN establistments_photo ON establistments_photo.estab_no = establistments.estab_no
+          WHERE NOT ratings.user_no = '${idSimilar}'
+          AND NOT ratings.user_no = 0
+          AND establistments_photo.image_isprimary = 1
+          GROUP BY ratings.estab_no
+          LIMIT 6`, (err, result) => {
+              if (err) { throw err; }
+              callback(null, result);
+            });
+        });
+    });
+}
 exports.spotsGetSimilarity = (db, user_no, callback) => {
   let iUsers = [];
   let otherUsers = {};
