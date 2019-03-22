@@ -87,7 +87,7 @@ exports.Waterfall_View = (req, res) => {
                     if (user_no == 0) {
                       db.query(userRecommendation(user_no), (user_err, user_recon) => {
                         if (user_err) { throw user_err; }
-                        res.render("Client/Spot/Festival/view", {
+                        res.render("Client/Spot/Nature/view", {
                           cat_res,
                           info_rows,
                           user_recon,
@@ -111,7 +111,7 @@ exports.Waterfall_View = (req, res) => {
                     } else {
                       spotsGetSimilarity(db, user_no, (err, user_recon) => {
                         if (err) { throw err; }
-                        res.render("Client/Spot/Festival/view", {
+                        res.render("Client/Spot/Nature/view", {
                           cat_res,
                           info_rows,
                           user_recon,

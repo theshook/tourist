@@ -13,240 +13,199 @@
       </ol>
     </nav>
     <div class="row">
-        <div class="col-md-8">
-          <div class="card">
-            <!-- Title -->
-            <div class="card-header">
-              <h4 class="card-title d-flex justify-content-center">
-                <%= info_rows[0].estab_name.toUpperCase() %>
-              </h4>
-            </div>
-            <!-- Carousel -->
-            <div id="carouselExampleFade" class="carousel slide carousel-fade" data-ride="carousel">
-              <div class="carousel-inner">
-                <% if (images_rows !== "N/A") { %>
-                <% images_rows.forEach(function(row, index) { %>
-                <div class="carousel-item <% if (index == 0) { %> active <% } %>">
-                  <img class="d-block w-100" src="/uploads/<%= row.image_filename %>"
-                    alt="/uploads/<%= row.image_filename %>" height="450">
-                </div>
-                <%  }); %>
-                <% } %>
+      <div class="col-md-8">
+        <div class="card">
+          <!-- Title -->
+          <div class="card-header">
+            <h4 class="card-title d-flex justify-content-center">
+              <%= info_rows[0].estab_name.toUpperCase() %>
+            </h4>
+          </div>
+          <!-- Carousel -->
+          <div id="carouselExampleFade" class="carousel slide carousel-fade" data-ride="carousel">
+            <div class="carousel-inner">
+              <% if (images_rows !== "N/A") { %>
+              <% images_rows.forEach(function(row, index) { %>
+              <div class="carousel-item <% if (index == 0) { %> active <% } %>">
+                <img class="d-block w-100" src="/uploads/<%= row.image_filename %>"
+                  alt="/uploads/<%= row.image_filename %>" height="450">
               </div>
-              <a class="carousel-control-prev" href="#carouselExampleFade" role="button" data-slide="prev">
-                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                <span class="sr-only">Previous</span>
-              </a>
-              <a class="carousel-control-next" href="#carouselExampleFade" role="button" data-slide="next">
-                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                <span class="sr-only">Next</span>
-              </a>
+              <%  }); %>
+              <% } %>
             </div>
-            <!-- Rating -->
-            <div class="card-footer">
-              <h3>Rating:
-                <% if (rating.length > 0) { %>
-                <%= rating[0].RATES %>
-                <% } %>
-                <span class="float-right">
-                  <%- include('./rating/rating.ejs') %>
-                </span>
-              </h3>
-            </div>
-            <!-- Information -->
-            <div class="card-body">
-              <dl class="row">
-                <dd class="col-sm-12 lead">
-                  <%= info_rows[0].estab_description %>
-                </dd>
-                <dd class="col-sm-12 lead">
-                  <%= info_rows[0].estab_address %>
-                </dd>
-                <dd class="col-sm-12 lead">
-                  <%= info_rows[0].town_name %>
-                </dd>
-                <dd class="col-sm-12 lead">
-                  <%= info_rows[0].bar_name %>
-                </dd>
-                <dd class="col-sm-12 lead">
-                  <%= info_rows[0].estab_contact %>
-                </dd>
-                <dd class="col-sm-12 lead">
-                  <%= info_rows[0].estab_email %>
-                </dd>
-                <dd class="col-sm-12 lead">
-                  <%= el_route %>
-                </dd>
-                <dd class="col-sm-12">
-                  <div class="col-md-12" id="map" style="height:350px;width:100%;"></div>
-                </dd>
-              </dl>
-            </div>
+            <a class="carousel-control-prev" href="#carouselExampleFade" role="button" data-slide="prev">
+              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+              <span class="sr-only">Previous</span>
+            </a>
+            <a class="carousel-control-next" href="#carouselExampleFade" role="button" data-slide="next">
+              <span class="carousel-control-next-icon" aria-hidden="true"></span>
+              <span class="sr-only">Next</span>
+            </a>
+          </div>
+          <!-- Rating -->
+          <div class="card-footer">
+            <h3>Rating:
+              <% if (rating.length > 0) { %>
+              <%= rating[0].RATES %>
+              <% } %>
+              <span class="float-right">
+                <%- include('./rating/rating.ejs') %>
+              </span>
+            </h3>
+          </div>
+          <!-- Information -->
+          <div class="card-body">
+            <dl class="row">
+              <dd class="col-sm-12 lead">
+                <%= info_rows[0].estab_description %>
+              </dd>
+              <dd class="col-sm-12 lead">
+                <%= info_rows[0].estab_address %>
+              </dd>
+              <dd class="col-sm-12 lead">
+                <%= info_rows[0].town_name %>
+              </dd>
+              <dd class="col-sm-12 lead">
+                <%= info_rows[0].bar_name %>
+              </dd>
+              <dd class="col-sm-12 lead">
+                <%= info_rows[0].estab_contact %>
+              </dd>
+              <dd class="col-sm-12 lead">
+                <%= info_rows[0].estab_email %>
+              </dd>
+              <dd class="col-sm-12 lead">
+                <%= el_route %>
+              </dd>
+              <dd class="col-sm-12">
+                <div class="col-md-12" id="map" style="height:350px;width:100%;"></div>
+              </dd>
+            </dl>
+          </div>
+          <!-- Comments -->
+          <div class="card-footer">
             <!-- Comments -->
-            <div class="card-footer">
-              <!-- Comments -->
-              <div class="row">
-                <div class="col-md-12">
-                  <form id="form-comments" class="form-inline" action="/<%= route %>/<%= info_rows[0].estab_no %>"
-                    method="post">
+            <div class="row">
+              <div class="col-md-12">
+                <form id="form-comments" class="form-inline" action="/<%= route %>/<%= info_rows[0].estab_no %>"
+                  method="post">
 
-                    <% if (user=="null") { %>
-                    <img src="/guest.ico" alt="..." class="rounded-circle" height="32" width="32">
-                    <input type="email" class="form-control" placeholder="Email (Required)" name="email" id="email">
-                    <input type="text" class="form-control" placeholder="Name (Required)" name="name" id="name">
-                    <% } %>
-                </div>
+                  <% if (user=="null") { %>
+                  <img src="/guest.ico" alt="..." class="rounded-circle" height="32" width="32">
+                  <input type="email" class="form-control" placeholder="Email (Required)" name="email" id="email">
+                  <input type="text" class="form-control" placeholder="Name (Required)" name="name" id="name">
+                  <% } %>
               </div>
-
-              <!-- Comment Input -->
-              <div class="row">
-                <div class="col-md-12">
-                  <textarea class="form-control" id="content" rows="3" style="min-width: 100%"
-                    name="comment_content"></textarea>
-                </div>
-              </div>
-
-              <!-- Comment Submit -->
-              <div class="row">
-                <div class="col-md-12">
-                  <button class="btn btn-primary float-right" id="comment">Comment</button>
-                  </form>
-                </div>
-              </div>
-              <hr>
-              <!-- Comment Output -->
-              <%- include('./comment/comment.ejs') %>
             </div>
+
+            <!-- Comment Input -->
+            <div class="row">
+              <div class="col-md-12">
+                <textarea class="form-control" id="content" rows="3" style="min-width: 100%"
+                  name="comment_content"></textarea>
+              </div>
+            </div>
+
+            <!-- Comment Submit -->
+            <div class="row">
+              <div class="col-md-12">
+                <button class="btn btn-primary float-right" id="comment">Comment</button>
+                </form>
+              </div>
+            </div>
+            <hr>
+            <!-- Comment Output -->
+            <%- include('./comment/comment.ejs') %>
           </div>
         </div>
+      </div>
 
-        <!-- Related Projects Row -->
-        <div class="col-md-4">
-          <% if(user == "null") { %>
-            <h5 class="section-heading text-uppercase">Just For You</h5>
-            <!-- /.Related Projects -->
-            <div class="row">
-            <% user_recon.forEach(function(recon) { %>
-            <% var cat; %>
-            <% if(recon.sc_name == 'Ilocano Delicacies') { %>
-            <% cat = 'ilocano' %>
-            <% } else if (recon.sc_name == 'Banks & Atms') { %>
-            <% cat = 'banks' %>
-            <% } else if (recon.sc_name == 'Churches & Structures') { %>
-            <% cat = 'church' %>
-            <% } else { %>
-            <% cat = recon.sc_name %>
-            <% } %>
-            <div class="col-md-12 mt-3">
-              <div class="card">
-                <a href="/<%= cat %>/<%= recon.spot_no %>">
-                  <img class="img-fluid rounded" style="height:200px; width:400px;"
-                    src="/uploads/<%= recon.img_filename %>"
-                    onerror="if (this.src != 'error.jpg') this.src = '/uploads/default.png';"
-                    alt="/uploads/default.png">
-                </a>
-                <div class="card-footer pt-0 mt-0 pb-0 mt-0">
-                  <p class="text-truncate mb-0 pb-0">
-                    <%= recon.spot_name %>
-                  </p>
-                  <p class="mb-0 pb-0">Rating:
-                    <%= recon.RATES %>
-                  </p>
-                </div>
-              </div>
-            </div>
-            <% }); %>
+      <!-- Related Projects Row -->
+      <div class="col-md-4">
+        <% if(user == "null") { %>
+        <h5 class="section-heading text-uppercase">Just For You</h5>
+        <!-- /.Related Projects -->
+        <div class="row">
 
-            <% userReconEstab.forEach(function(recon) { %>
-            <% var cat; %>
-            <% if(recon.ec_name == 'Ilocano Delicacies') { %>
-            <% cat = 'ilocano' %>
-            <% } else if (recon.ec_name == 'Banks & Atms') { %>
-            <% cat = 'banks' %>
-            <% } else if (recon.ec_name == 'Churches & Structures') { %>
-            <% cat = 'church' %>
-            <% } else { %>
-            <% cat = recon.ec_name %>
-            <% } %>
-            <div class="col-md-12 mt-3">
-              <div class="card">
-                <a href="/<%= cat %>/<%= recon.estab_no %>">
-                  <img class="img-fluid rounded" style="height:200px; width:400px;"
-                    src="/uploads/<%= recon.image_filename %>"
-                    onerror="if (this.src != 'error.jpg') this.src = '/uploads/default.png';"
-                    alt="<%= recon.estab_name %>">
-                </a>
-                <div class="card-footer pt-0 mt-0 pb-0 mt-0">
-                  <p class="text-truncate mb-0 pb-0">
-                    <%= recon.estab_name %>
-                  </p>
-                  <p class="mb-0 pb-0">Rating:
-                    <%= recon.RATES %>
-                  </p>
-                </div>
-              </div>
-            </div>
-            <% }); %>
-          </div>
-        <!-- /.end -->
+          <% userReconEstab.forEach(function(recon) { %>
+          <% var cat; %>
+          <% if(recon.ec_name == 'Ilocano Delicacies') { %>
+          <% cat = 'ilocano' %>
+          <% } else if (recon.ec_name == 'Banks & Atms') { %>
+          <% cat = 'banks' %>
+          <% } else if (recon.ec_name == 'Churches & Structures') { %>
+          <% cat = 'church' %>
+          <% } else { %>
+          <% cat = recon.ec_name %>
           <% } %>
-          
-          <!-- IF LOGGED IN -->
-          <% if(user != "null") { %>
-            <h5 class="section-heading text-uppercase">Similar to this destination:</h5>
-            <!-- /.Related Projects -->
-            <div class="row">
-            <% user_recon.forEach(function(recon) { %>
-            <div class="col-md-12 mt-3">
-              <div class="card">
-                <a href="/<%= recon.sc_name %>/<%= recon.spot_no %>">
-                  <img class="img-fluid rounded" style="height:200px; width:400px;"
-                    src="/uploads/<%= recon.img_filename %>"
-                    onerror="if (this.src != 'error.jpg') this.src = '/uploads/default.png';"
-                    alt="/uploads/default.png">
-                </a>
-                <div class="card-footer pt-0 mt-0 pb-0 mt-0">
-                  <p class="text-truncate mb-0 pb-0">
-                    <%= recon.spot_name %>
-                  </p>
-                  <p class="mb-0 pb-0">Rating:
-                    <%= recon.RATES %>
-                  </p>
-                </div>
+          <div class="col-md-12 mt-3">
+            <div class="card">
+              <a href="/<%= cat %>/<%= recon.estab_no %>">
+                <img class="img-fluid rounded" style="height:200px; width:400px;"
+                  src="/uploads/<%= recon.image_filename %>"
+                  onerror="if (this.src != 'error.jpg') this.src = '/uploads/default.png';"
+                  alt="<%= recon.estab_name %>">
+              </a>
+              <div class="card-footer pt-0 mt-0 pb-0 mt-0">
+                <p class="text-truncate mb-0 pb-0">
+                  <%= recon.estab_name %>
+                </p>
+                <p class="mb-0 pb-0">Rating:
+                  <%= recon.RATES %>
+                </p>
               </div>
             </div>
-            <% }); %>
-
-            <% userReconEstab.forEach(function(recon) { %>
-            <div class="col-md-12 mt-3">
-              <div class="card">
-                <a href="/<%= recon.ec_name %>/<%= recon.estab_no %>">
-                  <img class="img-fluid rounded" style="height:200px; width:400px;"
-                    src="/uploads/<%= recon.image_filename %>"
-                    onerror="if (this.src != 'error.jpg') this.src = '/uploads/default.png';"
-                    alt="<%= recon.estab_name %>">
-                </a>
-                <div class="card-footer pt-0 mt-0 pb-0 mt-0">
-                  <p class="text-truncate mb-0 pb-0">
-                    <%= recon.estab_name %>
-                  </p>
-                  <p class="mb-0 pb-0">Rating:
-                    <%= recon.RATES %>
-                  </p>
-                </div>
-              </div>
-            </div>
-            <% }); %>
           </div>
+          <% }); %>
+        </div>
         <!-- /.end -->
         <% } %>
-          
-          
+
+        <!-- IF LOGGED IN -->
+        <% if(user != "null") { %>
+        <h5 class="section-heading text-uppercase">Similar to this destination:</h5>
+        <!-- /.Related Projects -->
+        <div class="row">
+          <% userReconEstab.forEach(function(recon) { %>
+          <% var cat; %>
+          <% if(recon.ec_name == 'Ilocano Delicacies') { %>
+          <% cat = 'ilocano' %>
+          <% } else if (recon.ec_name == 'Banks & Atms') { %>
+          <% cat = 'banks' %>
+          <% } else if (recon.ec_name == 'Churches & Structures') { %>
+          <% cat = 'church' %>
+          <% } else { %>
+          <% cat = recon.ec_name %>
+          <% } %>
+          <div class="col-md-12 mt-3">
+            <div class="card">
+              <a href="/<%= recon.ec_name %>/<%= recon.estab_no %>">
+                <img class="img-fluid rounded" style="height:200px; width:400px;"
+                  src="/uploads/<%= recon.image_filename %>"
+                  onerror="if (this.src != 'error.jpg') this.src = '/uploads/default.png';"
+                  alt="<%= recon.estab_name %>">
+              </a>
+              <div class="card-footer pt-0 mt-0 pb-0 mt-0">
+                <p class="text-truncate mb-0 pb-0">
+                  <%= recon.estab_name %>
+                </p>
+                <p class="mb-0 pb-0">Rating:
+                  <%= recon.RATES %>
+                </p>
+              </div>
+            </div>
+          </div>
+          <% }); %>
         </div>
+        <!-- /.end -->
+        <% } %>
+
 
       </div>
+
     </div>
-    <!-- /.container -->
+  </div>
+  <!-- /.container -->
 </section>
 
 <input type="text" class="form-control" name="el_latitude" id="el_latitude" value="<%= el_latitude %>" hidden>
