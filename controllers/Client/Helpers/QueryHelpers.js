@@ -47,7 +47,8 @@ FROM ratings INNER JOIN establistments ON ratings.estab_no = establistments.esta
 
           // console.log(idSimilar, cosSimilarity);
 
-          db.query(`SELECT establistments.ec_no, establistments.estab_no, ratings.user_no,establistments.estab_name, establistments_category.ec_name, establistments_photo.image_filename, round(SUM(rating_value)/COUNT(*), 2) as RATES
+          db.query(`SELECT establistments.ec_no, establistments.estab_no, ratings.user_no,establistments.estab_name, establistments_category.ec_name, establistments_photo.image_filename, round(SUM(rating_value)/COUNT(*), 2) as RATES,
+          count(ratings.estab_no) as Num_of_Rates,
           FROM ratings 
           INNER JOIN establistments ON ratings.estab_no = establistments.estab_no 
           INNER JOIN users ON ratings.user_no = ratings.user_no
@@ -111,7 +112,8 @@ FROM ratings INNER JOIN spots ON ratings.spot_no = spots.spot_no
 
           // console.log(idSimilar, cosSimilarity);
 
-          db.query(`SELECT spots.spot_no, spots.spot_name, spots_category.sc_name, spots_photo.img_filename, round(SUM(rating_value)/COUNT(*), 2) as RATES
+          db.query(`SELECT spots.spot_no, spots.spot_name, spots_category.sc_name, spots_photo.img_filename, round(SUM(rating_value)/COUNT(*), 2) as RATES,
+          count(ratings.spot_no) as Num_of_Rates,
           FROM ratings 
           INNER JOIN spots ON ratings.spot_no = spots.spot_no 
           INNER JOIN users ON ratings.user_no = ratings.user_no
