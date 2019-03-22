@@ -1,3 +1,69 @@
+// Spots Similarity
+var similarity = require('cosine-similarity');
+exports.spotsGetSimilarity = (db, user_no, callback) => {
+  let iUsers = [];
+  let otherUsers = {};
+  let idSimilar = 0;
+  let cosSimilarity = 0.0;
+  db.query(`SELECT user_no, ratings.spot_no, spot_name, rating_value
+FROM ratings INNER JOIN spots ON ratings.spot_no = spots.spot_no 
+  WHERE user_no != 0 AND ratings.spot_no != 0 AND user_no = ${user_no}`, (err, rows) => {
+      db.query(`SELECT user_no, ratings.spot_no, spot_name, rating_value
+    FROM ratings INNER JOIN spots ON ratings.spot_no = spots.spot_no 
+      WHERE user_no != 0 AND ratings.spot_no != 0 AND user_no != ${user_no}`, (rerr, ratings) => {
+          if (rerr) throw rerr;
+
+
+          for (i = 0; i < rows.length; i++) {
+            iUsers.push(rows[i].rating_value);
+          }
+
+
+          for (i = 0; i < ratings.length; i++) {
+            otherUsers[ratings[i].user_no] = [];
+          }
+
+          for (let key in otherUsers) {
+            for (i = 0; i < ratings.length; i++) {
+              if (key == ratings[i].user_no) {
+                otherUsers[ratings[i].user_no].push(ratings[i].rating_value)
+              }
+            }
+          }
+
+
+          for (var key in otherUsers) {
+            if (otherUsers.hasOwnProperty(key)) {
+              if (similarity(iUsers, otherUsers[key]) < 1) {
+                if (cosSimilarity < similarity(iUsers, otherUsers[key])) {
+                  cosSimilarity = similarity(iUsers, otherUsers[key]);
+                  idSimilar = key;
+                  // console.log(`User ID:${key} ->`,
+                  //   `Cosine Similarity: ${similarity(iUsers, otherUsers[key])}`);
+                }
+              }
+            }
+          }
+
+          // console.log(idSimilar, cosSimilarity);
+
+          db.query(`SELECT spots.spot_no, spots.spot_name, spots_category.sc_name, spots_photo.img_filename, round(SUM(rating_value)/COUNT(*), 2) as RATES
+          FROM ratings 
+          INNER JOIN spots ON ratings.spot_no = spots.spot_no 
+          INNER JOIN users ON ratings.user_no = ratings.user_no
+          INNER JOIN spots_category ON spots_category.sc_no = spots.sc_no
+          INNER JOIN spots_photo ON spots_photo.spot_no = spots.spot_no
+          WHERE NOT ratings.user_no = ${idSimilar} AND NOT ratings.user_no = 0
+            AND spots_photo.img_isprimary = 1
+          GROUP BY ratings.spot_no
+          LIMIT 6`, (err, result) => {
+              if (err) { throw err; }
+              callback(null, result);
+            });
+        });
+    });
+}
+
 // LOG_FILE INSERT QUERY
 exports.log_file_query = () => {
   return `
@@ -291,7 +357,7 @@ exports.userRecommendation = (user_id) => {
   WHERE NOT ratings.user_no = '${user_id}' AND NOT ratings.user_no = 0
     AND spots_photo.img_isprimary = 1
   GROUP BY ratings.spot_no
-  ORDER BY RAND() LIMIT 0,3`;
+  ORDER BY RAND() LIMIT 0,6`;
 }
 
 exports.userReconEstab = (user_id) => {

@@ -96,7 +96,7 @@ exports.users_verify_email = (req, res) => {
   });
 }
 
-sendEmail = (username, res) => {
+function sendEmail(username, res) {
   const output = `
                 Before you get started, we just need to be sure this is the right email address.
                 Accuracy is kind of our thing.

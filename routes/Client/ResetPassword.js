@@ -108,7 +108,7 @@ router.post("/:email/:token", (req, res) => {
     });
 });
 
-sendEmail = (email, token, req, res) => {
+function sendEmail(email, token, req, res) {
   const output = `
                 We notice that you've requested to reset your password.
                 You must reset your password within an hour.

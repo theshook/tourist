@@ -16,7 +16,8 @@ const {
   visited_spot,
   userRecommendation,
   userReconEstab,
-  notifications
+  notifications,
+  spotsGetSimilarity
 } = require('./Helpers/QueryHelpers');
 
 var ipAddress;
@@ -84,17 +85,13 @@ exports.Waterfall_View = (req, res) => {
                     SELECT sc_name FROM spots_category`, (cat_errs, cat_res) => {
                       if (cat_errs) { throw cat_errs; }
 
-                      db.query(userRecommendation(user_no), (user_err, user_recon) => {
-                        if (user_err) { throw user_err; }
-
-                        db.query(userReconEstab(user_no), (user_estab_err, userReconEstab) => {
-                          if (user_estab_err) { throw user_estab_err; }
-
+                      if (user_no == 0) {
+                        db.query(userRecommendation(user_no), (user_err, user_recon) => {
+                          if (user_err) { throw user_err; }
                           res.render("Client/Spot/Festival/view", {
                             cat_res,
                             info_rows,
                             user_recon,
-                            userReconEstab,
                             sl_latitude: maps_rows.length ? maps_rows[0].sl_latitude : "N/A",
                             sl_lontitude: maps_rows.length ? maps_rows[0].sl_lontitude : "N/A",
                             sl_route: maps_rows.length ? maps_rows[0].sl_route : "N/A",
@@ -112,7 +109,31 @@ exports.Waterfall_View = (req, res) => {
                             userDetail: userDetail
                           });
                         });
-                      });
+                      } else {
+                        spotsGetSimilarity(db, user_no, (err, user_recon) => {
+                          if (err) { throw err; }
+                          res.render("Client/Spot/Festival/view", {
+                            cat_res,
+                            info_rows,
+                            user_recon,
+                            sl_latitude: maps_rows.length ? maps_rows[0].sl_latitude : "N/A",
+                            sl_lontitude: maps_rows.length ? maps_rows[0].sl_lontitude : "N/A",
+                            sl_route: maps_rows.length ? maps_rows[0].sl_route : "N/A",
+                            images_rows: images_rows.length ? images_rows : "N/A",
+                            id: id,
+                            rating: rating,
+                            isRated: isRated,
+                            rated: rated,
+                            total_pages: total_pages,
+                            user: req.user == undefined ? "null" : req.user.user_no,
+                            moment: moment,
+                            comments: comments,
+                            pageTitle: "Fectival Information",
+                            route: "festival",
+                            userDetail: userDetail
+                          });
+                        });
+                      }
                     });
                 });
               });

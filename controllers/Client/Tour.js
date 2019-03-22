@@ -94,7 +94,7 @@ exports.fetch_selected3 = (req, res) => {
   }
 };
 
-capitalizeFirstLetter = (string) => {
+function capitalizeFirstLetter(string) {
   return string[0].toUpperCase() + string.slice(1);
 }
 

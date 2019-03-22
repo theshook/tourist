@@ -20,7 +20,7 @@ exports.get_adventure_category = (req, res) => {
     });
 };
 
-findAdventureRoute = (adventure) => {
+function findAdventureRoute(adventure) {
   let categories = {
     "Water Adventure": "Water-Adventure",
     "Mountain Hiking": "Mountain-Hiking",
