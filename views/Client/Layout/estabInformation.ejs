@@ -57,7 +57,7 @@
           <div class="card-body">
             <dl class="row">
               <dd class="col-sm-12 lead">
-                <%= info_rows[0].estab_description %>
+                <%- info_rows[0].estab_description %>
               </dd>
               <dd class="col-sm-12 lead">
                 <%= info_rows[0].estab_address %>
@@ -137,11 +137,10 @@
           <% } else { %>
           <% cat = recon.ec_name %>
           <% } %>
-          <div class="col-md-12 mt-3">
-            <div class="card">
+          <div class="col-md-6 mt-3">
+            <div class="card" style="width:150px;">
               <a href="/<%= cat %>/<%= recon.estab_no %>">
-                <img class="img-fluid rounded" style="height:200px; width:400px;"
-                  src="/uploads/<%= recon.image_filename %>"
+                <img class="img-fluid" style="height:75px; width:150px;" src="/uploads/<%= recon.image_filename %>"
                   onerror="if (this.src != 'error.jpg') this.src = '/uploads/default.png';"
                   alt="<%= recon.estab_name %>">
               </a>
@@ -149,8 +148,11 @@
                 <p class="text-truncate mb-0 pb-0">
                   <%= recon.estab_name %>
                 </p>
-                <p class="mb-0 pb-0">Rating:
-                  <%= recon.RATES %>
+                <p class="mb-0 pb-0">
+                  Rating:
+                  <span class="badge badge-secondary">
+                    <%= recon.RATES %>
+                  </span>
                 </p>
               </div>
             </div>
@@ -176,11 +178,10 @@
           <% } else { %>
           <% cat = recon.ec_name %>
           <% } %>
-          <div class="col-md-12 mt-3">
-            <div class="card">
+          <div class="col-md-6 mt-3">
+            <div class="card" style="width: 150px;">
               <a href="/<%= recon.ec_name %>/<%= recon.estab_no %>">
-                <img class="img-fluid rounded" style="height:200px; width:400px;"
-                  src="/uploads/<%= recon.image_filename %>"
+                <img class="img-fluid" style="height:75px; width:150px;" src="/uploads/<%= recon.image_filename %>"
                   onerror="if (this.src != 'error.jpg') this.src = '/uploads/default.png';"
                   alt="<%= recon.estab_name %>">
               </a>
@@ -188,8 +189,11 @@
                 <p class="text-truncate mb-0 pb-0">
                   <%= recon.estab_name %>
                 </p>
-                <p class="mb-0 pb-0">Rating:
-                  <%= recon.RATES %>
+                <p class="mb-0 pb-0">
+                  Rating:
+                  <span class="badge badge-secondary">
+                    <%= recon.RATES %>
+                  </span>
                 </p>
               </div>
             </div>
@@ -211,11 +215,10 @@
           <% } else { %>
           <% cat = recon.ec_name %>
           <% } %>
-          <div class="col-md-12 mt-3">
-            <div class="card">
+          <div class="col-md-6 mt-3">
+            <div class="card" style="width: 150px;">
               <a href="/<%= cat %>/<%= recon.estab_no %>">
-                <img class="img-fluid rounded" style="height:200px; width:400px;"
-                  src="/uploads/<%= recon.image_filename %>"
+                <img class="img-fluid" style="height:75px; width:150px;" src="/uploads/<%= recon.image_filename %>"
                   onerror="if (this.src != 'error.jpg') this.src = '/uploads/default.png';"
                   alt="<%= recon.estab_name %>">
               </a>
@@ -223,8 +226,11 @@
                 <p class="text-truncate mb-0 pb-0">
                   <%= recon.estab_name %>
                 </p>
-                <p class="mb-0 pb-0">Rating:
-                  <%= recon.RATES %>
+                <p class="mb-0 pb-0">
+                  Rating:
+                  <span class="badge badge-secondary">
+                    <%= recon.RATES %>
+                  </span>
                 </p>
               </div>
             </div>

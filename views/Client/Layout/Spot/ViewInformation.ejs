@@ -58,7 +58,7 @@
           <div class="card-body">
             <dl class="row">
               <dd class="col-sm-12 lead">
-                <%= info_rows[0].spot_description %>
+                <%- info_rows[0].spot_description %>
               </dd>
               <dd class="col-sm-12 lead">
                 <%= info_rows[0].town_name %>
@@ -125,19 +125,21 @@
           <% } else { %>
           <% cat = recon.sc_name %>
           <% } %>
-          <div class="col-md-12 mt-3">
-            <div class="card">
+          <div class="col-md-6 mt-3">
+            <div class="card" style="width: 150px;">
               <a href="/<%= cat %>/<%= recon.spot_no %>">
-                <img class="img-fluid rounded" style="height:200px; width:400px;"
-                  src="/uploads/<%= recon.img_filename %>"
+                <img class="img-fluid" style="height:75px; width:150px;" src="/uploads/<%= recon.img_filename %>"
                   onerror="if (this.src != 'error.jpg') this.src = '/uploads/default.png';" alt="/uploads/default.png">
               </a>
               <div class="card-footer pt-0 mt-0 pb-0 mt-0">
                 <p class="text-truncate mb-0 pb-0">
                   <%= recon.spot_name %>
                 </p>
-                <p class="mb-0 pb-0">Rating:
-                  <%= recon.RATES %>
+                <p class="mb-0 pb-0">
+                  Rating:
+                  <span class="badge badge-secondary">
+                    <%= recon.RATES %>
+                  </span>
                 </p>
               </div>
             </div>
@@ -150,19 +152,21 @@
         <h5 class="section-heading text-uppercase">Just For You</h5>
         <div class="row">
           <% similarRows.forEach(function(recon) { %>
-          <div class="col-md-12 mt-3">
-            <div class="card">
+          <div class="col-md-6 mt-3">
+            <div class="card" style="width: 150px;">
               <a href="/<%= recon.sc_name %>/<%= recon.spot_no %>">
-                <img class="img-fluid rounded" style="height:200px; width:400px;"
-                  src="/uploads/<%= recon.img_filename %>"
+                <img class="img-fluid" style="height:75px; width:150px;" src="/uploads/<%= recon.img_filename %>"
                   onerror="if (this.src != 'error.jpg') this.src = '/uploads/default.png';" alt="/uploads/default.png">
               </a>
               <div class="card-footer pt-0 mt-0 pb-0 mt-0">
                 <p class="text-truncate mb-0 pb-0">
                   <%= recon.spot_name %>
                 </p>
-                <p class="mb-0 pb-0">Rating:
-                  <%= recon.RATES %>
+                <p class="mb-0 pb-0">
+                  Rating:
+                  <span class="badge badge-secondary">
+                    <%= recon.RATES %>
+                  </span>
                 </p>
               </div>
             </div>
@@ -183,19 +187,21 @@
           <% } else { %>
           <% cat = recon.sc_name %>
           <% } %>
-          <div class="col-md-12 mt-3">
-            <div class="card">
+          <div class="col-md-6 mt-3">
+            <div class="card" style="width: 150px;">
               <a href="/<%= cat %>/<%= recon.spot_no %>">
-                <img class="img-fluid rounded" style="height:200px; width:400px;"
-                  src="/uploads/<%= recon.img_filename %>"
+                <img class="img-fluid" style="height:75px; width:150px;" src="/uploads/<%= recon.img_filename %>"
                   onerror="if (this.src != 'error.jpg') this.src = '/uploads/default.png';" alt="/uploads/default.png">
               </a>
               <div class="card-footer pt-0 mt-0 pb-0 mt-0">
                 <p class="text-truncate mb-0 pb-0">
                   <%= recon.spot_name %>
                 </p>
-                <p class="mb-0 pb-0">Rating:
-                  <%= recon.RATES %>
+                <p class="mb-0 pb-0">
+                  Rating:
+                  <span class="badge badge-secondary">
+                    <%= recon.RATES %>
+                  </span>
                 </p>
               </div>
             </div>
