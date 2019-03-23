@@ -54,7 +54,7 @@ FROM ratings INNER JOIN establistments ON ratings.estab_no = establistments.esta
           INNER JOIN users ON ratings.user_no = ratings.user_no
           INNER JOIN establistments_category ON establistments_category.ec_no = establistments.ec_no
           INNER JOIN establistments_photo ON establistments_photo.estab_no = establistments.estab_no
-          WHERE NOT ratings.user_no = '${idSimilar}'
+          WHERE ratings.user_no = '${idSimilar}'
           AND NOT ratings.user_no = 0
           AND establistments_photo.image_isprimary = 1
           GROUP BY ratings.estab_no
@@ -119,7 +119,7 @@ FROM ratings INNER JOIN spots ON ratings.spot_no = spots.spot_no
           INNER JOIN users ON ratings.user_no = ratings.user_no
           INNER JOIN spots_category ON spots_category.sc_no = spots.sc_no
           INNER JOIN spots_photo ON spots_photo.spot_no = spots.spot_no
-          WHERE NOT ratings.user_no = ${idSimilar} AND NOT ratings.user_no = 0
+          WHERE ratings.user_no = ${idSimilar} AND NOT ratings.user_no = 0
             AND spots_photo.img_isprimary = 1
           GROUP BY ratings.spot_no
           LIMIT 6`, (err, result) => {
