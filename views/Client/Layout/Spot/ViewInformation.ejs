@@ -111,7 +111,7 @@
       </div>
       <!-- Related Projects Row -->
       <div class="col-md-4">
-        <% if(user == "null") { %>
+        <% if(user == "null" && user_recon.length != 0) { %>
         <h5 class="section-heading text-uppercase">Similar to this destination</h5>
         <div class="row">
           <% user_recon.forEach(function(recon) { %>
@@ -169,6 +169,7 @@
           </div>
           <% }); %>
         </div>
+        <% if(user_recon.length != 0) { %>
         <h5 class="section-heading text-uppercase mt-3">Similar to this destination</h5>
         <div class="row">
           <% user_recon.forEach(function(recon) { %>
@@ -201,6 +202,7 @@
           </div>
           <% }); %>
         </div>
+        <% } %>
         <% } %>
       </div>
     </div>

@@ -80,7 +80,7 @@ exports.restaurant_View = (req, res) => {
                     SELECT sc_name FROM spots_category`, (cat_errs, cat_res) => {
                       if (cat_errs) { throw cat_errs; }
 
-                      db.query(userReconEstab(user_no), (user_estab_err, userReconEstab) => {
+                      db.query(userReconEstab(id), (user_estab_err, userReconEstab) => {
                         if (user_estab_err) { throw user_estab_err; }
 
                         if (user_no == 0) {

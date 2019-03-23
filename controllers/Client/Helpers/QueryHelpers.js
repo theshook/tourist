@@ -58,7 +58,7 @@ FROM ratings INNER JOIN establistments ON ratings.estab_no = establistments.esta
           AND NOT ratings.user_no = 0
           AND establistments_photo.image_isprimary = 1
           GROUP BY ratings.estab_no
-          LIMIT 6`, (err, result) => {
+          LIMIT 1, 6`, (err, result) => {
               if (err) { throw err; }
               callback(null, result);
             });
@@ -122,7 +122,7 @@ FROM ratings INNER JOIN spots ON ratings.spot_no = spots.spot_no
           WHERE ratings.user_no = ${idSimilar} AND NOT ratings.user_no = 0
             AND spots_photo.img_isprimary = 1
           GROUP BY ratings.spot_no
-          LIMIT 6`, (err, result) => {
+          LIMIT 1, 6`, (err, result) => {
               if (err) { throw err; }
               callback(null, result);
             });
@@ -413,33 +413,42 @@ exports.searchHomePage = (search_q) => {
   GROUP BY spot_no`;
 }
 
-exports.userRecommendation = (user_id) => {
-  return `SELECT spots.spot_no, spots.spot_name, spots_category.sc_name, spots_photo.img_filename, round(SUM(rating_value)/COUNT(*), 2) as RATES
+exports.userRecommendation = (spot_no) => {
+  return `SELECT spots.spot_no, spots.spot_name, k_keyword, spots_category.sc_name,   
+    spots_photo.img_filename, round(SUM(rating_value)/COUNT(*), 2) as RATES
   FROM ratings 
   INNER JOIN spots ON ratings.spot_no = spots.spot_no 
   INNER JOIN users ON ratings.user_no = ratings.user_no
   INNER JOIN spots_category ON spots_category.sc_no = spots.sc_no
   INNER JOIN spots_photo ON spots_photo.spot_no = spots.spot_no
-  WHERE NOT ratings.user_no = '${user_id}' AND NOT ratings.user_no = 0
+  INNER JOIN keywords ON spots.spot_no = keywords.k_spot_no
+  WHERE NOT ratings.spot_no = '${spot_no}' AND NOT ratings.spot_no = 0
     AND spots_photo.img_isprimary = 1
+    AND k_keyword IN 
+        (SELECT k_keyword FROM keywords WHERE keywords.k_spot_no = '${spot_no}')
+    AND keywords.k_spot_no != '${spot_no}'
   GROUP BY ratings.spot_no
-  ORDER BY RAND() LIMIT 0,6`;
+  LIMIT 0,6`;
 }
 
-exports.userReconEstab = (user_id) => {
+exports.userReconEstab = (estab_no) => {
   return `SELECT establistments.ec_no, establistments.estab_no, ratings.user_no, 
-  establistments.estab_name, establistments_category.ec_name, establistments_photo.image_filename,
-  round(SUM(rating_value)/COUNT(*), 2) as RATES
-FROM ratings 
-INNER JOIN establistments ON ratings.estab_no = establistments.estab_no 
-INNER JOIN users ON ratings.user_no = ratings.user_no
-INNER JOIN establistments_category ON establistments_category.ec_no = establistments.ec_no
-INNER JOIN establistments_photo ON establistments_photo.estab_no = establistments.estab_no
-WHERE NOT ratings.user_no = '${user_id}'
-AND NOT ratings.user_no = 0
-AND establistments_photo.image_isprimary = 1
+    establistments.estab_name, establistments_category.ec_name, establistments_photo.image_filename,
+    round(SUM(rating_value)/COUNT(*), 2) as RATES
+	FROM ratings 
+	INNER JOIN establistments ON ratings.estab_no = establistments.estab_no 
+	INNER JOIN users ON ratings.user_no = ratings.user_no
+	INNER JOIN establistments_category ON establistments_category.ec_no = establistments.ec_no
+	INNER JOIN establistments_photo ON establistments_photo.estab_no = establistments.estab_no
+    INNER JOIN keywords ON establistments.estab_no = keywords.k_estab_no
+	WHERE NOT ratings.estab_no = '${estab_no}'
+    AND NOT ratings.estab_no = 0
+    AND establistments_photo.image_isprimary = 1
+    AND k_keyword IN 
+        (SELECT k_keyword FROM keywords WHERE keywords.k_estab_no = '${estab_no}')
+    AND keywords.k_estab_no != '${estab_no}'
 GROUP BY ratings.estab_no
-ORDER BY RAND() LIMIT 0,6`;
+LIMIT 0,6`;
 }
 
 exports.featured = () => {

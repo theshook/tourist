@@ -87,7 +87,7 @@ exports.Waterfall_View = (req, res) => {
                     SELECT sc_name FROM spots_category`, (cat_errs, cat_res) => {
                       if (cat_errs) { throw cat_errs; }
 
-                      db.query(userRecommendation(user_no), (user_err, user_recon) => {
+                      db.query(userRecommendation(id), (user_err, user_recon) => {
                         if (user_err) { throw user_err; }
 
                         if (user_no == 0) {
