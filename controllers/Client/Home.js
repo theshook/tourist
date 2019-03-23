@@ -10,8 +10,6 @@ const {
   spotsGetSimilarity
 } = require('./Helpers/QueryHelpers');
 
-
-
 exports.get_all_Category = (req, res) => {
   let user = req.user || '';
   let userId = (req.user == undefined) ? 0 : req.user.user_no;

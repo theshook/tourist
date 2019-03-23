@@ -87,56 +87,57 @@ exports.Waterfall_View = (req, res) => {
                     SELECT sc_name FROM spots_category`, (cat_errs, cat_res) => {
                       if (cat_errs) { throw cat_errs; }
 
-                      if (user_no == 0) {
-                        db.query(userRecommendation(user_no), (user_err, user_recon) => {
-                          if (user_err) { throw user_err; }
-                          res.render("Client/Spot/Ilocano/view", {
-                            cat_res,
-                            info_rows,
-                            user_recon,
-                            sl_latitude: maps_rows.length ? maps_rows[0].sl_latitude : "N/A",
-                            sl_lontitude: maps_rows.length ? maps_rows[0].sl_lontitude : "N/A",
-                            sl_route: maps_rows.length ? maps_rows[0].sl_route : "N/A",
-                            images_rows: images_rows.length ? images_rows : "N/A",
-                            id: id,
-                            rating: rating,
-                            isRated: isRated,
-                            rated: rated,
-                            total_pages: total_pages,
-                            user: req.user == undefined ? "null" : req.user.user_no,
-                            moment: moment,
-                            comments: comments,
-                            pageTitle: "Ilocano Delicacies Information",
-                            route: "ilocano",
-                            userDetail: userDetail
-                          });
-                        });
-                      } else {
-                        spotsGetSimilarity(db, user_no, (err, user_recon) => {
-                          if (err) { throw err; }
-                          res.render("Client/Spot/Ilocano/view", {
-                            cat_res,
-                            info_rows,
-                            user_recon,
-                            sl_latitude: maps_rows.length ? maps_rows[0].sl_latitude : "N/A",
-                            sl_lontitude: maps_rows.length ? maps_rows[0].sl_lontitude : "N/A",
-                            sl_route: maps_rows.length ? maps_rows[0].sl_route : "N/A",
-                            images_rows: images_rows.length ? images_rows : "N/A",
-                            id: id,
-                            rating: rating,
-                            isRated: isRated,
-                            rated: rated,
-                            total_pages: total_pages,
-                            user: req.user == undefined ? "null" : req.user.user_no,
-                            moment: moment,
-                            comments: comments,
-                            pageTitle: "Ilocano Delicacies Information",
-                            route: "ilocano",
-                            userDetail: userDetail
-                          });
-                        });
-                      }
+                      db.query(userRecommendation(user_no), (user_err, user_recon) => {
+                        if (user_err) { throw user_err; }
 
+                        if (user_no == 0) {
+                          res.render("Client/Spot/Ilocano/view", {
+                            cat_res,
+                            info_rows,
+                            user_recon,
+                            sl_latitude: maps_rows.length ? maps_rows[0].sl_latitude : "N/A",
+                            sl_lontitude: maps_rows.length ? maps_rows[0].sl_lontitude : "N/A",
+                            sl_route: maps_rows.length ? maps_rows[0].sl_route : "N/A",
+                            images_rows: images_rows.length ? images_rows : "N/A",
+                            id: id,
+                            rating: rating,
+                            isRated: isRated,
+                            rated: rated,
+                            total_pages: total_pages,
+                            user: req.user == undefined ? "null" : req.user.user_no,
+                            moment: moment,
+                            comments: comments,
+                            pageTitle: "Ilocano Delicacies Information",
+                            route: "ilocano",
+                            userDetail: userDetail
+                          });
+                        } else {
+                          spotsGetSimilarity(db, user_no, (err, similarRows) => {
+                            if (err) { throw err; }
+                            res.render("Client/Spot/Ilocano/view", {
+                              cat_res,
+                              info_rows,
+                              user_recon,
+                              similarRows,
+                              sl_latitude: maps_rows.length ? maps_rows[0].sl_latitude : "N/A",
+                              sl_lontitude: maps_rows.length ? maps_rows[0].sl_lontitude : "N/A",
+                              sl_route: maps_rows.length ? maps_rows[0].sl_route : "N/A",
+                              images_rows: images_rows.length ? images_rows : "N/A",
+                              id: id,
+                              rating: rating,
+                              isRated: isRated,
+                              rated: rated,
+                              total_pages: total_pages,
+                              user: req.user == undefined ? "null" : req.user.user_no,
+                              moment: moment,
+                              comments: comments,
+                              pageTitle: "Ilocano Delicacies Information",
+                              route: "ilocano",
+                              userDetail: userDetail
+                            });
+                          });
+                        }
+                      });
                     });
                 });
               });

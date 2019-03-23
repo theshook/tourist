@@ -112,7 +112,7 @@
       <!-- Related Projects Row -->
       <div class="col-md-4">
         <% if(user == "null") { %>
-        <h5 class="section-heading text-uppercase">Just For You</h5>
+        <h5 class="section-heading text-uppercase">Similar to this destination</h5>
         <div class="row">
           <% user_recon.forEach(function(recon) { %>
           <% var cat; %>
@@ -147,12 +147,44 @@
         <% } %>
 
         <% if(user != "null") { %>
-        <h5 class="section-heading text-uppercase">Similar to this destination:</h5>
+        <h5 class="section-heading text-uppercase">Just For You</h5>
         <div class="row">
-          <% user_recon.forEach(function(recon) { %>
+          <% similarRows.forEach(function(recon) { %>
           <div class="col-md-12 mt-3">
             <div class="card">
               <a href="/<%= recon.sc_name %>/<%= recon.spot_no %>">
+                <img class="img-fluid rounded" style="height:200px; width:400px;"
+                  src="/uploads/<%= recon.img_filename %>"
+                  onerror="if (this.src != 'error.jpg') this.src = '/uploads/default.png';" alt="/uploads/default.png">
+              </a>
+              <div class="card-footer pt-0 mt-0 pb-0 mt-0">
+                <p class="text-truncate mb-0 pb-0">
+                  <%= recon.spot_name %>
+                </p>
+                <p class="mb-0 pb-0">Rating:
+                  <%= recon.RATES %>
+                </p>
+              </div>
+            </div>
+          </div>
+          <% }); %>
+        </div>
+        <h5 class="section-heading text-uppercase mt-3">Similar to this destination</h5>
+        <div class="row">
+          <% user_recon.forEach(function(recon) { %>
+          <% var cat; %>
+          <% if(recon.sc_name == 'Ilocano Delicacies') { %>
+          <% cat = 'ilocano' %>
+          <% } else if (recon.sc_name == 'Banks & Atms') { %>
+          <% cat = 'banks' %>
+          <% } else if (recon.sc_name == 'Churches & Structures') { %>
+          <% cat = 'church' %>
+          <% } else { %>
+          <% cat = recon.sc_name %>
+          <% } %>
+          <div class="col-md-12 mt-3">
+            <div class="card">
+              <a href="/<%= cat %>/<%= recon.spot_no %>">
                 <img class="img-fluid rounded" style="height:200px; width:400px;"
                   src="/uploads/<%= recon.img_filename %>"
                   onerror="if (this.src != 'error.jpg') this.src = '/uploads/default.png';" alt="/uploads/default.png">
