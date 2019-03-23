@@ -64,7 +64,7 @@
         </li>
         <li class="nav-item">
           <% if (userDetail == '') {%>
-          <a class="nav-link" href="/login">Sign In</a>
+          <a class="nav-link" href="/login">Sign in to do more!</a>
           <% } else { %>
           <a class="nav-link" href="/logout/client">Welcome back
             <%= userDetail.user_lname %>,
@@ -83,7 +83,7 @@
 <%- include('../partials/footer') %>
 
 <script type="text/javascript">
-  var establisments = <%- JSON.stringify(estab) %>;
+  var establisments = <% - JSON.stringify(estab) %>;
   var estabMarker = establisments.map(
     estabs => ({ lat: estabs.el_latitude, lng: estabs.el_lontitude }));
 
@@ -119,17 +119,17 @@
         title: name,
         animation: google.maps.Animation.DROP
       });
-      
-      let cat; 
-      if(ec_name == 'Ilocano Delicacies') { 
-      cat = 'ilocano';
-      } else if (ec_name == 'Banks & Atms') { 
-      cat = 'banks';
-      } else if (ec_name == 'Churches & Structures') { 
-      cat = 'church';
-      } else { 
-      cat = ec_name ;
-      } 
+
+      let cat;
+      if (ec_name == 'Ilocano Delicacies') {
+        cat = 'ilocano';
+      } else if (ec_name == 'Banks & Atms') {
+        cat = 'banks';
+      } else if (ec_name == 'Churches & Structures') {
+        cat = 'church';
+      } else {
+        cat = ec_name;
+      }
 
       var content = `
         <div class="container">

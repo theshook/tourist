@@ -13,15 +13,16 @@
     <div class="collapse navbar-collapse" id="navbarResponsive">
       <ul class="navbar-nav text-uppercase ml-auto">
         <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" id="servicesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <a class="nav-link dropdown-toggle" href="#" id="servicesDropdown" role="button" data-toggle="dropdown"
+            aria-haspopup="true" aria-expanded="false">
             Services
           </a>
           <div class="dropdown-menu" aria-labelledby="servicesDropdown">
             <a href="/tour" class="dropdown-item">
-            <span class="fa-stack">
-              <i class="fa fa-circle fa-stack-2x text-primary"></i>
-              <i class="fa fa-location-arrow fa-stack-1x fa-inverse"></i>
-            </span>
+              <span class="fa-stack">
+                <i class="fa fa-circle fa-stack-2x text-primary"></i>
+                <i class="fa fa-location-arrow fa-stack-1x fa-inverse"></i>
+              </span>
               Tour
             </a>
             <a class="dropdown-item" href="/map">
@@ -63,7 +64,7 @@
         </li>
         <li class="nav-item">
           <% if (userDetail == '') {%>
-          <a class="nav-link" href="/login">Sign In</a>
+          <a class="nav-link" href="/login">Sign in to do more!</a>
           <% } else { %>
           <a class="nav-link" href="/logout/client">Welcome back
             <%= userDetail.user_lname %>,
@@ -79,12 +80,12 @@
   <div class="container">
     <div class="row">
       <div class="col-lg-12 text-center">
-      <nav aria-label="breadcrumb">
-        <ol class="breadcrumb">
-          <li class="breadcrumb-item"><a href="/">Home</a></li>
-          <li class="breadcrumb-item active" aria-current="page">Tour</li>
-        </ol>
-      </nav>
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/">Home</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Tour</li>
+          </ol>
+        </nav>
         <h2 class="section-heading text-uppercase">Tour</h2>
         <h3 class="section-subheading text-muted">This guides you to where you want to go.</h3>
       </div>
@@ -101,7 +102,7 @@
           </div>
           <% if (userDetail == '') {%>
           <div class="alert alert-info" role="alert">
-            You need to sign in first.
+            You need to Sign in to do more! first.
           </div>
           <% } else { %>
           <button type="submit" class="btn btn-primary mb-2">Go!</button>
