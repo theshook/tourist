@@ -101,7 +101,7 @@ function sendEmail(username, res) {
                 Before you get started, we just need to be sure this is the right email address.
                 Accuracy is kind of our thing.
 
-                <a href="http://localhost:8080/register/verify/${username}">Verify Now</a>
+                <a href="https://abra-tourist.herokuapp.com/register/verify/${username}">Verify Now</a>
                 `;
 
   // async..await is not allowed in global scope, must use a wrapper

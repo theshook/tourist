@@ -103,7 +103,7 @@ router.post("/:email/:token", (req, res) => {
         email: req.params.email,
         token: req.params.token,
         message: undefined,
-        success: 'Password successfully change! click <a href="http://localhost:8080/login" class="btn btn-info">here</a> to login.'
+        success: 'Password successfully change! click <a href="https://abra-tourist.herokuapp.com/login" class="btn btn-info">here</a> to login.'
       });
     });
 });
@@ -114,7 +114,7 @@ function sendEmail(email, token, req, res) {
                 You must reset your password within an hour.
                 <br>
                 Click here! 
-                <a href="http://localhost:8080/reset/${email}/${token}">Create New Password</a>
+                <a href="https://abra-tourist.herokuapp.com/reset/${email}/${token}">Create New Password</a>
                 `;
 
   // async..await is not allowed in global scope, must use a wrapper

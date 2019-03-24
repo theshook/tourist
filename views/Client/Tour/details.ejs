@@ -139,7 +139,7 @@
   var infowindow;
 
   $("#attraction1").change(function () {
-    fetch("http://localhost:8080/tour/details/1/" + $(this).val(), { method: 'post' })
+    fetch("https://abra-tourist.herokuapp.com/tour/details/1/" + $(this).val(), { method: 'post' })
       .then(response => response.json())
       .then(data => {
         establisments = data;
@@ -157,7 +157,7 @@
 
   $("#attraction2").change(function () {
 
-    fetch("http://localhost:8080/tour/details/2/" + $(this).val(), { method: 'post' })
+    fetch("https://abra-tourist.herokuapp.com/tour/details/2/" + $(this).val(), { method: 'post' })
       .then(response => response.json())
       .then(data => {
         establisments = data;
@@ -176,7 +176,7 @@
 
   $("#attraction3").change(function () {
 
-    fetch("http://localhost:8080/tour/details/3/" + $(this).val(), { method: 'post' })
+    fetch("https://abra-tourist.herokuapp.com/tour/details/3/" + $(this).val(), { method: 'post' })
       .then(response => response.json())
       .then(data => {
         establisments = data;
@@ -289,7 +289,7 @@
       $.ajax({
         type: 'POST',
         data: data,
-        url: 'http://localhost:8080/tour/send',
+        url: 'https://abra-tourist.herokuapp.com/tour/send',
         success: function (data) {
           Swal.hideLoading()
           Swal.fire(
