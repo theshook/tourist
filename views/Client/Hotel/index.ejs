@@ -2,7 +2,7 @@
 
 <%- include('../Layout/estabGetAllNavBar') %>
 
-<header class="masthead" style="background-image: url(../img/hotels.png);">
+<header class="masthead" style="background-image: url(../img/esta_spot/hotels.png);">
   <div class="container">
     <div class="intro-text">
       <div class="intro-heading text-uppercase text-white"></div>
@@ -12,13 +12,8 @@
 
 <section id="hotels">
   <div class="container">
-    <div class="row">
-      <div class="col-lg-12 text-center">
-        <h2 class="section-heading text-uppercase">Hotels</h2>
-        <h3 class="section-subheading text-muted">Need to rest for a tiring tour? The province offers the best places to
-          rest.</h3>
-      </div>
-    </div>
+    <%- include('../presets/getAllBreadcrumbs') %>
+    <%- include('../presets/topDestination') %>
     <%- include('../Layout/estabGetAll') %>
   </div>
 </section>

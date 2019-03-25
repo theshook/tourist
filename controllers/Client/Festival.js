@@ -17,7 +17,8 @@ const {
   userRecommendation,
   userReconEstab,
   notifications,
-  spotsGetSimilarity
+  spotsGetSimilarity,
+  topDestination
 } = require('./Helpers/QueryHelpers');
 
 var ipAddress;
@@ -33,12 +34,18 @@ exports.get_all_Waterfall = (req, res) => {
       if (err) {
         throw err;
       }
-      res.render("Client/Spot/Festival", {
-        rows: rows,
-        pageTitle: "Festival in Abra",
-        route: "festival",
-        userDetail: userDetail
-      });
+
+      db.query(topDestination('festival'), (err, topRows) => {
+        if (err) throw err;
+
+        res.render("Client/Spot/Festival", {
+          rows: rows,
+          topRows,
+          pageTitle: "Festival in Abra",
+          route: "festival",
+          userDetail: userDetail
+        });
+      })
     }
   );
 };

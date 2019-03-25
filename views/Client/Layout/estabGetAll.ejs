@@ -1,9 +1,3 @@
-<nav aria-label="breadcrumb">
-  <ol class="breadcrumb">
-    <li class="breadcrumb-item"><a href="/">Home</a></li>
-    <li class="breadcrumb-item active" aria-current="page"><%= pageTitle %></li>
-  </ol>
-</nav>
 <section class="row text-center" id="<%= route %>">
   <% rows.forEach(function(row){ %>
   <div class="container py-3">
@@ -26,15 +20,17 @@
             <br>
             <h3>
               <% if (row.RATES) { %>
-              <span class="float-left">
-                Rating:
-              </span>
-              <span class="badge badge-secondary float-left">
-                <%= row.RATES %>
-              </span>
-              <span class="float-left">
-                (<%= row.Num_of_Rates %> reviews)
-              </span>
+              <small>
+                <span class="float-left">
+                  Rating:
+                </span>
+                <span class="badge badge-secondary float-left">
+                  <%= row.RATES %>
+                </span>
+                <span class="float-left">
+                  (<%= row.Num_of_Rates %> reviews)
+                </span>
+              </small>
               <% } %>
             </h3>
           </div>

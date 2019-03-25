@@ -130,6 +130,52 @@ FROM ratings INNER JOIN spots ON ratings.spot_no = spots.spot_no
     });
 }
 
+// Top 6 based on category
+exports.topDestination = (category) => {
+  let cat;
+  if (category == 'ilocano') {
+    cat = 'Ilocano Delicacies'
+  } else if (category == 'banks') {
+    cat = 'Banks & Atms'
+  } else if (category == 'church') {
+    cat = 'Churches & Structures'
+  } else {
+    cat = category
+  }
+
+  return `SELECT 
+  round(SUM(rating_value)/COUNT(*), 2) as RATES,
+  count(ratings.estab_no) as Num_of_Rates,
+  image_filename,
+  estab_name,
+  ec_name,
+  establistments.estab_no
+  FROM ratings 
+  INNER JOIN establistments_photo ON ratings.estab_no = establistments_photo.estab_no
+  INNER JOIN establistments ON ratings.estab_no = establistments.estab_no
+  INNER JOIN establistments_category ON establistments.ec_no = establistments_category.ec_no
+  WHERE (rating_inactive=0 AND rating_delete=0) 
+  AND image_isprimary=1 
+  AND ec_name="${cat}"
+  GROUP BY ratings.estab_no HAVING RATES >= 3.5
+UNION
+SELECT 
+  round(SUM(rating_value)/COUNT(*), 2) as RATES,
+  count(ratings.spot_no) as Num_of_Rates,
+  img_filename,
+  spot_name,
+  sc_name,
+  spots.spot_no
+  FROM ratings 
+  INNER JOIN spots_photo ON ratings.spot_no = spots_photo.spot_no
+  INNER JOIN spots ON ratings.spot_no = spots.spot_no
+  INNER JOIN spots_category ON spots.sc_no = spots_category.sc_no
+  WHERE (rating_inactive=0 AND rating_delete=0) 
+  AND img_isprimary=1 
+  AND sc_name="${cat}"
+  GROUP BY ratings.spot_no HAVING RATES >= 3.5`;
+}
+
 // LOG_FILE INSERT QUERY
 exports.log_file_query = () => {
   return `

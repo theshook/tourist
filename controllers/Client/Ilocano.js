@@ -17,7 +17,8 @@ const {
   userRecommendation,
   userReconEstab,
   notifications,
-  spotsGetSimilarity
+  spotsGetSimilarity,
+  topDestination
 } = require('./Helpers/QueryHelpers');
 
 var ipAddress;
@@ -33,11 +34,17 @@ exports.get_all_Waterfall = (req, res) => {
       if (err) {
         throw err;
       }
-      res.render("Client/Spot/Ilocano", {
-        rows: rows,
-        pageTitle: "Ilocano and Delicacies",
-        route: "ilocano",
-        userDetail: userDetail
+
+      db.query(topDestination('ilocano'), (err, topRows) => {
+        if (err) throw err;
+
+        res.render("Client/Spot/Ilocano", {
+          rows: rows,
+          topRows,
+          pageTitle: "Ilocano and Delicacies",
+          route: "ilocano",
+          userDetail: userDetail
+        });
       });
     }
   );

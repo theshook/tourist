@@ -47,10 +47,19 @@
             Explore
           </a>
           <div class="dropdown-menu" aria-labelledby="exploreDropdown">
-            <a class="dropdown-item" href="#">Action</a>
-            <a class="dropdown-item" href="#">Another action</a>
-            <div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="#">Something else here</a>
+            <% rows.forEach(function(row){ %>
+            <% var cat; %>
+            <% if(row.ec_name == 'Ilocano Delicacies') { %>
+            <% cat = 'ilocano' %>
+            <% } else if (row.ec_name == 'Banks & Atms') { %>
+            <% cat = 'banks' %>
+            <% } else if (row.ec_name == 'Churches & Structures') { %>
+            <% cat = 'church' %>
+            <% } else { %>
+            <% cat = row.ec_name %>
+            <% } %>
+            <a class="dropdown-item" href="/<%= cat %>"><%= row.ec_name %></a>
+            <% }); %>
           </div>
         </li>
         <li class="nav-item">

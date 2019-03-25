@@ -13,7 +13,8 @@ let {
   userRecommendation,
   userReconEstab,
   notifications,
-  estabGetSimilarity
+  estabGetSimilarity,
+  topDestination
 } = require("./Helpers/QueryHelpers");
 
 var ipAddress;
@@ -27,11 +28,17 @@ exports.get_all_Church = (req, res) => {
     if (err) {
       throw err;
     }
-    res.render("Client/Banks", {
-      rows: rows,
-      pageTitle: "Banks and Atms",
-      route: "banks",
-      userDetail: userDetail
+
+    db.query(topDestination('banks'), (err, topRows) => {
+      if (err) throw err;
+
+      res.render("Client/Banks", {
+        rows: rows,
+        topRows,
+        pageTitle: "Banks and Atms",
+        route: "banks",
+        userDetail: userDetail
+      });
     });
   });
 };

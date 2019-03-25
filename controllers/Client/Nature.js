@@ -17,7 +17,8 @@ const {
   userRecommendation,
   userReconEstab,
   notifications,
-  spotsGetSimilarity
+  spotsGetSimilarity,
+  topDestination
 } = require('./Helpers/QueryHelpers');
 
 var ipAddress;
@@ -33,11 +34,17 @@ exports.get_all_Waterfall = (req, res) => {
       if (err) {
         throw err;
       }
-      res.render("Client/Spot/Nature", {
-        rows: rows,
-        pageTitle: "Nature",
-        route: "nature",
-        userDetail: userDetail
+
+      db.query(topDestination('nature'), (err, topRows) => {
+        if (err) throw err;
+
+        res.render("Client/Spot/Nature", {
+          rows: rows,
+          topRows,
+          pageTitle: "Nature",
+          route: "nature",
+          userDetail: userDetail
+        });
       });
     }
   );

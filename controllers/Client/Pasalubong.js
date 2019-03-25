@@ -13,7 +13,8 @@ let {
   userRecommendation,
   userReconEstab,
   notifications,
-  estabGetSimilarity
+  estabGetSimilarity,
+  topDestination
 } = require("./Helpers/QueryHelpers");
 
 var ipAddress;
@@ -27,11 +28,17 @@ exports.get_all_Church = (req, res) => {
     if (err) {
       throw err;
     }
-    res.render("Client/Pasalubong", {
-      rows: rows,
-      pageTitle: "Pasalubong / Shopping Center",
-      route: "pasalubong",
-      userDetail: userDetail
+
+    db.query(topDestination('pasalubong'), (err, topRows) => {
+      if (err) throw err;
+
+      res.render("Client/Pasalubong", {
+        rows: rows,
+        topRows,
+        pageTitle: "Pasalubong Center Information",
+        route: "pasalubong",
+        userDetail: userDetail
+      });
     });
   });
 };

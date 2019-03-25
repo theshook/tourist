@@ -13,7 +13,8 @@ let {
   userRecommendation,
   userReconEstab,
   notifications,
-  estabGetSimilarity
+  estabGetSimilarity,
+  topDestination
 } = require("./Helpers/QueryHelpers");
 
 var ipAddress;
@@ -27,11 +28,18 @@ exports.get_all_Hotel = (req, res) => {
     if (err) {
       throw err;
     }
-    res.render(`Client/Hotel`, {
-      rows: rows,
-      pageTitle: `Hotel in Abra`,
-      route: "hotels",
-      userDetail: userDetail
+
+    db.query(topDestination('hotels'), (err, topRows) => {
+      if (err) throw err;
+
+
+      res.render(`Client/Hotel`, {
+        rows: rows,
+        topRows,
+        pageTitle: `Hotel in Abra`,
+        route: "hotels",
+        userDetail: userDetail
+      });
     });
   });
 };

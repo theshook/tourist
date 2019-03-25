@@ -13,7 +13,8 @@ let {
   userRecommendation,
   userReconEstab,
   notifications,
-  estabGetSimilarity
+  estabGetSimilarity,
+  topDestination
 } = require("./Helpers/QueryHelpers");
 
 var ipAddress;
@@ -27,11 +28,17 @@ exports.get_all_Restaurant = (req, res) => {
     if (err) {
       throw err;
     }
-    res.render("Client/Restaurant", {
-      rows: rows,
-      pageTitle: "Restaurants in Abra",
-      route: "restaurants",
-      userDetail: userDetail
+
+    db.query(topDestination('restaurants'), (err, topRows) => {
+      if (err) throw err;
+
+      res.render("Client/Restaurant", {
+        rows: rows,
+        topRows,
+        pageTitle: "Restaurants in Abra",
+        route: "restaurants",
+        userDetail: userDetail
+      });
     });
   });
 };
