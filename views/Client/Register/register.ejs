@@ -112,7 +112,8 @@
             </div>
             <div class="form-group row">
               <div class="offset-sm-5">
-                <div class="g-recaptcha" data-sitekey="6LcBjJMUAAAAAFRFIs_8eUm4H3yJvyLSwOUGe4Tx">
+                <div class="g-recaptcha" data-sitekey="6LcBjJMUAAAAAFRFIs_8eUm4H3yJvyLSwOUGe4Tx"
+                  data-expired-callback="recaptchaExpired()">
 
                 </div>
               </div>
@@ -143,6 +144,10 @@
           return false;
         }
       });
+    }
+    window.recaptchaExpired = recaptchaExpired;
+    function recaptchaExpired() {
+      alert("Your Recaptcha has expired, please verify it again !");
     }
 
     function numberValidation(n1, n2, s1) {
