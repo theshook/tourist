@@ -161,18 +161,8 @@
       }
     }
 
-    $("#form-register").submit(function (e) {
+    $('#form-register').submit(function (e) {
       e.preventDefault();
-
-      Swal.fire({
-        title: 'Wait a moment!',
-        html: 'It will close if it\'s done.',
-        allowOutsideClick: false,
-        allowEscapeKey: false,
-        onBeforeOpen: () => {
-          Swal.showLoading()
-        },
-      })
 
       var fname = $.trim($('#fname').val());
       var lname = $.trim($('#lname').val());
@@ -189,12 +179,11 @@
       var mobile = numberValidation(mnumber, cmnumber, "Mobile");
       var phone = numberValidation(pnumber, cpnumber, "Phone");
 
-      if (!mobile) {
+      if (mobile != undefined) {
         e.preventDefault();
         return false;
       }
-
-      if (!phone) {
+      if (phone != undefined) {
         e.preventDefault();
         return false;
       }
@@ -220,6 +209,15 @@
         return customRegExp.test(password);
       }
 
+      Swal.fire({
+        title: 'Wait a moment!',
+        html: 'It will close if it\'s done.',
+        allowOutsideClick: false,
+        allowEscapeKey: false,
+        onBeforeOpen: () => {
+          Swal.showLoading()
+        },
+      })
 
 
       fetch('/register', {
@@ -281,7 +279,7 @@
               text: data.msg,
             })
           }
-        });
+        }).catch(err => console.log(err));
 
     });
   });

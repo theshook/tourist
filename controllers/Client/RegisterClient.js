@@ -33,7 +33,7 @@ exports.users_create_client = (req, res) => {
   ) {
     return res.json({ "success": false, "msg": "Please select captcha", error: '' });
   }
-
+  console.log(`Data Received`)
   // Secret Key
   const secretKey = '6LcBjJMUAAAAAPXrrdcv_4tWc2EJJB7zv3DseKHd';
 
@@ -44,18 +44,19 @@ exports.users_create_client = (req, res) => {
   // Make Request To VerifyURL
   request(verifyUrl, (err, response, body) => {
     body = JSON.parse(body);
-
+    console.log(`Verified Url`)
     // If Not Successful
     if (body.success !== undefined && !body.success) {
+      console.log(`Error line 50`)
       return res.json({ "success": false, "msg": "Failed captcha verification" });
     }
 
     //If Successful
     db.query(`SELECT * FROM users WHERE user_email = ?`, [data.email], (val_err, val_res) => {
       if (val_err) { throw val_err; }
-
+      console.log(`User query`)
       if (val_res.length >= 1) {
-
+        console.log(`Email Already exists line 59`)
         return res.json({ msg: '', error: 'Email already exists.' });
 
       } else {
@@ -69,7 +70,7 @@ exports.users_create_client = (req, res) => {
             db.query('INSERT INTO logins(user_no, login_uname, login_pword, login_inactive) values(?,?,?,1)',
               [rows.insertId, data.username, data.password], (error, result) => {
                 if (error) { throw error; }
-
+                console.log(`Send Email`)
                 sendEmail(data.username, res);
               });
           });
@@ -96,7 +97,7 @@ exports.users_verify_email = (req, res) => {
   });
 }
 
-function sendEmail(username, res) {
+sendEmail = (username, res) => {
   const output = `
                 Before you get started, we just need to be sure this is the right email address.
                 Accuracy is kind of our thing.
