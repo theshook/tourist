@@ -83,7 +83,7 @@
 <%- include('../partials/footer') %>
 
 <script type="text/javascript">
-  var establisments = <% - JSON.stringify(estab) %>;
+  var establisments = <%- JSON.stringify(estab) %>;
   var estabMarker = establisments.map(
     estabs => ({ lat: estabs.el_latitude, lng: estabs.el_lontitude }));
 
