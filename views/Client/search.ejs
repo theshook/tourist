@@ -126,6 +126,44 @@
         Search Keyword for '<%= search %>' (<%= search_count %>)
       </h4>
     </div>
+    <div class="col-md-12">
+      <form method="GET" action="/search">
+        <input type="text" name="search" value="<%=search%>" hidden>
+        <div class="form-row pull-right">
+          <div class="form-group col-md-12">
+            <span class="font-weight-bold">Sort By</span>
+            <label for="destination">
+              <select name="destination" id="" class="form-control" onchange="this.form.submit()">
+                <option value="" <%= destination=='null' ? 'selected' : '' %>>
+                  Default
+                </option>
+                <option value="nature" <%= destination=='nature' ? 'selected' : '' %>>
+                  Attractions
+                </option>
+                <option value="church" <%= destination=='Churches & Structures' ? 'selected' : '' %>>Churches/Structures
+                </option>
+                <option value="ilocano" <%= destination=='Ilocano Delicacies' ? 'selected' : '' %>>Ilocano Foods
+                </option>
+                <option value="festivals" <%= destination=='festivals' ? 'selected' : '' %>>Festivals</option>
+                <option value="adventures" <%= destination=='adventures' ? 'selected' : '' %>>Adventures</option>
+                <option value="hotels" <%= destination=='hotels' ? 'selected' : '' %>>Hotels</option>
+                <option value="restaurants" <%= destination=='restaurants' ? 'selected' : '' %>>Restaurants</option>
+                <option value="banks" <%= destination=='Banks & Atms' ? 'selected' : '' %>>Banks/Atms</option>
+                <option value="pasalubong" <%= destination=='pasalubong' ? 'selected' : '' %>>Shopping</option>
+              </select>
+            </label>
+            <label for="filtering">
+              <select name="filtering" id="" class="form-control" onchange="this.form.submit()">
+                <option value="">Default</option>
+                <option value="popularity" <%= filtering=='popularity' ? 'selected' : '' %>>By Popularity</option>
+                <option value="recents" <%= filtering=='recents' ? 'selected' : '' %>>Recents Destinations</option>
+                <option value="featured" <%= filtering=='featured' ? 'selected' : '' %>>Featured Attractions</option>
+              </select>
+            </label>
+          </div>
+        </div>
+      </form>
+    </div>
     <% search_res.forEach(function(res) { %>
     <% var cat; %>
     <% if(res.ec_name == 'Ilocano Delicacies') { %>

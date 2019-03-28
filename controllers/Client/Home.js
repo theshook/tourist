@@ -77,17 +77,41 @@ exports.get_all_Category = (req, res) => {
 exports.get_search = (req, res) => {
   let user = req.user || '';
   let search = req.query.search || null;
+  let destination = req.query.destination || null;
+  let filtering = req.query.filtering || null;
+  let dcat;
+  let fcat;
+
+  if (destination == 'ilocano') {
+    dcat = 'Ilocano Delicacies'
+  } else if (destination == 'banks') {
+    dcat = 'Banks & Atms'
+  } else if (destination == 'church') {
+    dcat = 'Churches & Structures'
+  } else {
+    dcat = destination
+  }
+
+  if (filtering == 'popularity') {
+    fcat = 'RATES';
+  } else if (filtering == 'recents') {
+    fcat = 'id'
+  } else if (filtering == 'featured') {
+    fcat = 'featured';
+  }
 
   db.query(`SELECT ec_name FROM establistments_category
   UNION SELECT sc_name FROM spots_category`, (err, rows) => {
       if (err) { throw err; }
-      db.query(searchHomePage(search), (search_err, search_res) => {
+      db.query(searchHomePage(search, dcat, fcat), (search_err, search_res) => {
         if (search_err) { throw search_err; }
         console.log(search_res.length)
         res.render("Client/search", {
           rows,
           search,
-          search_res: (search_res.length == 0) ? 'N/A' : search_res,
+          destination: dcat,
+          filtering,
+          search_res,
           search_count: (search_res.length == 0) ? '0' : search_res.length,
           pageTitle: "Abra Travel Guide",
           user: user,

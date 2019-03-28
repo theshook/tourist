@@ -417,9 +417,70 @@ exports.top_destination_spot = () => {
   WHERE (rating_inactive=0 AND rating_delete=0) AND img_isprimary=1 GROUP BY ratings.spot_no HAVING RATES >= 4`;
 }
 
-exports.searchHomePage = (search_q) => {
+//***************************************************************************************//
+//********************************************************************** Search Functions//
+//***************************************************************************************//
+
+exports.searchHomePage = (search_q, category, popularity) => {
+  if (popularity == null) {
+    popularity = 'RAND()';
+  }
+  if (popularity == 'id') {
+    if (category != null)
+      return searchHomePageByCategory(category, popularity);
+    else
+      return searchHomePageByRecents(popularity);
+  } else if (popularity == 'featured') {
+    return searchHomePageByFeatured();
+  } else if (category != null) {
+    return searchHomePageByCategory(category, popularity);
+  } else {
+    return `SELECT 
+      establistments.estab_no as id,
+      estab_name,
+      estab_description,
+      establistments_photo.image_filename,
+      establistments_category.ec_name,
+      round(SUM(rating_value)/COUNT(*), 2) as RATES
+      FROM establistments 
+      INNER JOIN towns ON establistments.town_no = towns.town_no 
+      INNER JOIN establistments_category ON establistments.ec_no = establistments_category.ec_no 
+      INNER JOIN establistments_photo ON establistments.estab_no = establistments_photo.estab_no
+      INNER JOIN establistments_location ON establistments.estab_no = establistments_location.estab_no
+      LEFT JOIN ratings ON ratings.estab_no = establistments.estab_no
+      WHERE ((encode_delete=0 AND encode_inactive=0) AND establistments_photo.image_isprimary=1)
+      AND estab_name LIKE '%${search_q}%' 
+      OR towns.town_name LIKE '%${search_q}%' 
+      OR establistments_category.ec_name LIKE '%${search_q}%'
+      GROUP BY establistments.estab_no
+      UNION
+      SELECT 
+      spots.spot_no as id,
+      spot_name,
+      spot_description, 
+      spots_photo.img_filename,
+      spots_category.sc_name,
+      round(SUM(rating_value)/COUNT(*), 2) as RATES
+      FROM spots
+      INNER JOIN spots_category ON spots_category.sc_no = spots.sc_no
+      INNER JOIN barangays ON barangays.bar_no = spots.bar_no
+      INNER JOIN towns ON towns.town_no = spots.town_no
+      INNER JOIN spots_photo ON spots_photo.spot_no = spots.spot_no
+      LEFT JOIN ratings ON ratings.spot_no = spots.spot_no
+      INNER JOIN spots_location ON spots_location.spot_no = spots_location.spot_no
+      WHERE spots_photo.img_isprimary=1 
+      AND spot_name LIKE '%${search_q}%' 
+      OR spot_subname LIKE '%${search_q}%' 
+      OR towns.town_name LIKE '%${search_q}%' 
+      OR spots_category.sc_name LIKE '%${search_q}%' 
+      GROUP BY spots.spot_no
+      ORDER BY ${popularity} DESC`;
+  }
+}
+
+searchHomePageByCategory = (category, popularity) => {
   return `SELECT 
-  establistments.estab_no,
+  establistments.estab_no as id,
   estab_name,
   estab_description,
   establistments_photo.image_filename,
@@ -432,13 +493,11 @@ exports.searchHomePage = (search_q) => {
   INNER JOIN establistments_location ON establistments.estab_no = establistments_location.estab_no
   LEFT JOIN ratings ON ratings.estab_no = establistments.estab_no
   WHERE ((encode_delete=0 AND encode_inactive=0) AND establistments_photo.image_isprimary=1)
-  AND estab_name LIKE '%${search_q}%' 
-  OR towns.town_name LIKE '%${search_q}%' 
-  OR establistments_category.ec_name LIKE '%${search_q}%'
-  GROUP BY estab_no
+  AND establistments_category.ec_name = '${category}'
+  GROUP BY establistments.estab_no
   UNION
   SELECT 
-  spots.spot_no,
+  spots.spot_no as id,
   spot_name,
   spot_description, 
   spots_photo.img_filename,
@@ -452,12 +511,86 @@ exports.searchHomePage = (search_q) => {
   LEFT JOIN ratings ON ratings.spot_no = spots.spot_no
   INNER JOIN spots_location ON spots_location.spot_no = spots_location.spot_no
   WHERE spots_photo.img_isprimary=1 
-  AND spot_name LIKE '%${search_q}%' 
-  OR spot_subname LIKE '%${search_q}%' 
-  OR towns.town_name LIKE '%${search_q}%' 
-  OR spots_category.sc_name LIKE '%${search_q}%' 
-  GROUP BY spot_no`;
+  AND spots_category.sc_name = '${category}' 
+  GROUP BY spots.spot_no
+  ORDER BY ${popularity} DESC`;
 }
+
+searchHomePageByRecents = (popularity) => {
+  return `SELECT 
+  establistments.estab_no as id,
+  estab_name,
+  estab_description,
+  establistments_photo.image_filename,
+  establistments_category.ec_name,
+  round(SUM(rating_value)/COUNT(*), 2) as RATES
+  FROM establistments 
+  INNER JOIN towns ON establistments.town_no = towns.town_no 
+  INNER JOIN establistments_category ON establistments.ec_no = establistments_category.ec_no 
+  INNER JOIN establistments_photo ON establistments.estab_no = establistments_photo.estab_no
+  INNER JOIN establistments_location ON establistments.estab_no = establistments_location.estab_no
+  LEFT JOIN ratings ON ratings.estab_no = establistments.estab_no
+  WHERE ((encode_delete=0 AND encode_inactive=0) AND establistments_photo.image_isprimary=1)
+  GROUP BY establistments.estab_no
+  UNION
+  SELECT 
+  spots.spot_no as id,
+  spot_name,
+  spot_description, 
+  spots_photo.img_filename,
+  spots_category.sc_name,
+  round(SUM(rating_value)/COUNT(*), 2) as RATES
+  FROM spots
+  INNER JOIN spots_category ON spots_category.sc_no = spots.sc_no
+  INNER JOIN barangays ON barangays.bar_no = spots.bar_no
+  INNER JOIN towns ON towns.town_no = spots.town_no
+  INNER JOIN spots_photo ON spots_photo.spot_no = spots.spot_no
+  LEFT JOIN ratings ON ratings.spot_no = spots.spot_no
+  INNER JOIN spots_location ON spots_location.spot_no = spots_location.spot_no
+  WHERE spots_photo.img_isprimary=1 
+  GROUP BY spots.spot_no
+  ORDER BY ${popularity} DESC`;
+}
+
+searchHomePageByFeatured = () => {
+  return `
+  SELECT 
+    round(SUM(rating_value)/COUNT(*), 2) as RATES,
+    count(ratings.estab_no) as Num_of_Rates,
+    establistments.estab_no, 
+    estab_name,
+    estab_description,
+    establistments_category.ec_name, 
+    establistments_photo.image_filename
+  FROM ratings
+    INNER JOIN establistments ON ratings.estab_no = establistments.estab_no
+    INNER JOIN establistments_category ON establistments_category.ec_no = establistments.ec_no
+    INNER JOIN featured ON ratings.estab_no = featured.estab_no
+    INNER JOIN establistments_photo ON establistments_photo.estab_no = featured.estab_no
+      WHERE establistments.estab_no = featured.estab_no AND establistments_photo.image_isprimary = 1
+        GROUP BY establistments.estab_no  
+UNION
+  SELECT 
+    round(SUM(rating_value)/COUNT(*), 2) as RATES,
+    count(ratings.spot_no) as Num_of_Rates,
+    spots.spot_no,
+    spot_name,
+    spot_description,
+    spots_category.sc_name,
+    spots_photo.img_filename
+  FROM ratings
+  INNER JOIN spots ON ratings.spot_no = spots.spot_no
+  INNER JOIN spots_category ON spots_category.sc_no = spots.sc_no
+  INNER JOIN featured ON ratings.spot_no = featured.spot_no
+  INNER JOIN spots_photo ON spots_photo.spot_no = featured.spot_no
+    WHERE spots.spot_no = featured.spot_no AND spots_photo.img_isprimary = 1
+      GROUP BY spots.spot_no
+    `;
+}
+
+//***************************************************************************************//
+//****************************************************************** End Search Functions//
+//***************************************************************************************//
 
 exports.userRecommendation = (spot_no) => {
   return `SELECT spots.spot_no, spots.spot_name, k_keyword, spots_category.sc_name,   
@@ -513,9 +646,7 @@ exports.featured = () => {
 	INNER JOIN spots_photo ON spots_photo.spot_no = featured.spot_no
 	WHERE spots.spot_no = featured.spot_no AND spots_photo.img_isprimary = 1
     GROUP BY spots.spot_no
-
 UNION
-
 SELECT 
 round(SUM(rating_value)/COUNT(*), 2) as RATES,
 count(ratings.estab_no) as Num_of_Rates,
