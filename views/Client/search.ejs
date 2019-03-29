@@ -156,7 +156,8 @@
               <select name="filtering" id="" class="form-control" onchange="this.form.submit()">
                 <option value="">Default</option>
                 <option value="popularity" <%= filtering=='popularity' ? 'selected' : '' %>>By Popularity</option>
-                <option value="recents" <%= filtering=='recents' ? 'selected' : '' %>>Recents Destinations</option>
+                <option value="recents" <%= filtering=='recents' ? 'selected' : '' %>>Recently Added Destinations
+                </option>
                 <option value="featured" <%= filtering=='featured' ? 'selected' : '' %>>Featured Attractions</option>
               </select>
             </label>
