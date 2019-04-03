@@ -178,7 +178,7 @@
     <% } %>
     <div class="col-md-4 col-sm-6 portfolio-item pb-3">
       <div class="card">
-        <a class="portfolio-link" href="/<%= cat %>/<%= res.estab_no %>">
+        <a class="portfolio-link" href="/<%= cat %>/<%= res.id %>">
           <img src="/uploads/<%= res.image_filename %>" class="img-fluid" style="height:200px; width:400px;"
             onerror="if (this.src != 'error.jpg') this.src = '/uploads/default.png';" alt="<%= res.estab_name %>">
         </a>
@@ -192,7 +192,7 @@
           <p class="card-text text-muted">
             <%= res.estab_description.substring(0, 100) %>...
           </p>
-          <a class="portfolio-link btn btn-primary float-right" href="/<%= cat %>/<%= res.estab_no %>">
+          <a class="portfolio-link btn btn-primary float-right" href="/<%= cat %>/<%= res.id %>">
             Explore
           </a>
         </div>
