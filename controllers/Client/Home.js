@@ -79,6 +79,7 @@ exports.get_search = (req, res) => {
   let search = req.query.search || null;
   let destination = req.query.destination || null;
   let filtering = req.query.filtering || null;
+  let prices = req.query.prices || null;
   let dcat;
   let fcat;
 
@@ -103,14 +104,15 @@ exports.get_search = (req, res) => {
   db.query(`SELECT ec_name FROM establistments_category
   UNION SELECT sc_name FROM spots_category`, (err, rows) => {
       if (err) { throw err; }
-      db.query(searchHomePage(search, dcat, fcat), (search_err, search_res) => {
+      db.query(searchHomePage(search, dcat, fcat, prices), (search_err, search_res) => {
         if (search_err) { throw search_err; }
-        console.log(search_res.length)
+
         res.render("Client/search", {
           rows,
           search,
           destination: dcat,
           filtering,
+          prices,
           search_res,
           search_count: (search_res.length == 0) ? '0' : search_res.length,
           pageTitle: "Abra Travel Guide",

@@ -38,7 +38,8 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarResponsive">
       <form action="/search" method="get" class="form-inline my-2 my-lg-0">
-        <input class="form-control mr-sm-2" type="text" placeholder="Search" id="tags" name="search">
+        <input class="form-control mr-sm-2" type="text" placeholder="Search" id="tags" name="search"
+          value="<%= search %>">
         <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
       </form>
 
@@ -161,6 +162,29 @@
                 <option value="featured" <%= filtering=='featured' ? 'selected' : '' %>>Featured Attractions</option>
               </select>
             </label>
+            <% if(search == 'hotel' || search == 'hotels' || search == 'Hotel' || search == 'Hotels' || search == 'HOTEL' || search == 'HOTELS' || destination == 'hotels') { %>
+            <label for="destination">
+              <% } else { %>
+              <label for="destination" style="display: none;">
+                <% } %>
+                <select name="prices" id="" class="form-control" onchange="this.form.submit()">
+                  <option value="1000" <%= prices=='1000' ? 'selected' : '' %>>
+                    Less than 1000
+                  </option>
+                  <option value="1500" <%= prices=='1500' ? 'selected' : '' %>>
+                    Less than 1500
+                  </option>
+                  <option value="2000" <%= prices=='2000' ? 'selected' : '' %>>
+                    Less than 2000
+                  </option>
+                  <option value="2500" <%= prices=='2500' ? 'selected' : '' %>>
+                    Less than 2500
+                  </option>
+                  <option value="3000" <%= prices=='3000' ? 'selected' : '' %>>
+                    Less than 3000
+                  </option>
+                </select>
+              </label>
           </div>
         </div>
       </form>
@@ -192,6 +216,11 @@
           <p class="card-text text-muted">
             <%= res.estab_description.substring(0, 100) %>...
           </p>
+          <% if (res.price) { %>
+          <h2 class="badge badge-secondary">
+            <%= (res.price) ? '₱'+res.price : '' %>
+          </h2>
+          <% } %>
           <a class="portfolio-link btn btn-primary float-right" href="/<%= cat %>/<%= res.id %>">
             Explore
           </a>
