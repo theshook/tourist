@@ -18,7 +18,8 @@ const {
   userReconEstab,
   notifications,
   spotsGetSimilarity,
-  topDestination
+  topDestination,
+  keywords_spot
 } = require('./Helpers/QueryHelpers');
 
 var ipAddress;
@@ -94,35 +95,14 @@ exports.Waterfall_View = (req, res) => {
                     db.query(userRecommendation(id), (user_err, user_recon) => {
                       if (user_err) { throw user_err; }
 
-                      if (user_no == 0) {
-                        res.render("Client/Spot/Nature/view", {
-                          cat_res,
-                          info_rows,
-                          user_recon,
-                          sl_latitude: maps_rows.length ? maps_rows[0].sl_latitude : "N/A",
-                          sl_lontitude: maps_rows.length ? maps_rows[0].sl_lontitude : "N/A",
-                          sl_route: maps_rows.length ? maps_rows[0].sl_route : "N/A",
-                          images_rows: images_rows.length ? images_rows : "N/A",
-                          id: id,
-                          rating: rating,
-                          isRated: isRated,
-                          rated: rated,
-                          total_pages: total_pages,
-                          user: req.user == undefined ? "null" : req.user.user_no,
-                          moment: moment,
-                          comments: comments,
-                          pageTitle: "Nature",
-                          route: "nature",
-                          userDetail: userDetail
-                        });
-                      } else {
-                        spotsGetSimilarity(db, user_no, (err, similarRows) => {
-                          if (err) { throw err; }
+                      db.query(keywords_spot(), [id], (key_err, key_rows) => {
+                        if (key_err) throw key_err;
+                        if (user_no == 0) {
                           res.render("Client/Spot/Nature/view", {
                             cat_res,
+                            key_rows,
                             info_rows,
                             user_recon,
-                            similarRows,
                             sl_latitude: maps_rows.length ? maps_rows[0].sl_latitude : "N/A",
                             sl_lontitude: maps_rows.length ? maps_rows[0].sl_lontitude : "N/A",
                             sl_route: maps_rows.length ? maps_rows[0].sl_route : "N/A",
@@ -139,8 +119,35 @@ exports.Waterfall_View = (req, res) => {
                             route: "nature",
                             userDetail: userDetail
                           });
-                        });
-                      }
+                        } else {
+                          spotsGetSimilarity(db, user_no, (err, similarRows) => {
+                            if (err) { throw err; }
+                            res.render("Client/Spot/Nature/view", {
+                              cat_res,
+                              info_rows,
+                              key_rows,
+                              user_recon,
+                              similarRows,
+                              sl_latitude: maps_rows.length ? maps_rows[0].sl_latitude : "N/A",
+                              sl_lontitude: maps_rows.length ? maps_rows[0].sl_lontitude : "N/A",
+                              sl_route: maps_rows.length ? maps_rows[0].sl_route : "N/A",
+                              images_rows: images_rows.length ? images_rows : "N/A",
+                              id: id,
+                              rating: rating,
+                              isRated: isRated,
+                              rated: rated,
+                              total_pages: total_pages,
+                              user: req.user == undefined ? "null" : req.user.user_no,
+                              moment: moment,
+                              comments: comments,
+                              pageTitle: "Nature",
+                              route: "nature",
+                              userDetail: userDetail
+                            });
+                          });
+                        }
+                      });
+
                     });
                   });
                 });

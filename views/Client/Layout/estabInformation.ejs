@@ -56,6 +56,12 @@
           <!-- Information -->
           <div class="card-body">
             <dl class="row">
+              <dd class="col-sm-12 font-italic">Tags:<small>
+                  <% key_rows.forEach(function(word) { %>
+                  <%= (!Number(word.k_keyword)) ? word.k_keyword+';' : '' %>
+                  <% }); %>
+                </small>
+              </dd>
               <dd class="col-sm-12 lead">
                 <%- info_rows[0].estab_description %>
               </dd>

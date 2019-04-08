@@ -14,7 +14,8 @@ let {
   userReconEstab,
   notifications,
   estabGetSimilarity,
-  topDestination
+  topDestination,
+  keywords_estab
 } = require("./Helpers/QueryHelpers");
 
 var ipAddress;
@@ -91,36 +92,15 @@ exports.hotel_View = (req, res) => {
                       db.query(userReconEstab(id), (user_estab_err, userReconEstab) => {
                         if (user_estab_err) { throw user_estab_err; }
 
-                        if (user_no == 0) {
-                          res.render("Client/Hotel/view", {
-                            info_rows,
-                            cat_res,
-                            userReconEstab,
-                            el_latitude: maps_rows.length ? maps_rows[0].el_latitude : "N/A",
-                            el_lontitude: maps_rows.length ? maps_rows[0].el_lontitude : "N/A",
-                            el_route: maps_rows.length ? maps_rows[0].el_route : "N/A",
-                            images_rows: images_rows.length ? images_rows : "N/A",
-                            id: id,
-                            rating: rating,
-                            isRated: isRated,
-                            rated: rated,
-                            total_pages: total_pages,
-                            user: req.user == undefined ? "null" : req.user.user_no,
-                            moment: moment,
-                            comments: comments,
-                            pageTitle: "Hotel Information",
-                            route: "hotels",
-                            userDetail: userDetail
-                          });
-                        } else {
-                          estabGetSimilarity(db, user_no, (err, similarRows) => {
-                            if (err) throw err;
+                        db.query(keywords_estab(), [id], (key_err, key_rows) => {
+                          if (key_err) throw key_err;
 
+                          if (user_no == 0) {
                             res.render("Client/Hotel/view", {
                               info_rows,
                               cat_res,
+                              key_rows,
                               userReconEstab,
-                              similarRows,
                               el_latitude: maps_rows.length ? maps_rows[0].el_latitude : "N/A",
                               el_lontitude: maps_rows.length ? maps_rows[0].el_lontitude : "N/A",
                               el_route: maps_rows.length ? maps_rows[0].el_route : "N/A",
@@ -137,8 +117,35 @@ exports.hotel_View = (req, res) => {
                               route: "hotels",
                               userDetail: userDetail
                             });
-                          });
-                        }
+                          } else {
+                            estabGetSimilarity(db, user_no, (err, similarRows) => {
+                              if (err) throw err;
+
+                              res.render("Client/Hotel/view", {
+                                info_rows,
+                                cat_res,
+                                key_rows,
+                                userReconEstab,
+                                similarRows,
+                                el_latitude: maps_rows.length ? maps_rows[0].el_latitude : "N/A",
+                                el_lontitude: maps_rows.length ? maps_rows[0].el_lontitude : "N/A",
+                                el_route: maps_rows.length ? maps_rows[0].el_route : "N/A",
+                                images_rows: images_rows.length ? images_rows : "N/A",
+                                id: id,
+                                rating: rating,
+                                isRated: isRated,
+                                rated: rated,
+                                total_pages: total_pages,
+                                user: req.user == undefined ? "null" : req.user.user_no,
+                                moment: moment,
+                                comments: comments,
+                                pageTitle: "Hotel Information",
+                                route: "hotels",
+                                userDetail: userDetail
+                              });
+                            });
+                          }
+                        });
                       });
                     });
                 });

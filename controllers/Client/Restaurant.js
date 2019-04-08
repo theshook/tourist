@@ -14,7 +14,8 @@ let {
   userReconEstab,
   notifications,
   estabGetSimilarity,
-  topDestination
+  topDestination,
+  keywords_estab
 } = require("./Helpers/QueryHelpers");
 
 var ipAddress;
@@ -90,35 +91,14 @@ exports.restaurant_View = (req, res) => {
                       db.query(userReconEstab(id), (user_estab_err, userReconEstab) => {
                         if (user_estab_err) { throw user_estab_err; }
 
-                        if (user_no == 0) {
-                          res.render("Client/Restaurant/view", {
-                            cat_res,
-                            userReconEstab,
-                            info_rows,
-                            el_latitude: maps_rows.length ? maps_rows[0].el_latitude : "N/A",
-                            el_lontitude: maps_rows.length ? maps_rows[0].el_lontitude : "N/A",
-                            el_route: maps_rows.length ? maps_rows[0].el_route : "N/A",
-                            images_rows: images_rows.length ? images_rows : "N/A",
-                            id: id,
-                            rating: rating,
-                            isRated: isRated,
-                            rated: rated,
-                            total_pages: total_pages,
-                            user: req.user == undefined ? "null" : req.user.user_no,
-                            moment: moment,
-                            comments: comments,
-                            pageTitle: "Restaurant Information",
-                            route: "restaurants",
-                            userDetail: userDetail
-                          });
-                        } else {
-                          estabGetSimilarity(db, user_no, (err, similarRows) => {
-                            if (err) throw err;
+                        db.query(keywords_estab(), [id], (key_err, key_rows) => {
+                          if (key_err) throw key_err;
 
+                          if (user_no == 0) {
                             res.render("Client/Restaurant/view", {
                               cat_res,
+                              key_rows,
                               userReconEstab,
-                              similarRows,
                               info_rows,
                               el_latitude: maps_rows.length ? maps_rows[0].el_latitude : "N/A",
                               el_lontitude: maps_rows.length ? maps_rows[0].el_lontitude : "N/A",
@@ -136,8 +116,36 @@ exports.restaurant_View = (req, res) => {
                               route: "restaurants",
                               userDetail: userDetail
                             });
-                          });
-                        }
+                          } else {
+                            estabGetSimilarity(db, user_no, (err, similarRows) => {
+                              if (err) throw err;
+
+                              res.render("Client/Restaurant/view", {
+                                cat_res,
+                                key_rows,
+                                userReconEstab,
+                                similarRows,
+                                info_rows,
+                                el_latitude: maps_rows.length ? maps_rows[0].el_latitude : "N/A",
+                                el_lontitude: maps_rows.length ? maps_rows[0].el_lontitude : "N/A",
+                                el_route: maps_rows.length ? maps_rows[0].el_route : "N/A",
+                                images_rows: images_rows.length ? images_rows : "N/A",
+                                id: id,
+                                rating: rating,
+                                isRated: isRated,
+                                rated: rated,
+                                total_pages: total_pages,
+                                user: req.user == undefined ? "null" : req.user.user_no,
+                                moment: moment,
+                                comments: comments,
+                                pageTitle: "Restaurant Information",
+                                route: "restaurants",
+                                userDetail: userDetail
+                              });
+                            });
+                          }
+                        });
+
 
                       });
                     });

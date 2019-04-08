@@ -809,3 +809,21 @@ exports.notifications_estab = () => {
 	  FROM notifications
     INNER JOIN establistments ON establistments.estab_no = notifications.estab_no`;
 }
+
+exports.keywords_estab = () => {
+  return `
+  SELECT 
+    k_keyword
+  FROM keywords 
+  WHERE k_estab_no = ?
+  `;
+}
+
+exports.keywords_spot = () => {
+  return `
+  SELECT 
+    k_keyword
+  FROM keywords 
+  WHERE k_spot_no = ?
+  `;
+}
