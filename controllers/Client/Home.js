@@ -26,48 +26,53 @@ exports.get_all_Category = (req, res) => {
         db.query(`SELECT sa_name FROM spots_actualuse WHERE sa_inactive = 0 and sa_delete = 0`, (sa_err, sa_rows) => {
           if (sa_err) { throw sa_err; }
 
-          if (userId == 0) {
-            db.query(userRecommendation(user), (user_err, user_recon) => {
-              if (user_err) { throw user_err; }
+          db.query(top_destination_spot(), (err, top_spot) => {
+            if (err) throw err;
 
-              db.query(userReconEstab(user), (user_estab_err, userReconEstab) => {
-                if (user_estab_err) { throw user_estab_err; }
+            if (userId == 0) {
+              db.query(userRecommendation(user), (user_err, user_recon) => {
+                if (user_err) { throw user_err; }
 
-                res.render("Client/", {
-                  rows,
-                  sa_rows,
-                  pageTitle: "Abra Travel Guide",
-                  user: user,
-                  user_recon,
-                  userReconEstab,
-                  fea_row,
-                  top_estab,
-                  login_message: (req.flash('loginMessage').length == 0) ? '' : req.flash('loginMessage')
+                db.query(userReconEstab(user), (user_estab_err, userReconEstab) => {
+                  if (user_estab_err) { throw user_estab_err; }
+
+                  res.render("Client/", {
+                    rows,
+                    sa_rows,
+                    top_spot,
+                    pageTitle: "Abra Travel Guide",
+                    user: user,
+                    user_recon,
+                    userReconEstab,
+                    fea_row,
+                    top_estab,
+                    login_message: (req.flash('loginMessage').length == 0) ? '' : req.flash('loginMessage')
+                  });
                 });
               });
-            });
-          } else {
-            spotsGetSimilarity(db, userId, (err, user_recon) => {
-              if (err) throw err;
-
-              estabGetSimilarity(db, userId, (err, userReconEstab) => {
+            } else {
+              spotsGetSimilarity(db, userId, (err, user_recon) => {
                 if (err) throw err;
 
-                res.render("Client/", {
-                  rows,
-                  sa_rows,
-                  pageTitle: "Abra Travel Guide",
-                  user: user,
-                  user_recon,
-                  userReconEstab,
-                  fea_row,
-                  top_estab,
-                  login_message: (req.flash('loginMessage').length == 0) ? '' : req.flash('loginMessage')
+                estabGetSimilarity(db, userId, (err, userReconEstab) => {
+                  if (err) throw err;
+
+                  res.render("Client/", {
+                    rows,
+                    sa_rows,
+                    top_spot,
+                    pageTitle: "Abra Travel Guide",
+                    user: user,
+                    user_recon,
+                    userReconEstab,
+                    fea_row,
+                    top_estab,
+                    login_message: (req.flash('loginMessage').length == 0) ? '' : req.flash('loginMessage')
+                  });
                 });
               });
-            });
-          }
-
+            }
+          });
         });
       });
     });
