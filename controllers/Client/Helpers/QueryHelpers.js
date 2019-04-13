@@ -38,30 +38,48 @@ FROM ratings INNER JOIN establistments ON ratings.estab_no = establistments.esta
                 if (cosSimilarity < similarity(iUsers, otherUsers[key])) {
                   cosSimilarity = similarity(iUsers, otherUsers[key]);
                   idSimilar = key;
-                  // console.log(`User ID:${key} ->`,
-                  //   `Cosine Similarity: ${similarity(iUsers, otherUsers[key])}`);
+                  console.log(`User ID:${key} ->`,
+                    `Cosine Similarity: ${similarity(iUsers, otherUsers[key])}`);
                 }
               }
             }
           }
 
           // console.log(idSimilar, cosSimilarity);
+          //console.log(idSimilar == 0);
 
-          db.query(`SELECT establistments.ec_no, establistments.estab_no, ratings.user_no,establistments.estab_name, establistments_category.ec_name, establistments_photo.image_filename, round(SUM(rating_value)/COUNT(*), 2) as RATES,
-          count(ratings.estab_no) as Num_of_Rates
-          FROM ratings 
-          INNER JOIN establistments ON ratings.estab_no = establistments.estab_no 
-          INNER JOIN users ON ratings.user_no = ratings.user_no
-          INNER JOIN establistments_category ON establistments_category.ec_no = establistments.ec_no
-          INNER JOIN establistments_photo ON establistments_photo.estab_no = establistments.estab_no
-          WHERE ratings.user_no = '${idSimilar}'
-          AND NOT ratings.user_no = 0
-          AND establistments_photo.image_isprimary = 1
-          GROUP BY ratings.estab_no
-          LIMIT 1, 6`, (err, result) => {
-              if (err) { throw err; }
-              callback(null, result);
-            });
+          if (idSimilar == 0) {
+            db.query(`SELECT establistments.ec_no, establistments.estab_no, ratings.user_no,establistments.estab_name, establistments_category.ec_name, establistments_photo.image_filename, round(SUM(rating_value)/COUNT(*), 2) as RATES,
+              count(ratings.estab_no) as Num_of_Rates
+            FROM ratings 
+            INNER JOIN establistments ON ratings.estab_no = establistments.estab_no 
+            INNER JOIN users ON ratings.user_no = ratings.user_no
+            INNER JOIN establistments_category ON establistments_category.ec_no = establistments.ec_no
+            INNER JOIN establistments_photo ON establistments_photo.estab_no = establistments.estab_no
+            WHERE establistments_photo.image_isprimary = 1
+            GROUP BY ratings.estab_no
+            ORDER BY RAND()
+            LIMIT 1, 6`, (err, result) => {
+                if (err) { throw err; }
+                callback(null, result);
+              });
+          } else {
+            db.query(`SELECT establistments.ec_no, establistments.estab_no, ratings.user_no,establistments.estab_name, establistments_category.ec_name, establistments_photo.image_filename, round(SUM(rating_value)/COUNT(*), 2) as RATES,
+              count(ratings.estab_no) as Num_of_Rates
+            FROM ratings 
+            INNER JOIN establistments ON ratings.estab_no = establistments.estab_no 
+            INNER JOIN users ON ratings.user_no = ratings.user_no
+            INNER JOIN establistments_category ON establistments_category.ec_no = establistments.ec_no
+            INNER JOIN establistments_photo ON establistments_photo.estab_no = establistments.estab_no
+            WHERE ratings.user_no = '${idSimilar}'
+            AND NOT ratings.user_no = 0
+            AND establistments_photo.image_isprimary = 1
+            GROUP BY ratings.estab_no
+            LIMIT 1, 6`, (err, result) => {
+                if (err) { throw err; }
+                callback(null, result);
+              });
+          }
         });
     });
 }
@@ -111,21 +129,38 @@ FROM ratings INNER JOIN spots ON ratings.spot_no = spots.spot_no
           }
 
           // console.log(idSimilar, cosSimilarity);
-
-          db.query(`SELECT spots.spot_no, spots.spot_name, spots_category.sc_name, spots_photo.img_filename, round(SUM(rating_value)/COUNT(*), 2) as RATES,
-          count(ratings.spot_no) as Num_of_Rates
-          FROM ratings 
-          INNER JOIN spots ON ratings.spot_no = spots.spot_no 
-          INNER JOIN users ON ratings.user_no = ratings.user_no
-          INNER JOIN spots_category ON spots_category.sc_no = spots.sc_no
-          INNER JOIN spots_photo ON spots_photo.spot_no = spots.spot_no
-          WHERE ratings.user_no = ${idSimilar} AND NOT ratings.user_no = 0
-            AND spots_photo.img_isprimary = 1
-          GROUP BY ratings.spot_no
-          LIMIT 1, 6`, (err, result) => {
-              if (err) { throw err; }
-              callback(null, result);
-            });
+          //console.log(idSimilar == 0);
+          if (idSimilar == 0) {
+            db.query(`SELECT spots.spot_no, spots.spot_name, spots_category.sc_name, spots_photo.img_filename, round(SUM(rating_value)/COUNT(*), 2) as RATES,
+            count(ratings.spot_no) as Num_of_Rates
+            FROM ratings 
+            INNER JOIN spots ON ratings.spot_no = spots.spot_no 
+            INNER JOIN users ON ratings.user_no = ratings.user_no
+            INNER JOIN spots_category ON spots_category.sc_no = spots.sc_no
+            INNER JOIN spots_photo ON spots_photo.spot_no = spots.spot_no
+            WHERE spots_photo.img_isprimary = 1
+            GROUP BY ratings.spot_no
+            ORDER BY RAND()
+            LIMIT 1, 6`, (err, result) => {
+                if (err) { throw err; }
+                callback(null, result);
+              });
+          } else {
+            db.query(`SELECT spots.spot_no, spots.spot_name, spots_category.sc_name, spots_photo.img_filename, round(SUM(rating_value)/COUNT(*), 2) as RATES,
+            count(ratings.spot_no) as Num_of_Rates
+            FROM ratings 
+            INNER JOIN spots ON ratings.spot_no = spots.spot_no 
+            INNER JOIN users ON ratings.user_no = ratings.user_no
+            INNER JOIN spots_category ON spots_category.sc_no = spots.sc_no
+            INNER JOIN spots_photo ON spots_photo.spot_no = spots.spot_no
+            WHERE ratings.user_no = ${idSimilar} AND NOT ratings.user_no = 0
+              AND spots_photo.img_isprimary = 1
+            GROUP BY ratings.spot_no
+            LIMIT 1, 6`, (err, result) => {
+                if (err) { throw err; }
+                callback(null, result);
+              });
+          }
         });
     });
 }
