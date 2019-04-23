@@ -491,9 +491,9 @@ exports.searchHomePage = (search_q, category, popularity, prices) => {
       LEFT JOIN ratings ON ratings.estab_no = establistments.estab_no
       WHERE 
       ((encode_delete=0 AND encode_inactive=0) AND establistments_photo.image_isprimary=1)
-      AND estab_name LIKE '%${search_q}%' 
-      OR towns.town_name LIKE '%${search_q}%' 
-      OR establistments_category.ec_name LIKE '%${search_q}%'
+      AND estab_name LIKE "%${search_q}%" 
+      OR towns.town_name LIKE "%${search_q}%" 
+      OR establistments_category.ec_name LIKE "%${search_q}%"
       GROUP BY price, establistments.estab_no
       HAVING price <= ${prices} AND price != 0
       UNION
@@ -515,10 +515,10 @@ exports.searchHomePage = (search_q, category, popularity, prices) => {
       INNER JOIN spots_location ON spots_location.spot_no = spots_location.spot_no
       WHERE 
       spots_photo.img_isprimary=1 
-      AND spot_name LIKE '%${search_q}%' 
-      OR spot_subname LIKE '%${search_q}%' 
-      OR towns.town_name LIKE '%${search_q}%' 
-      OR spots_category.sc_name LIKE '%${search_q}%' 
+      AND spot_name LIKE "%${search_q}%" 
+      OR spot_subname LIKE "%${search_q}%" 
+      OR towns.town_name LIKE "%${search_q}%" 
+      OR spots_category.sc_name LIKE "%${search_q}%" 
       GROUP BY price, spots.spot_no
       HAVING price <= ${prices} AND price != 0
       ORDER BY ${popularity} DESC`;
@@ -540,10 +540,10 @@ exports.searchHomePage = (search_q, category, popularity, prices) => {
       INNER JOIN keywords ON establistments.estab_no = keywords.k_estab_no
       LEFT JOIN ratings ON ratings.estab_no = establistments.estab_no
       WHERE ((encode_delete=0 AND encode_inactive=0) AND establistments_photo.image_isprimary=1)
-      AND estab_name LIKE '%${search_q}%' 
-      OR towns.town_name LIKE '%${search_q}%' 
-      OR establistments_category.ec_name LIKE '%${search_q}%'
-      OR k_keyword LIKE '${search_q}%'
+      AND estab_name LIKE "%${search_q}%" 
+      OR towns.town_name LIKE "%${search_q}%" 
+      OR establistments_category.ec_name LIKE "%${search_q}%"
+      OR k_keyword LIKE "${search_q}%"
       GROUP BY establistments.estab_no
       UNION
       SELECT 
@@ -562,11 +562,11 @@ exports.searchHomePage = (search_q, category, popularity, prices) => {
       LEFT JOIN ratings ON ratings.spot_no = spots.spot_no
       INNER JOIN spots_location ON spots_location.spot_no = spots_location.spot_no
       WHERE spots_photo.img_isprimary=1 
-      AND spot_name LIKE '%${search_q}%' 
-      OR spot_subname LIKE '%${search_q}%' 
-      OR towns.town_name LIKE '%${search_q}%' 
-      OR spots_category.sc_name LIKE '%${search_q}%' 
-      OR k_keyword LIKE '${search_q}%'
+      AND spot_name LIKE "%${search_q}%" 
+      OR spot_subname LIKE "%${search_q}%" 
+      OR towns.town_name LIKE "%${search_q}%" 
+      OR spots_category.sc_name LIKE "%${search_q}%" 
+      OR k_keyword LIKE "${search_q}%"
       GROUP BY spots.spot_no
       ORDER BY ${popularity} DESC`;
   }
