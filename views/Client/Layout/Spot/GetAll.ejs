@@ -11,6 +11,16 @@
             <h3 class="text-left">
               <%= row.spot_name %>
             </h3>
+            <p class="text-left">
+              <small><%= moment(row.spot_encode_date).format('MMMM D, YYYY'); %></small>
+              <span>
+                <% spot_visited.forEach(function(visited) { %>
+                <% if (row.spot_no == visited.spot_no) { %>
+                (<%= visited.spot_visited %> views)
+                <% } %>
+                <% }); %>
+              </span>
+            </p>
             <p class="card-text text-left text-truncate">
               <%= row.spot_description %>
             </p>
@@ -20,15 +30,17 @@
             <br>
             <h3>
               <% if (row.RATES) { %>
-              <span class="float-left">
-                Rating:
-              </span>
-              <span class="badge badge-secondary float-left">
-                <%= row.RATES %>
-              </span>
-              <span class="float-left">
-                (<%= row.Num_of_Rates %> reviews)
-              </span>
+              <small>
+                <span class="float-left">
+                  Rating:
+                </span>
+                <span class="badge badge-secondary float-left">
+                  <%= row.RATES %>
+                </span>
+                <span class="float-left">
+                  (<%= row.Num_of_Rates %> reviews)
+                </span>
+              </small>
               <% } %>
             </h3>
           </div>

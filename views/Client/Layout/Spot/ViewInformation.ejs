@@ -63,6 +63,10 @@
                   <% }); %>
                 </small>
               </dd>
+              <dd class="col-sm-12 text-dark">
+                <%= moment(info_rows[0].spot_encode_date).format('MMMM D, YYYY'); %>
+                (<%= spot_visited %> views)
+              </dd>
               <dd class="col-sm-12">
                 <%- info_rows[0].spot_description %>
               </dd>

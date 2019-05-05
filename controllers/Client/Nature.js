@@ -19,7 +19,9 @@ const {
   notifications,
   spotsGetSimilarity,
   topDestination,
-  keywords_spot
+  keywords_spot,
+  spot_visited,
+  get_all_spot_visited
 } = require('./Helpers/QueryHelpers');
 
 var ipAddress;
@@ -39,12 +41,18 @@ exports.get_all_Waterfall = (req, res) => {
       db.query(topDestination('nature'), (err, topRows) => {
         if (err) throw err;
 
-        res.render("Client/Spot/Nature", {
-          rows: rows,
-          topRows,
-          pageTitle: "Nature",
-          route: "nature",
-          userDetail: userDetail
+        db.query(get_all_spot_visited(), (err, spot_visited) => {
+          if (err) throw err;
+
+          res.render("Client/Spot/Nature", {
+            spot_visited: spot_visited.length ? spot_visited : "0",
+            rows: rows,
+            topRows,
+            moment,
+            pageTitle: "Nature",
+            route: "nature",
+            userDetail: userDetail
+          });
         });
       });
     }
@@ -97,37 +105,17 @@ exports.Waterfall_View = (req, res) => {
 
                       db.query(keywords_spot(), [id], (key_err, key_rows) => {
                         if (key_err) throw key_err;
-                        if (user_no == 0) {
-                          res.render("Client/Spot/Nature/view", {
-                            cat_res,
-                            key_rows,
-                            info_rows,
-                            user_recon,
-                            sl_latitude: maps_rows.length ? maps_rows[0].sl_latitude : "N/A",
-                            sl_lontitude: maps_rows.length ? maps_rows[0].sl_lontitude : "N/A",
-                            sl_route: maps_rows.length ? maps_rows[0].sl_route : "N/A",
-                            images_rows: images_rows.length ? images_rows : "N/A",
-                            id: id,
-                            rating: rating,
-                            isRated: isRated,
-                            rated: rated,
-                            total_pages: total_pages,
-                            user: req.user == undefined ? "null" : req.user.user_no,
-                            moment: moment,
-                            comments: comments,
-                            pageTitle: "Nature",
-                            route: "nature",
-                            userDetail: userDetail
-                          });
-                        } else {
-                          spotsGetSimilarity(db, user_no, (err, similarRows) => {
-                            if (err) { throw err; }
+
+                        db.query(spot_visited(), [id], (err, spot_visited) => {
+                          if (err) throw err;
+
+                          if (user_no == 0) {
                             res.render("Client/Spot/Nature/view", {
                               cat_res,
-                              info_rows,
                               key_rows,
+                              info_rows,
+                              spot_visited: spot_visited.length ? spot_visited[0].spot_visited : "0",
                               user_recon,
-                              similarRows,
                               sl_latitude: maps_rows.length ? maps_rows[0].sl_latitude : "N/A",
                               sl_lontitude: maps_rows.length ? maps_rows[0].sl_lontitude : "N/A",
                               sl_route: maps_rows.length ? maps_rows[0].sl_route : "N/A",
@@ -144,10 +132,36 @@ exports.Waterfall_View = (req, res) => {
                               route: "nature",
                               userDetail: userDetail
                             });
-                          });
-                        }
+                          } else {
+                            spotsGetSimilarity(db, user_no, (err, similarRows) => {
+                              if (err) { throw err; }
+                              res.render("Client/Spot/Nature/view", {
+                                cat_res,
+                                info_rows,
+                                key_rows,
+                                spot_visited: spot_visited.length ? spot_visited[0].spot_visited : "0",
+                                user_recon,
+                                similarRows,
+                                sl_latitude: maps_rows.length ? maps_rows[0].sl_latitude : "N/A",
+                                sl_lontitude: maps_rows.length ? maps_rows[0].sl_lontitude : "N/A",
+                                sl_route: maps_rows.length ? maps_rows[0].sl_route : "N/A",
+                                images_rows: images_rows.length ? images_rows : "N/A",
+                                id: id,
+                                rating: rating,
+                                isRated: isRated,
+                                rated: rated,
+                                total_pages: total_pages,
+                                user: req.user == undefined ? "null" : req.user.user_no,
+                                moment: moment,
+                                comments: comments,
+                                pageTitle: "Nature",
+                                route: "nature",
+                                userDetail: userDetail
+                              });
+                            });
+                          }
+                        });
                       });
-
                     });
                   });
                 });

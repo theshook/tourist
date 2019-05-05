@@ -322,7 +322,8 @@ exports.spot_get_all_query = sc_no => {
   spot_description, 
   spots_photo.img_filename,
   round(SUM(rating_value)/COUNT(*), 2) as RATES,
-  count(ratings.estab_no) as Num_of_Rates
+  count(ratings.estab_no) as Num_of_Rates,
+  spot_encode_date
   FROM spots
   INNER JOIN spots_category ON spots_category.sc_no = spots.sc_no
   INNER JOIN barangays ON barangays.bar_no = spots.bar_no
@@ -331,7 +332,8 @@ exports.spot_get_all_query = sc_no => {
   LEFT JOIN ratings ON spots.spot_no = ratings.spot_no
   WHERE spots_photo.img_isprimary=1 AND 
   spots.sc_no=${sc_no}
-	GROUP BY spot_no`;
+  GROUP BY spots.spot_no
+  ORDER BY spots.spot_no ASC`;
 };
 
 exports.spot_get_single_query = sc_no => {
@@ -869,6 +871,10 @@ exports.keywords_spot = () => {
 
 exports.spot_visited = () => {
   return `SELECT count(spot_no) AS spot_visited FROM visited WHERE spot_no = ? GROUP BY spot_no;`
+}
+
+exports.get_all_spot_visited = () => {
+  return `SELECT spot_no, count(spot_no) AS spot_visited FROM visited GROUP BY spot_no`;
 }
 
 exports.estab_visited = () => {
