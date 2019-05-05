@@ -259,7 +259,8 @@ exports.estab_get_all_query = ec_no => {
   towns.town_name,
   establistments_photo.image_filename,
   round(SUM(rating_value)/COUNT(*), 2) as RATES,
-  count(ratings.estab_no) as Num_of_Rates
+  count(ratings.estab_no) as Num_of_Rates,
+  estab_encode_date
   FROM establistments 
   INNER JOIN towns ON establistments.town_no = towns.town_no 
   INNER JOIN establistments_category ON establistments.ec_no = establistments_category.ec_no 
@@ -267,8 +268,8 @@ exports.estab_get_all_query = ec_no => {
   LEFT JOIN ratings ON establistments.estab_no = ratings.estab_no
   WHERE (encode_delete=0 AND encode_inactive=0) AND 
   establistments.ec_no=${ec_no} AND establistments_photo.image_isprimary=1
-  GROUP BY estab_no
-  order by estab_no ASC`;
+  GROUP BY establistments.estab_no
+  ORDER BY establistments.estab_no ASC`;
 };
 
 exports.estab_single_info = (id) => {
@@ -280,7 +281,8 @@ exports.estab_single_info = (id) => {
   towns.town_name,
   barangays.bar_name,
   estab_contact,
-  estab_email
+  estab_email,
+  estab_encode_date
   FROM establistments
   INNER JOIN barangays ON barangays.bar_no = establistments.bar_no
   INNER JOIN towns ON towns.town_no = establistments.town_no
@@ -339,7 +341,8 @@ exports.spot_get_single_query = sc_no => {
   spot_subname,
   spot_description, 
   towns.town_name,
-  barangays.bar_name
+  barangays.bar_name,
+  spot_encode_date
   FROM spots
   INNER JOIN barangays ON barangays.bar_no = spots.bar_no
   INNER JOIN towns ON towns.town_no = spots.town_no
@@ -862,4 +865,16 @@ exports.keywords_spot = () => {
   FROM keywords 
   WHERE k_spot_no = ?
   `;
+}
+
+exports.spot_visited = () => {
+  return `SELECT count(spot_no) AS spot_visited FROM visited WHERE spot_no = ? GROUP BY spot_no;`
+}
+
+exports.estab_visited = () => {
+  return `SELECT count(estab_no) AS estab_visited FROM visited WHERE estab_no = ? GROUP BY estab_no;`
+}
+
+exports.get_all_estab_visited = () => {
+  return `SELECT estab_no, count(estab_no) AS estab_visited FROM visited GROUP BY estab_no`;
 }

@@ -15,7 +15,9 @@ let {
   notifications,
   estabGetSimilarity,
   topDestination,
-  keywords_estab
+  keywords_estab,
+  estab_visited,
+  get_all_estab_visited
 } = require("./Helpers/QueryHelpers");
 
 var ipAddress;
@@ -33,12 +35,18 @@ exports.get_all_Church = (req, res) => {
     db.query(topDestination('pasalubong'), (err, topRows) => {
       if (err) throw err;
 
-      res.render("Client/Pasalubong", {
-        rows: rows,
-        topRows,
-        pageTitle: "Pasalubong Center Information",
-        route: "pasalubong",
-        userDetail: userDetail
+      db.query(get_all_estab_visited(), (err, estab_visited) => {
+        if (err) throw err;
+
+        res.render("Client/Pasalubong", {
+          estab_visited: estab_visited.length ? estab_visited : "0",
+          rows: rows,
+          topRows,
+          moment,
+          pageTitle: "Pasalubong Center Information",
+          route: "pasalubong",
+          userDetail: userDetail
+        });
       });
     });
   });
@@ -93,36 +101,16 @@ exports.church_View = (req, res) => {
 
                         db.query(keywords_estab(), [id], (key_err, key_rows) => {
                           if (key_err) throw key_err;
-                          if (user_no == 0) {
-                            res.render("Client/Pasalubong/view", {
-                              cat_res,
-                              key_rows,
-                              userReconEstab,
-                              info_rows,
-                              el_latitude: maps_rows.length ? maps_rows[0].el_latitude : "N/A",
-                              el_lontitude: maps_rows.length ? maps_rows[0].el_lontitude : "N/A",
-                              el_route: maps_rows.length ? maps_rows[0].el_route : "N/A",
-                              images_rows: images_rows.length ? images_rows : "N/A",
-                              id: id,
-                              rating: rating,
-                              isRated: isRated,
-                              rated: rated,
-                              total_pages: total_pages,
-                              user: req.user == undefined ? "null" : req.user.user_no,
-                              moment: moment,
-                              comments: comments,
-                              pageTitle: "Shopping Center Information",
-                              route: "pasalubong",
-                              userDetail: userDetail
-                            });
-                          } else {
-                            estabGetSimilarity(db, user_no, (err, similarRows) => {
-                              if (err) throw err;
+
+                          db.query(estab_visited(), [id], (err, estab_visited) => {
+                            if (err) throw err;
+
+                            if (user_no == 0) {
                               res.render("Client/Pasalubong/view", {
                                 cat_res,
                                 key_rows,
+                                estab_visited: estab_visited.length ? estab_visited[0].estab_visited : "0",
                                 userReconEstab,
-                                similarRows,
                                 info_rows,
                                 el_latitude: maps_rows.length ? maps_rows[0].el_latitude : "N/A",
                                 el_lontitude: maps_rows.length ? maps_rows[0].el_lontitude : "N/A",
@@ -140,10 +128,36 @@ exports.church_View = (req, res) => {
                                 route: "pasalubong",
                                 userDetail: userDetail
                               });
-                            });
-                          }
+                            } else {
+                              estabGetSimilarity(db, user_no, (err, similarRows) => {
+                                if (err) throw err;
+                                res.render("Client/Pasalubong/view", {
+                                  cat_res,
+                                  key_rows,
+                                  estab_visited: estab_visited.length ? estab_visited[0].estab_visited : "0",
+                                  userReconEstab,
+                                  similarRows,
+                                  info_rows,
+                                  el_latitude: maps_rows.length ? maps_rows[0].el_latitude : "N/A",
+                                  el_lontitude: maps_rows.length ? maps_rows[0].el_lontitude : "N/A",
+                                  el_route: maps_rows.length ? maps_rows[0].el_route : "N/A",
+                                  images_rows: images_rows.length ? images_rows : "N/A",
+                                  id: id,
+                                  rating: rating,
+                                  isRated: isRated,
+                                  rated: rated,
+                                  total_pages: total_pages,
+                                  user: req.user == undefined ? "null" : req.user.user_no,
+                                  moment: moment,
+                                  comments: comments,
+                                  pageTitle: "Shopping Center Information",
+                                  route: "pasalubong",
+                                  userDetail: userDetail
+                                });
+                              });
+                            }
+                          });
                         });
-
                       });
                     });
                 });

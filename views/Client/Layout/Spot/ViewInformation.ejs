@@ -63,17 +63,17 @@
                   <% }); %>
                 </small>
               </dd>
-              <dd class="col-sm-12 lead">
+              <dd class="col-sm-12">
                 <%- info_rows[0].spot_description %>
               </dd>
-              <dd class="col-sm-12 lead">
-                <%= info_rows[0].town_name %>
+              <dd class="col-sm-12">
+                <strong><%= info_rows[0].town_name %></strong>
               </dd>
-              <dd class="col-sm-12 lead">
-                <%= info_rows[0].bar_name %>
+              <dd class="col-sm-12">
+                <strong><%= info_rows[0].bar_name %></strong>
               </dd>
-              <dd class="col-sm-12 lead">
-                <%= sl_route %>
+              <dd class="col-sm-12">
+                <strong><%= sl_route %></strong>
               </dd>
               <dd class="col-sm-12">
                 <div class="col-md-12" id="map" style="height:350px;width:100%;"></div>
@@ -118,7 +118,7 @@
       <!-- Related Projects Row -->
       <div class="col-md-4">
         <% if(user == "null" && user_recon.length != 0) { %>
-        <h5 class="section-heading text-uppercase">You Might Like</h5>
+        <h5 class="section-heading text-uppercase">You Might Also Like:</h5>
         <div class="row">
           <% user_recon.forEach(function(recon) { %>
           <% var cat; %>
@@ -180,7 +180,7 @@
           <% }); %>
         </div>
         <% if(user_recon.length != 0) { %>
-        <h5 class="section-heading text-uppercase mt-3">You Might Like</h5>
+        <h5 class="section-heading text-uppercase mt-3">You Might Also Like:</h5>
         <div class="row">
           <% user_recon.forEach(function(recon) { %>
           <% var cat; %>

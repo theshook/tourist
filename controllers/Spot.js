@@ -1,6 +1,5 @@
 const db = require("../db.js");
 var moment = require("moment");
-var nl2br = require('nl2br');
 
 exports.spots_gets_all = (req, res) => {
   let search_towns = req.query.town_q || null;
@@ -148,7 +147,7 @@ exports.spots_create = (req, res) => {
       data.bar_no,
       data.spot_name,
       data.spot_subname,
-      nl2br(data.desc),
+      data.desc,
       user,
       date
     ],
@@ -388,7 +387,7 @@ exports.spots_update = (req, res) => {
       data.town_no,
       data.bar_no,
       data.spot_name,
-      nl2br(data.desc),
+      data.desc,
       data.spot_subname,
       user,
       id

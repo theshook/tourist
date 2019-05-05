@@ -1,7 +1,7 @@
 <script src="http://code.jquery.com/color/jquery.color.plus-names-2.1.2.min.js"></script>
 <link rel="stylesheet" href="/vendor/jquery-tags/jquery-tagsinput.min.css">
 <script src="/vendor/jquery-tags/jquery-tagsinput.min.js"></script>
-<div class="col-md-7 mx-auto">
+<div class="col-md-12 mx-auto">
   <div class="card">
     <div class="card-header card-header-warning">
       <h4 class="card-title">New Spot</h4>
@@ -69,7 +69,7 @@
             <label for="exampleFormControlTextarea1">
               <span class="text-danger">*</span>
               Description</label>
-            <textarea class="form-control" name="desc" id="description" rows="3"></textarea>
+            <textarea class="form-control" name="desc" id="editor1" rows="10" cols="80"></textarea>
             <div class="form-group bmd-form-group">
               <label for="keywords">Keyword(s) <span class="text-muted">press enter for every keywords or you can use
                   semicolon (;)</span></label>
@@ -87,6 +87,7 @@
 
 <script>
   $(document).ready(function () {
+    CKEDITOR.replace('editor1');
     $('[data-role="tags-input"]').tagsInput();
   });
 
@@ -149,18 +150,13 @@
     $('#create_spot').submit((e) => {
       // Validation
       var spot_name = $.trim($('#spot_name').val());
-      var spot_description = $.trim($('#description').val());
+      var spot_description = $.trim($('#editor1').val());
       var bar_no = $('#bar_no').val();
 
       if (spot_name === '') {
         e.preventDefault()
         alert('Spot name is required.');
         $('#spot_name').addClass('is-invalid');
-      }
-
-      if (spot_description === '') {
-        e.preventDefault()
-        alert('Description is required.');
       }
 
       if (bar_no == 0) {

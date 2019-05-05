@@ -11,7 +11,17 @@
             <h3 class="text-left">
               <%= row.estab_name %>
             </h3>
-            <p class="card-text text-left text-truncate">
+            <p class="text-left">
+              <small><%= moment(row.estab_encode_date).format('MMMM D, YYYY'); %></small>
+              <span>
+                <% estab_visited.forEach(function(visited) { %>
+                <% if (row.estab_no == visited.estab_no) { %>
+                (<%= visited.estab_visited %> views)
+                <% } %>
+                <% }); %>
+              </span>
+            </p>
+            <p class="card-text text-left text-wrap text-truncate">
               <%= row.estab_description %>
             </p>
             <a href="/<%= route %>/<%= row.estab_no %>" class="btn btn-primary float-left my-3">View more</a>

@@ -62,26 +62,30 @@
                   <% }); %>
                 </small>
               </dd>
-              <dd class="col-sm-12 lead">
+              <dd class="col-sm-12 text-dark">
+                <%= moment(info_rows[0].estab_encode_date).format('MMMM D, YYYY'); %>
+                (<%= estab_visited %> views)
+              </dd>
+              <dd class="col-sm-12">
                 <%- info_rows[0].estab_description %>
               </dd>
-              <dd class="col-sm-12 lead">
+              <dd class="col-sm-12">
                 <%= info_rows[0].estab_address %>
               </dd>
-              <dd class="col-sm-12 lead">
+              <dd class="col-sm-12">
                 <%= info_rows[0].town_name %>
               </dd>
-              <dd class="col-sm-12 lead">
+              <dd class="col-sm-12">
                 <%= info_rows[0].bar_name %>
               </dd>
-              <dd class="col-sm-12 lead">
-                <%= info_rows[0].estab_contact %>
+              <dd class="col-sm-12">
+                <strong><%= info_rows[0].estab_contact %></strong>
               </dd>
-              <dd class="col-sm-12 lead">
-                <%= info_rows[0].estab_email %>
+              <dd class="col-sm-12">
+                <strong><%= info_rows[0].estab_email %></strong>
               </dd>
-              <dd class="col-sm-12 lead">
-                <%= el_route %>
+              <dd class="col-sm-12">
+                <<strong>><%= el_route %></strong>
               </dd>
               <dd class="col-sm-12">
                 <div class="col-md-12" id="map" style="height:350px;width:100%;"></div>
@@ -129,7 +133,7 @@
       <!-- Related Projects Row -->
       <div class="col-md-4">
         <% if(user == "null" && userReconEstab.length != 0) { %>
-        <h5 class="section-heading text-uppercase">You Might Like</h5>
+        <h5 class="section-heading text-uppercase">You Might Also Like:</h5>
         <!-- /.Related Projects -->
         <div class="row">
           <% userReconEstab.forEach(function(recon) { %>
@@ -207,7 +211,7 @@
           <% }); %>
         </div>
         <% if(userReconEstab.length != 0) { %>
-        <h5 class="section-heading text-uppercase mt-3">You Might Like</h5>
+        <h5 class="section-heading text-uppercase mt-3">You Might Also Like:</h5>
         <!-- /.Related Projects -->
         <div class="row">
           <% userReconEstab.forEach(function(recon) { %>

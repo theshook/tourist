@@ -1,7 +1,7 @@
 <script src="http://code.jquery.com/color/jquery.color.plus-names-2.1.2.min.js"></script>
 <link rel="stylesheet" href="/vendor/jquery-tags/jquery-tagsinput.min.css">
 <script src="/vendor/jquery-tags/jquery-tagsinput.min.js"></script>
-<div class="col-md-7 mx-auto">
+<div class="col-md-12 mx-auto">
   <div class="card">
     <div class="card-header card-header-warning">
       <h4 class="card-title">New Establishment</h4>
@@ -50,8 +50,8 @@
                 Barangay required.
               </div>
             </div>
-            <label for="exampleFormControlTextarea1"><span class="text-danger">*</span> Description</label>
-            <textarea class="form-control" id="desc" name="desc" rows="3"></textarea>
+            Description</label>
+            <textarea class="form-control" name="desc" id="editor1" rows="10" cols="80"></textarea>
             <div class="form-group bmd-form-group">
               <label for="address" class="bmd-label-floating"><span class="text-danger">*</span> Address</label>
               <input type="text" class="form-control" id="address" name="address">
@@ -83,6 +83,7 @@
 </div>
 <script>
   $(document).ready(function () {
+    CKEDITOR.replace('editor1');
     $('[data-role="tags-input"]').tagsInput();
   });
   $(document).ready(function () {
@@ -154,7 +155,7 @@
     $('#create_estab').submit((e) => {
       // Validation
       var estab_name = $.trim($('#estab_name').val());
-      var desc = $.trim($('#desc').val());
+      var desc = $.trim($('#editor1').val());
       var bar_no = $('#bar_no').val();
       var address = $.trim($('#address').val());
       var contact = $.trim($('#contact').val());
@@ -163,11 +164,6 @@
         e.preventDefault()
         alert('Establishemnt name is required.');
         $('#estab_name').addClass('is-invalid');
-      }
-
-      if (desc === '') {
-        e.preventDefault()
-        alert('Description is required.');
       }
 
       if (bar_no == 0) {
