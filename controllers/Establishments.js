@@ -1,6 +1,5 @@
 const db = require("../db.js");
 var moment = require("moment");
-var nl2br = require('nl2br');
 
 exports.esatablishment_view = (req, res) => {
   let id = req.params.estab_no;
