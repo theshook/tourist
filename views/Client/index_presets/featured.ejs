@@ -25,7 +25,11 @@
           <h6>
             <% if (rows.RATES) { %>
             <span class="float-left">
-              Rating:&nbsp;
+              <% let starPercentage = (rows.RATES / 5) * 100 %>
+              <% let starPercentageRounded = `${Math.round(starPercentage / 10) * 10}%` %>
+              <div class="stars-outer">
+                <div class="stars-inner" style="width: <%= starPercentageRounded %>;"></div>
+              </div>
             </span>
             <span class="badge badge-secondary float-left">
               <%= rows.RATES %>

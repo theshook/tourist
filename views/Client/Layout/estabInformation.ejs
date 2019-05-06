@@ -44,8 +44,13 @@
           </div>
           <!-- Rating -->
           <div class="card-footer">
-            <h3>Rating:
+            <h3>
               <% if (rating.length > 0) { %>
+              <% let starPercentage = (rating[0].RATES / 5) * 100 %>
+              <% let starPercentageRounded = `${Math.round(starPercentage / 10) * 10}%` %>
+              <div class="stars-outer">
+                <div class="stars-inner" style="width: <%= starPercentageRounded %>;"></div>
+              </div>
               <%= rating[0].RATES %>
               <% } %>
               <span class="float-right">
@@ -154,12 +159,16 @@
                   onerror="if (this.src != 'error.jpg') this.src = '/uploads/default.png';"
                   alt="<%= recon.estab_name %>">
               </a>
-              <div class="card-footer pt-0 mt-0 pb-0 mt-0">
+              <div class="card-footer p-1">
                 <p class="text-truncate mb-0 pb-0">
                   <%= recon.estab_name %>
                 </p>
                 <p class="mb-0 pb-0">
-                  Rating:
+                  <% let starPercentage = (recon.RATES / 5) * 100 %>
+                  <% let starPercentageRounded = `${Math.round(starPercentage / 10) * 10}%` %>
+                  <div class="stars-outer">
+                    <div class="stars-inner" style="width: <%= starPercentageRounded %>;"></div>
+                  </div>
                   <span class="badge badge-secondary">
                     <%= recon.RATES %>
                   </span>
@@ -195,12 +204,16 @@
                   onerror="if (this.src != 'error.jpg') this.src = '/uploads/default.png';"
                   alt="<%= recon.estab_name %>">
               </a>
-              <div class="card-footer pt-0 mt-0 pb-0 mt-0">
+              <div class="card-footer p-1">
                 <p class="text-truncate mb-0 pb-0">
                   <%= recon.estab_name %>
                 </p>
                 <p class="mb-0 pb-0">
-                  Rating:
+                  <% let starPercentage = (recon.RATES / 5) * 100 %>
+                  <% let starPercentageRounded = `${Math.round(starPercentage / 10) * 10}%` %>
+                  <div class="stars-outer">
+                    <div class="stars-inner" style="width: <%= starPercentageRounded %>;"></div>
+                  </div>
                   <span class="badge badge-secondary">
                     <%= recon.RATES %>
                   </span>
@@ -232,12 +245,16 @@
                   onerror="if (this.src != 'error.jpg') this.src = '/uploads/default.png';"
                   alt="<%= recon.estab_name %>">
               </a>
-              <div class="card-footer pt-0 mt-0 pb-0 mt-0">
+              <div class="card-footer p-1">
                 <p class="text-truncate mb-0 pb-0">
                   <%= recon.estab_name %>
                 </p>
                 <p class="mb-0 pb-0">
-                  Rating:
+                  <% let starPercentage = (recon.RATES / 5) * 100 %>
+                  <% let starPercentageRounded = `${Math.round(starPercentage / 10) * 10}%` %>
+                  <div class="stars-outer">
+                    <div class="stars-inner" style="width: <%= starPercentageRounded %>;"></div>
+                  </div>
                   <span class="badge badge-secondary">
                     <%= recon.RATES %>
                   </span>
