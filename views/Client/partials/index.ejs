@@ -29,6 +29,23 @@
   <link href="/css/style.css" rel="stylesheet">
 
   <script src="/vendor/jquery/jquery.min.js"></script>
+  <script src="/js/moment/moment.js"></script>
+  <script>
+    $(document).ready(function () {
+      function getDateTime() {
+        var day = new Date()
+        var dayWrapper = moment(day);
+        var dayString = dayWrapper.format("MMM D, YYYY h:mm:ss a");
+        return dayString;
+      }
+
+      // example usage: realtime clock
+      setInterval(function () {
+        currentTime = getDateTime();
+        document.getElementById("digital-clock").innerHTML = currentTime;
+      }, 1000);
+    });
+  </script>
 </head>
 
 <body id="page-top">
